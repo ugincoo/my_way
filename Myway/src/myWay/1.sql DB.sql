@@ -4,11 +4,11 @@ create database myway;
 use myway;
 
 
-create table mMaterials(
+create table mMaterials( -- 재료 카테고리 테이블
 	category_no int auto_increment primary key
 );
 
-create table dMaterials(
+create table dMaterials( -- 재료 상세 테이블
 	category_no int,
     mater_no int auto_increment primary key,
     mater_name varchar(15),
@@ -17,20 +17,20 @@ create table dMaterials(
 	foreign key (category_no) references mMaterials(category_no)
 );
 
-create table member(
+create table member( -- 회원가입 테이블
 	member_no int auto_increment primary key,
     member_id varchar(15) not null,
     member_pw int
 );
 
-create table recommend(
+create table recommend( -- 추천게시판 테이블
 	recom_no int auto_increment primary key,
     recom_title varchar(15),
     recom_view int,
     recom_content text
 );
 
-create table bcommend(
+create table bcommend( -- 댓글 테이블
 	bcomm_no int auto_increment primary key,
     bcomm_content varchar(50),
     member_no int,
