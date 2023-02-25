@@ -68,4 +68,24 @@ public class OderController {
 	public int findMaterNo(int no, int categoryNo) {
 		return OderDao.getInstance().findMaterNo(no, categoryNo);
 	}
+	
+	//pOrder에 담기전에 주문 한개 단위로 전달하기
+	public boolean returnPOrderDto() {
+		boolean result = false;
+		
+		ArrayList<DmaterialDto> dto = new ArrayList<>();
+		
+		for(int i = 0; i < cartList.size(); i++) {
+			// 카테고리당 1개씩만 선택하니까 카테고리 수를 나눈 것이 한 주문 단위
+			if((i != 0 )&&(i%returnCategoryCount() == 0)) {  
+				System.out.println(dto);
+				System.out.println(1);
+				result = OderDao.getInstance().inputPOrder(dto);
+			}
+			
+			dto.add(cartList.get(i));
+			System.out.println(dto);
+		}
+		return result;
+	}
 }

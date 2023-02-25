@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import myWay.controller.MemberController;
 import myWay.dto.DmaterialDto;
 
 public class OderDao {
@@ -28,7 +29,7 @@ private static OderDao oderDao = new OderDao();
 			conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/myway", "root", "1234");
 //			System.out.println("연결 성공");
-			
+			System.out.println(MemberController.getInstance().getLogSeasion());
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -136,6 +137,43 @@ private static OderDao oderDao = new OderDao();
 	}
 	
 	
-	// 2. 주문하기 
-	
+	// 2. pOrder에 담기 
+	public boolean inputPOrder(ArrayList<DmaterialDto> cartList) {
+		System.out.println(cartList);
+		String sql = "insert into porder (member_no, bread_no, che_no, meat_no, veg_no, source_no, drink_no)"
+				+ "values (?, ?, ?, ?, ?, ?, ?)";
+		System.out.println(cartList);
+		try {
+			System.out.println(1);
+			pstmt = conn.prepareStatement(sql);
+			System.out.println(1);
+			
+			System.out.println(cartList.size());
+			pstmt.setInt(1, MemberController.getInstance().getLogSeasion().getMemberNo());
+			System.out.println(1);
+			pstmt.setInt(2, cartList.get(0).getMaterNo());
+			System.out.println(1);
+			pstmt.setInt(3, cartList.get(1).getMaterNo());
+			System.out.println(1);
+			pstmt.setInt(4, cartList.get(2).getMaterNo());
+			System.out.println(1);
+			pstmt.setInt(5, cartList.get(3).getMaterNo());
+			System.out.println(1);
+			pstmt.setInt(6, cartList.get(4).getMaterNo());
+			System.out.println(1);
+			pstmt.setInt(7, cartList.get(5).getMaterNo());
+			System.out.println(1);
+			
+			pstmt.executeUpdate();
+			
+			System.out.println(1);
+			
+			return true;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
 }

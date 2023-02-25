@@ -40,6 +40,4 @@ public class PurchaseDto {
 		this.purchasePrice = purchasePrice;
 	}
     
-	
-
 }

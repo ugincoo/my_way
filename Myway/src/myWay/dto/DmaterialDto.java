@@ -1,7 +1,6 @@
 package myWay.dto;
 
 public class DmaterialDto extends MmaterialDto  {
-	// 필드
 	int materNo;
 	String materName;
 	int  materStock;
@@ -30,6 +29,7 @@ public class DmaterialDto extends MmaterialDto  {
 		return "DmaterialDto [materNo=" + materNo + ", materName=" + materName + ", materStock=" + materStock
 				+ ", materPrice=" + materPrice + ", categoryNo=" + categoryNo + "]";
 	}
+	
 	public int getMaterNo() {
 		return materNo;
 	}
