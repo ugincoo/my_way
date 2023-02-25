@@ -2,9 +2,13 @@ package myWay.dto;
 
 public class MemberDto {
 	// 필드
-	int memberNo;
-    String memberId;
-    int memberPw;
+	int 	memberNo;	// 회원일련번호
+    String 	memberId;	// 회원 ID
+    int 	memberPw;	// 회원 PW
+    String 	memberNm;	// 회원 이름-> 하다가 깨닫고 추가함 
+    
+    // DB 테이블에 컬럼 추가하는 방법
+    // ALTER member ADD COLUMN memberNm VARCHAR(20) NOT NULL;
     
 	// 생성자
 	public MemberDto() { }
@@ -37,6 +41,12 @@ public class MemberDto {
 	}
 	public void setMemberPw(int memberPw) {
 		this.memberPw = memberPw;
+	}
+	public String getMemberNm() {
+		return memberNm;
+	}
+	public void setMemberNm(String memberNm) {
+		this.memberNm = memberNm;
 	}
 	
 	
