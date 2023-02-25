@@ -140,12 +140,6 @@ public class OderFront {
 	
 	// 2-1 or 3-1 결제하기
 	public void purchase() {
-		boolean result = OderController.getInstance().returnPOrderDto();
-		
-		if(result) {
-			System.out.println("주문 테이블에 무사히 들어왔습니다");
-		}else {
-			System.err.println("주문 테이블에 들어오지 않았습니다.");
-		}
+		OderController.getInstance().returnPOrderDto();
 	}
 }

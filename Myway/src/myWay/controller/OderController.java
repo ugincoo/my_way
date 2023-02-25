@@ -1,9 +1,11 @@
 package myWay.controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import myWay.dao.OderDao;
 import myWay.dto.DmaterialDto;
+import myWay.dto.PorderDto;
 
 public class OderController {
 	private static OderController oc = new OderController();
@@ -70,22 +72,41 @@ public class OderController {
 	}
 	
 	//pOrder에 담기전에 주문 한개 단위로 전달하기
-	public boolean returnPOrderDto() {
-		boolean result = false;
+	public void returnPOrderDto() {
 		
 		ArrayList<DmaterialDto> dto = new ArrayList<>();
 		
 		for(int i = 0; i < cartList.size(); i++) {
 			// 카테고리당 1개씩만 선택하니까 카테고리 수를 나눈 것이 한 주문 단위
-			if((i != 0 )&&(i%returnCategoryCount() == 0)) {  
-				System.out.println(dto);
-				System.out.println(1);
-				result = OderDao.getInstance().inputPOrder(dto);
+			if((i != 0 )&&((i+1)%returnCategoryCount() == 0)) {  
+				dto.add(cartList.get(i));
+				PorderDto pOrderDto = returnPorderDto(dto);
+				OderDao.getInstance().inputPOrder(pOrderDto);
+				dto.clear(); //넣었으면 앞부분 비워주기
+			}else {
+				dto.add(cartList.get(i));
+				
 			}
-			
-			dto.add(cartList.get(i));
-			System.out.println(dto);
 		}
-		return result;
+	}
+	
+	//pOrder 반환하는 함수
+	public PorderDto returnPorderDto(ArrayList<DmaterialDto> dto) {
+		PorderDto pOrderDto = new PorderDto(
+				MemberController.getInstance().getLogSeasion().getMemberNo(),
+				dto.get(0).getMaterNo(),
+				dto.get(1).getMaterNo(),
+				dto.get(2).getMaterNo(),
+				dto.get(3).getMaterNo(), 
+				dto.get(4).getMaterNo(),
+				dto.get(5).getMaterNo());
+		
+		return pOrderDto;
+	}
+	
+	//최종 결제!
+	public void purchase() {
+		ArrayList<Integer> pOrderList = OderDao.getInstance().returnPOrderNo();
+		
 	}
 }

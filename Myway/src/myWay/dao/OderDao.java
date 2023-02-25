@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import myWay.controller.MemberController;
 import myWay.dto.DmaterialDto;
+import myWay.dto.PorderDto;
 
 public class OderDao {
 private static OderDao oderDao = new OderDao();
@@ -138,42 +139,68 @@ private static OderDao oderDao = new OderDao();
 	
 	
 	// 2. pOrder에 담기 
-	public boolean inputPOrder(ArrayList<DmaterialDto> cartList) {
-		System.out.println(cartList);
+	public void inputPOrder(PorderDto pOrderDto) {
+
 		String sql = "insert into porder (member_no, bread_no, che_no, meat_no, veg_no, source_no, drink_no)"
 				+ "values (?, ?, ?, ?, ?, ?, ?)";
-		System.out.println(cartList);
+		
+		
 		try {
-			System.out.println(1);
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(1);
-			
-			System.out.println(cartList.size());
-			pstmt.setInt(1, MemberController.getInstance().getLogSeasion().getMemberNo());
-			System.out.println(1);
-			pstmt.setInt(2, cartList.get(0).getMaterNo());
-			System.out.println(1);
-			pstmt.setInt(3, cartList.get(1).getMaterNo());
-			System.out.println(1);
-			pstmt.setInt(4, cartList.get(2).getMaterNo());
-			System.out.println(1);
-			pstmt.setInt(5, cartList.get(3).getMaterNo());
-			System.out.println(1);
-			pstmt.setInt(6, cartList.get(4).getMaterNo());
-			System.out.println(1);
-			pstmt.setInt(7, cartList.get(5).getMaterNo());
-			System.out.println(1);
+
+			pstmt.setInt(1, pOrderDto.getMemberNo());
+			pstmt.setInt(2, pOrderDto.getBreadNo());
+			pstmt.setInt(3, pOrderDto.getCheNo());
+			pstmt.setInt(4, pOrderDto.getMeatNo());
+			pstmt.setInt(5, pOrderDto.getVegNo());
+			pstmt.setInt(6, pOrderDto.getSourceNo());
+			pstmt.setInt(7, pOrderDto.getDrinkNo());
 			
 			pstmt.executeUpdate();
-			
-			System.out.println(1);
-			
-			return true;
-			
+
 		}catch(SQLException e) {
-			e.printStackTrace();
 			System.out.println(e.getMessage());
-			return false;
+			
 		}
 	}
+	// pOrder 테이블의 pOrder_no을 반환하기
+	public ArrayList<Integer> returnPOrderNo() {
+		String sql = "select * from porder where member_no = ? && o_status = ?";
+		ArrayList<Integer> pOrderNoList = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, MemberController.getInstance().getLogSeasion().getMemberNo());
+			pstmt.setInt(2, 0);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				pOrderNoList.add(rs.getInt(1));
+			}
+			
+			return pOrderNoList;
+			
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	//최종 결제
+	public void purchase(int pOrderNo) {
+		String sql = "insert into purchase (purchase_no, porder_no, purchase_price, purcahse_date)"
+				+ "values (?, ?, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(0, 0);
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			
+		}
+	}
+	
 }
