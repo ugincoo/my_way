@@ -6,4 +6,5 @@
  *
  */
 module Myway {
+	requires java.sql;
 }
