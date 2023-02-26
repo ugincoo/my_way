@@ -26,7 +26,7 @@ public class StockFront {
 				System.out.print("[1]재고 관리  [2]커뮤니티  [3]나가기 :");
 				int ch = scanner.nextInt();
 				if( ch == 1) { stockpage(); }
-				else if( ch == 2 ) {}
+				else if( ch == 2 ) { RecomendFront.getInstance().recomendpage(); }
 				else if( ch == 3 ) { return; }
 			}catch( InputMismatchException e ) {
 				System.out.println("!잘못된 입력입니다!");
@@ -50,10 +50,10 @@ public class StockFront {
 				
 				System.out.println("-------------------- 재고 현황 --------------------");
 				System.out.printf("%2s%15s \t %7s \t %5s \n" , "no" , "재료명" , "재료가격" , "재고" );
-				// 재료 번호 데이터 전달 및 출력
+				// 재료 카테고리 데이터 전달 및 출력
 				ArrayList<DmaterialDto> result = StockController.getInstance().Materials(categoryNo);
 				for( int i = 0 ; i<result.size() ; i++ ) {
-					System.out.printf("%2s%15s \t %7s \t %5s \n" , result.get(i).getMaterNo() , result.get(i).getMaterName() , result.get(i).getMaterPrice() , result.get(i).getMaterStock() );
+					System.out.printf("%2d%15s \t %7d \t %5d \n" , result.get(i).getMaterNo() , result.get(i).getMaterName() , result.get(i).getMaterPrice() , result.get(i).getMaterStock() );
 				}
 				System.out.println("-------------------------------------------------");
 				System.out.println("[1]재료 등록 [2]재료 수정 [3]재료 삭제 [4]나가기 : ");
@@ -73,9 +73,9 @@ public class StockFront {
 	
 	// 재료 등록
 	public void materialSignup( int categoryNo ) {
-		System.out.println("〖 제품명 〗: ");	String materName = scanner.next();
-		System.out.println("〖 제품 가격 〗: ");	int materprice = scanner.nextInt();
-		System.out.println("〖 제품 재고 〗: ");	int materStock = scanner.nextInt();
+		System.out.print("〖 제품명 〗: ");	String materName = scanner.next();
+		System.out.print("〖 제품 가격 〗: ");	int materprice = scanner.nextInt();
+		System.out.print("〖 제품 재고 〗: ");	int materStock = scanner.nextInt();
 		
 		// 데이터 전달
 		 boolean result = StockController.getInstance().materialSignup(categoryNo, materName, materprice, materStock);
@@ -91,17 +91,16 @@ public class StockFront {
 			System.out.println("[1]재료명 [2]재료가격 [3]재고 ");
 			System.out.print("- 재료번호 : "); 	int materNo = scanner.nextInt();
 			System.out.print("- 구분 : "); 		int ch = scanner.nextInt();
-			
 			if( ch == 1 ) { // 재료명 수정
-				System.out.print("- 변경 내용 : "); 	String materName = scanner.next(); 
+				System.out.print("- 재료명 : "); 	String materName = scanner.next(); 
 				StockController.getInstance().materNameUpdate(materNo, materName);
 			}
 			else if( ch == 2 ) { // 재료가격 수정 
-				System.out.print("- 변경 내용 : "); 	int materPrice = scanner.nextInt();
+				System.out.print("- 재료가격 : "); 	int materPrice = scanner.nextInt();
 				StockController.getInstance().materPriceUpdate(materNo, materPrice);
 			}
 			else if( ch == 3 ) { // 재료 재고 수정
-				System.out.print("- 변경 내용 : "); 	int materStock = scanner.nextInt(); 
+				System.out.print("- 재고 : "); 	int materStock = scanner.nextInt(); 
 				StockController.getInstance().materStockUpdate(materNo, materStock);
 			}
 			System.out.println(" 【 수정 완료 】 ");
