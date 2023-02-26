@@ -49,6 +49,7 @@ create table Porder( -- 주문 테이블
     source_no int,
 	meat_no int,
     o_status int default 0, 
+    price int,
 	foreign key (member_no) references member(member_no),
     foreign key (bread_no) references dMaterials(mater_no),
     foreign key (drink_no) references dMaterials(mater_no),
@@ -62,7 +63,7 @@ create table purchase( -- 결제 테이블
 	purchase_no int auto_increment primary key,
     porder_no int,
     purchase_price int,
-    purcahse_date  dateTime,
+    purcahse_date  timestamp,
     foreign key (porder_no) references porder(porder_no)
 );
 

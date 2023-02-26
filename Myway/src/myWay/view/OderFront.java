@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import javax.sound.midi.Sequence;
 
 import myWay.controller.MemberController;
 import myWay.controller.OderController;
@@ -34,8 +33,8 @@ public class OderFront {
 	
 	//메인 페이지
 	public void index() {
+	while(true) {
 		try {
-			while(true) {
 				System.out.print("1.커뮤니티 2. 주문하기 3.장바구니목록확인 4.로그아웃 : ");
 				int choice = scanner.nextInt();
 				
@@ -50,12 +49,13 @@ public class OderFront {
 				}else if(choice == 4) { //4. 로그아웃
 					return;
 				}
-			}
+
 		}catch(InputMismatchException e) {
 			System.out.println("숫자로 입력해주세요.");
 			scanner = new Scanner(System.in);
-		}
+		}		
 	}
+}
 	
 	// 종류마다 재료 리스트 출력
 	public void printMaterialList(int categoryNo) {
@@ -120,12 +120,15 @@ public class OderFront {
 	//3. 장바구니 목록 확인
 	public void viewCartList() {
 		ArrayList<DmaterialDto> dto = OderController.getInstance().returnCartList();
-		System.out.println("-------------------현재 장바구니---------------");
+		System.out.println("-------------------현재 장바구니-------------------");
 		for(int i = 0; i < dto.size(); i++) {
+			if(i != 0 && i%OderController.getInstance().returnCategoryCount() == 0) {
+				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			}
 			String cName = OderController.getInstance().findCategoryName(dto.get(i).getCategoryNo());
 			System.out.printf("%s : %s \t %d원\n", cName, dto.get(i).getMaterName(), dto.get(i).getMaterPrice());
 		}
-		System.out.println("-----------------------------------------");
+		System.out.println("--------------------------------------------");
 		
 		System.out.println("1. 결제하기 2. 뒤로가기");
 		
@@ -133,6 +136,7 @@ public class OderFront {
 		
 		if(answer == 1) {
 			purchase();
+			
 		}else if(answer == 2) {
 			return;
 		}
@@ -141,5 +145,10 @@ public class OderFront {
 	// 2-1 or 3-1 결제하기
 	public void purchase() {
 		OderController.getInstance().returnPOrderDto();
+		if(OderController.getInstance().purchase()) {
+			System.out.println("결제 완료되었습니다.");
+		}else {
+			System.out.println("결제 실패하였습니다.");
+		}
 	}
 }

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import myWay.controller.MemberController;
@@ -137,12 +138,33 @@ private static OderDao oderDao = new OderDao();
 		}
 	}
 	
+	//각각의 재료의 가격을 반환하는 함수
+	public int returnMaterPrice(int materNo) {
+		String sql = "select * from dMaterials where mater_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, materNo);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			return rs.getInt(5); //가격
+			
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+			return 0;
+		}
+	}
+	
 	
 	// 2. pOrder에 담기 
-	public void inputPOrder(PorderDto pOrderDto) {
+	public void inputPOrder(PorderDto pOrderDto, int totalPrice) {
 
-		String sql = "insert into porder (member_no, bread_no, che_no, meat_no, veg_no, source_no, drink_no)"
-				+ "values (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into porder (member_no, bread_no, che_no, meat_no, veg_no, source_no, drink_no, price)"
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		
 		try {
@@ -155,6 +177,7 @@ private static OderDao oderDao = new OderDao();
 			pstmt.setInt(5, pOrderDto.getVegNo());
 			pstmt.setInt(6, pOrderDto.getSourceNo());
 			pstmt.setInt(7, pOrderDto.getDrinkNo());
+			pstmt.setInt(8, totalPrice);
 			
 			pstmt.executeUpdate();
 
@@ -163,8 +186,10 @@ private static OderDao oderDao = new OderDao();
 			
 		}
 	}
+	
 	// pOrder 테이블의 pOrder_no을 반환하기
 	public ArrayList<Integer> returnPOrderNo() {
+		//지금 로그인한 멤버의 정보와 결제가 아직 되지 않은 걸 찾아서 결제를 하려고함.
 		String sql = "select * from porder where member_no = ? && o_status = ?";
 		ArrayList<Integer> pOrderNoList = new ArrayList<>();
 		
@@ -183,23 +208,64 @@ private static OderDao oderDao = new OderDao();
 			return pOrderNoList;
 			
 		}catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return null;
 		}
 	}
-	
-	//최종 결제
-	public void purchase(int pOrderNo) {
-		String sql = "insert into purchase (purchase_no, porder_no, purchase_price, purcahse_date)"
-				+ "values (?, ?, ?, ?)";
+	//pOrderNo마다 가격받아오기
+	public int returnPorderPrice(int pOrderNo) {
+		String sql = "select * from porder where porder_no = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(0, 0);
+			pstmt.setInt(1, pOrderNo);
+			
+			rs = pstmt.executeQuery();
+			rs.next();
+			System.out.println(rs.getInt(10));
+			return rs.getInt(10);
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+			return 0;
+		}
+	}
+	
+	
+	//최종 결제
+	public boolean purchase(int pOrderNo, int price, Timestamp dateTime) {
+		String sql = "insert into purchase (porder_no, purchase_price, purcahse_date)"
+				+ "values (?, ?, ?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pOrderNo);
+			pstmt.setInt(2, price);
+			pstmt.setTimestamp(3, dateTime);
+			
+			pstmt.executeUpdate();
+			
+			changepOrderStatus(pOrderNo);
+			
+			return true;
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
+	//결제되었으면 해당 pOrder의 status를 1로 바꾸기
+	public void changepOrderStatus(int pOrderNo) {
+		String sql = "update porder set o_status = ? where porder_no = ?";	
+		try {
+			pstmt = conn.prepareStatement(sql);
 			
+			pstmt.setInt(1, 1);
+			pstmt.setInt(2, pOrderNo);
+			
+			pstmt.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 	

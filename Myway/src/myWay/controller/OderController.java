@@ -1,7 +1,11 @@
 package myWay.controller;
 
 import java.lang.reflect.Array;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import myWay.dao.OderDao;
 import myWay.dto.DmaterialDto;
@@ -81,7 +85,8 @@ public class OderController {
 			if((i != 0 )&&((i+1)%returnCategoryCount() == 0)) {  
 				dto.add(cartList.get(i));
 				PorderDto pOrderDto = returnPorderDto(dto);
-				OderDao.getInstance().inputPOrder(pOrderDto);
+				int totalPrice = findOneSetPrice(pOrderDto);
+				OderDao.getInstance().inputPOrder(pOrderDto, totalPrice);
 				dto.clear(); //넣었으면 앞부분 비워주기
 			}else {
 				dto.add(cartList.get(i));
@@ -89,6 +94,27 @@ public class OderController {
 			}
 		}
 	}
+	//주문 한개에 있는 정보마다 해당 가격 받아오는 함수 
+	public int findOneSetPrice(PorderDto pOrderDto) {
+		ArrayList<Integer> materNoList = new ArrayList<>();
+		
+		//total가격만 구하면 되는거라 순서는 상관X
+		materNoList.add(pOrderDto.getBreadNo());
+		materNoList.add(pOrderDto.getCheNo());
+		materNoList.add(pOrderDto.getDrinkNo());
+		materNoList.add(pOrderDto.getMeatNo());
+		materNoList.add(pOrderDto.getVegNo());
+		materNoList.add(pOrderDto.getSourceNo());
+		
+		int totalPrice = 0;
+		
+		for(int i = 0; i< materNoList.size(); i++) {
+			totalPrice += OderDao.getInstance().returnMaterPrice(materNoList.get(i));
+		}
+		return totalPrice;
+		
+	}
+	
 	
 	//pOrder 반환하는 함수
 	public PorderDto returnPorderDto(ArrayList<DmaterialDto> dto) {
@@ -104,9 +130,26 @@ public class OderController {
 		return pOrderDto;
 	}
 	
+	
 	//최종 결제!
-	public void purchase() {
+	public boolean purchase() {
+		boolean result = false;
 		ArrayList<Integer> pOrderList = OderDao.getInstance().returnPOrderNo();
+		Timestamp dateTime = new Timestamp(System.currentTimeMillis());
+		for(int i = 0; i < pOrderList.size(); i++) {
+			int price = OderDao.getInstance().returnPorderPrice(pOrderList.get(i));
+			result = OderDao.getInstance().purchase(pOrderList.get(i), price, dateTime);
+		}
 		
+		return result;
 	}
+	
+	//현재 시간 형식
+	public String returnNowDate() {
+		LocalDateTime dateTime = LocalDateTime.now();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateString = format.format(dateTime);
+		return dateString;
+	}
+	
 }
