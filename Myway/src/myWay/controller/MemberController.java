@@ -24,9 +24,9 @@ public class MemberController {
 	
 	
 	//로그인
-	public int login(String memberId,int memberPw ) {
+	public boolean login(String memberId,int memberPw ) {
 		
-		int result
+		boolean result
 			= MemberDao.getInstance().login(memberId,memberPw);
 		
 		return result;

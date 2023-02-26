@@ -14,6 +14,9 @@ public class MemberFront {
 		return memberfrot;
 	}
 	
+	public static void main(String[] args) {
+		memberfrot.index();
+	}
 	
 	//메인화면: 회원가입, 로그인 메뉴 분기 처리 (1, 2) 
 	public void index() {
@@ -69,12 +72,12 @@ public class MemberFront {
 		System.out.println("비밀번호를입력하세요");
 		int memberPw = scanner.nextInt();
 		
-		int result= 
+		boolean result= 
 				MemberController.getInstance().login(memberId,memberPw);
 		
-		if(result==0) {
+		if(result==true) {
 			System.out.println("로그인에 성공하였습니다 추천메뉴페이지로 이동");
-		}else if(result==2) {
+		}else if(result==false) {
 			System.out.println("아이디와 비밀번호가 일치하지 않습니다");
 		}
 		

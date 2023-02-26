@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+
 
 public class MemberDao {
 	// Database 연결
@@ -57,14 +57,36 @@ public class MemberDao {
 		} catch (Exception e) {
 			System.out.println("MemberDao.java signup 오류");
 		}
+		return true;
 	}
 	 
 	 
 	 
 	// 로그인 
-	public boolean login( ) {
+	public boolean login(String memberId,int memberPw ) {
+		try {
+				
+					int result = checklogin(memberId,memberPw);
+					
+					// 경우의수 1.DB의 저장된 ID,PW가 일치해야함.. /2. ID 나 PW 둘 중 하나라도 안맞는 경우 
+					if(result == 0) {//로그인성공
+						
+						
+						return true;
+						
+					}else if(result == 1) { //로그인실패
+						System.out.println("id와 pw가 일치하지 않습니다");
+						return false;
+					}else {
+						return false;
+					}
+					
+		}catch (Exception e) {
+				return false;
+		}	
 		
-	}
+
+	}//login e
 	
 	
 	
@@ -93,9 +115,34 @@ public class MemberDao {
 			 result = rs.getInt(1);
 			 
 		 } catch (Exception e) {
-			System.out.println("checkUserId error");
+			System.out.println("checkUserId error"+e);
 		 }
 		 
 		 return result;	// 0 (중복없음 회원가입 가능), 1 (중복있음 회원가입 불가)
 	 }
-}
+	
+	
+	//로그인 유효성검사 
+	public int checklogin( String memberId,int memberPw) {
+		int result = 0;
+		String sql = "SELECT MEMBER_ID"
+					+"		 MEMBER_PW"
+					+"		 WHERE(MEMBER_ID = memberId && MEMBER_PW = memberPw)"
+					+"		FROM PRODUCT;";
+	
+		try {
+			ps=conn.prepareStatement(sql);
+			
+			rs = ps.executeQuery();
+			
+	
+			
+		}catch (Exception e) {
+			System.out.println("checklogin error"+e);
+		}
+		
+	}
+	
+	
+	
+}//class e
