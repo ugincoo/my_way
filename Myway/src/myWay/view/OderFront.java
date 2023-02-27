@@ -31,6 +31,7 @@ public class OderFront {
 		}
 	}
 	
+	
 	//메인 페이지
 	public void index() {
 	while(true) {
@@ -145,10 +146,41 @@ public class OderFront {
 	// 2-1 or 3-1 결제하기
 	public void purchase() {
 		OderController.getInstance().returnPOrderDto();
-		if(OderController.getInstance().purchase()) {
+		ArrayList<PorderDto> result = OderController.getInstance().purchase();
+		if(result != null) {
 			System.out.println("결제 완료되었습니다.");
+			printOrderPaper(result);
 		}else {
 			System.out.println("결제 실패하였습니다.");
 		}
 	}
+	
+	//영수증 출력
+	public void printOrderPaper(ArrayList<PorderDto> orderPaperList) {
+		System.out.println("--------------영수증--------------");
+		System.out.printf("\t\t  %d  \t\t\n", OderController.getInstance().orderNumber);
+		int totalPrice = 0;
+		
+		ArrayList<DmaterialDto> materialsList = new ArrayList<>();
+		for(int i = 0; i < orderPaperList.size(); i++) {
+			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getBreadNo()));
+			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getCheNo()));
+			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getDrinkNo()));
+			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getMeatNo()));
+			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getSourceNo()));
+			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getVegNo()));
+			
+			totalPrice += OderController.getInstance().findOneSetPrice(orderPaperList.get(i));
+		}
+		
+		System.out.printf("%s  \t %s \t %s\n" ,"번호", "재료 이름", "재료 가격");
+		for(int i = 0; i < materialsList.size(); i++) {
+			System.out.printf("%d \t %s \t%d\n", i+1, materialsList.get(i).getMaterName(), materialsList.get(i).getMaterPrice());
+		}
+		System.out.println("[총 금액]  " + totalPrice);
+		
+		OderController.getInstance().orderNumber++; //주문 번호 증가
+	}
+	
+	
 }

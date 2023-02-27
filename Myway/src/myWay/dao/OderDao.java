@@ -223,7 +223,7 @@ private static OderDao oderDao = new OderDao();
 			
 			rs = pstmt.executeQuery();
 			rs.next();
-			System.out.println(rs.getInt(10));
+			
 			return rs.getInt(10);
 		}catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -266,6 +266,51 @@ private static OderDao oderDao = new OderDao();
 			pstmt.executeUpdate();
 		}catch (SQLException e) {
 			System.out.println(e.getMessage());
+		}
+	}
+	
+	//결제완료되었으면 해당 재료의 재고를 줄이기
+	public void minusStock(int materNo) {
+		String sql = "update dMaterials set mater_stock = mater_stock-1 where mater_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, materNo);
+			
+			pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	//영수증에 필요한 정보 반환
+	public PorderDto returnOrderInfo(int pOrderNo){
+		String sql = "select * from porder where porder_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pOrderNo);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			PorderDto dto = new PorderDto(
+					rs.getInt(1), 
+					rs.getInt(2), 
+					rs.getInt(3), 
+					rs.getInt(4), 
+					rs.getInt(5), 
+					rs.getInt(6), 
+					rs.getInt(7));
+			
+			return dto;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 	

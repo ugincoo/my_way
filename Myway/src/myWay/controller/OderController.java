@@ -19,6 +19,8 @@ public class OderController {
 		return oc;
 	}
 	
+	public int orderNumber = 1; //주문 번호 [프로그램 재실행할때마다 1부터]
+	
 	ArrayList<DmaterialDto> cartList = new ArrayList<>();
 	
 	//카테고리 개수 반환
@@ -132,16 +134,28 @@ public class OderController {
 	
 	
 	//최종 결제!
-	public boolean purchase() {
-		boolean result = false;
+	public ArrayList<PorderDto> purchase() {
 		ArrayList<Integer> pOrderList = OderDao.getInstance().returnPOrderNo();
+		
 		Timestamp dateTime = new Timestamp(System.currentTimeMillis());
 		for(int i = 0; i < pOrderList.size(); i++) {
 			int price = OderDao.getInstance().returnPorderPrice(pOrderList.get(i));
-			result = OderDao.getInstance().purchase(pOrderList.get(i), price, dateTime);
+			OderDao.getInstance().purchase(pOrderList.get(i), price, dateTime);
 		}
 		
-		return result;
+		minusStock(cartList); //장바구니 비우기 전에 재고 줄이기 위해 전달
+		cartList.clear(); // 결제가 완료되었으면 해당 장바구니를 비워준다.
+		
+		ArrayList<PorderDto> dto = returnOrderPaper(pOrderList);
+		
+		return dto;
+	}
+	
+	//재고 줄이기
+	public void minusStock(ArrayList<DmaterialDto> orderList) {
+		for(int i = 0; i < orderList.size(); i++) {
+			OderDao.getInstance().minusStock(orderList.get(i).getMaterNo());
+		}
 	}
 	
 	//현재 시간 형식
@@ -150,6 +164,17 @@ public class OderController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dateString = format.format(dateTime);
 		return dateString;
+	}
+	
+	//영수증 출력
+	public ArrayList<PorderDto> returnOrderPaper(ArrayList<Integer> pOrderList) {
+		ArrayList<PorderDto> orderList = new ArrayList<>();
+		
+		for(int i = 0; i < pOrderList.size(); i++) {
+			orderList.add(OderDao.getInstance().returnOrderInfo(pOrderList.get(i)));
+		}
+		
+		return orderList;
 	}
 	
 }
