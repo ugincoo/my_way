@@ -1,13 +1,9 @@
 package myWay;
 
-
-import myWay.view.OderFront;
+import myWay.view.MemberFront;
 
 public class Start {
-	
-	public static int orderNumber = 0;
-	
 	public static void main(String[] args) {
-		OderFront.getInstance().login();
+		MemberFront.getInstance().index();
 	}
 }

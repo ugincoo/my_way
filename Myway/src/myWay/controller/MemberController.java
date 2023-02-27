@@ -1,37 +1,58 @@
 package myWay.controller;
 
-import java.util.ArrayList;
+
 
 import myWay.dao.MemberDao;
 import myWay.dto.MemberDto;
 
-
 public class MemberController {
-	//* 싱글톤
-	private static MemberController mc = new MemberController();
-	private MemberController() {};
+	// 얘는 MemberDao에 있는 기능들을 호출할 때 쓴다.
+	//싱글톤
+	private static MemberController memberController = new MemberController();
+	public MemberController() {
+	}
 	public static MemberController getInstance() {
-		return mc;
+		return memberController;
 	}
 	
-	//로그인한 Member 객체를 담기 위해
-	private MemberDto logSeasion = null;
+	//로그인 세션
+	private MemberDto logSession = null;
+	
+	MemberDto dto = new MemberDto();
+	
+	public MemberDto dto() {
+		return logSession;
+	}
+	
+	//회원가입
+	public boolean signup(String memberId, int memberPw) {
+		
+		boolean result 
+			= MemberDao.getInstance().signup(memberId, memberPw);
 
-	public MemberDto getLogSeasion() {
-		return logSeasion;
+		return result;
 	}
 	
 	
 	//로그인
-	public int logIn(String id, int pw) {
-		ArrayList<MemberDto> memberDB = MemberDao.getInstance().returnMemberDB();
+	public boolean login(String memberId,int memberPw ) {
 		
-		for(int i = 0; i < memberDB.size(); i++) {
-			if((memberDB.get(i).getMemberId().equals(id))&&(memberDB.get(i).getMemberPw() == pw)){
-				logSeasion = memberDB.get(i);
-				return memberDB.get(i).getMemberNo();
-			}
-		}
-		return -1;
+		 MemberDto result
+			= MemberDao.getInstance().login(memberId,memberPw);
+		
+		 if(result!=null) {
+			 logSession = result;
+			 System.out.println(logSession);
+			 return true;
+		 }
+		 return false;
+		
+	
+				
 	}
-}
+	
+
+	
+	
+	
+}//class e
