@@ -97,9 +97,5 @@ public class RecomendDao {
 			}catch( Exception e ) { System.out.println(" DB 오류 : "+ e ); }
 			return false;
 		}
-		
-		
-		
-		
-		
+	
 }

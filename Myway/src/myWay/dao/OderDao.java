@@ -244,7 +244,7 @@ private static OderDao oderDao = new OderDao();
 			pstmt.setTimestamp(3, dateTime);
 			
 			pstmt.executeUpdate();
-			
+
 			changepOrderStatus(pOrderNo);
 			
 			return true;
@@ -255,7 +255,7 @@ private static OderDao oderDao = new OderDao();
 	}
 	
 	//결제되었으면 해당 pOrder의 status를 1로 바꾸기
-	public void changepOrderStatus(int pOrderNo) {
+	public Timestamp changepOrderStatus(int pOrderNo) {
 		String sql = "update porder set o_status = ? where porder_no = ?";	
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -264,8 +264,13 @@ private static OderDao oderDao = new OderDao();
 			pstmt.setInt(2, pOrderNo);
 			
 			pstmt.executeUpdate();
+			
+			Timestamp timeStamp = returnDateTime(pOrderNo);
+			
+			return timeStamp;
 		}catch (SQLException e) {
 			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 	
@@ -313,5 +318,36 @@ private static OderDao oderDao = new OderDao();
 			return null;
 		}
 	}
+	
+	//해당 주문 날짜/시간 반환하는 함수 pOrderNo로
+	public Timestamp returnDateTime(int pOrderNo) {
+		//인수로 pOrderNo를 받은 이유는 차피 pOrderNo가 여러개일지라도
+		//결제는 같은 아이디고 status가 0이면 한꺼번에 Timestamp(같은 값)을 넣어주기 때문
+		
+		String sql = "select * from purchase where porder_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, pOrderNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+
+				return rs.getTimestamp(4);
+				
+			}else {
+				return null;
+			}
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
 	
 }

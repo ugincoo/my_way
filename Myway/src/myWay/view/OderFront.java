@@ -1,5 +1,6 @@
 package myWay.view;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -111,6 +112,7 @@ public class OderFront {
 	public void purchase() {
 		OderController.getInstance().returnPOrderDto();
 		ArrayList<PorderDto> result = OderController.getInstance().purchase();
+		
 		if(result != null) {
 			System.out.println("결제 완료되었습니다.");
 			printOrderPaper(result);
@@ -121,8 +123,8 @@ public class OderFront {
 	
 	//영수증 출력
 	public void printOrderPaper(ArrayList<PorderDto> orderPaperList) {
-		System.out.println("--------------영수증--------------");
-		System.out.printf("\t\t  %d  \t\t\n", OderController.getInstance().orderNumber);
+		System.out.println("-------------------영수증-------------------");
+		System.out.printf("\t  %d  \t\n", OderController.getInstance().orderNumber);
 		int totalPrice = 0;
 		
 		ArrayList<DmaterialDto> materialsList = new ArrayList<>();
@@ -137,12 +139,18 @@ public class OderFront {
 			totalPrice += OderController.getInstance().findOneSetPrice(orderPaperList.get(i));
 		}
 		
-		System.out.printf("%s  \t %s \t %s\n" ,"번호", "재료 이름", "재료 가격");
+		System.out.printf("%s  %10s \t %8s\n" ,"번호", "재료 이름", "재료 가격");
 		for(int i = 0; i < materialsList.size(); i++) {
-			System.out.printf("%d \t %s \t%d\n", i+1, materialsList.get(i).getMaterName(), materialsList.get(i).getMaterPrice());
+			if(i != 0 && i%6 == 0) {
+				System.out.println("------------------------");
+			}
+			System.out.printf("%d  %10s \t %15d\n", i+1, materialsList.get(i).getMaterName(), materialsList.get(i).getMaterPrice());
+			
 		}
 		System.out.println("[총 금액]  " + totalPrice);
 		
+		System.out.println("║▌│█║▌│ █║▌│█│║▌║║▌│█║▌│ █║▌│█│║▌║\r\n");
+		System.out.println(OderController.getInstance().formatDateTime);
 		OderController.getInstance().orderNumber++; //주문 번호 증가
 	}
 	
