@@ -29,6 +29,9 @@ create table recommend( -- 추천게시판 테이블
     recom_view int,
     recom_content text
 );
+update recommend set recom_view = 0;
+-- view 초기값  0 설정
+
 
 create table bcommend( -- 댓글 테이블
 	bcomm_no int auto_increment primary key,
