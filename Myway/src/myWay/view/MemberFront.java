@@ -14,9 +14,6 @@ public class MemberFront {
 		return memberfrot;
 	}
 	
-	public static void main(String[] args) {
-		memberfrot.index();
-	}
 	
 	//메인화면: 회원가입, 로그인 메뉴 분기 처리 (1, 2) 
 	public void index() {

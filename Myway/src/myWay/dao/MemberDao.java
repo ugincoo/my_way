@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import myWay.dto.MemberDto;
 
 
 public class MemberDao {
@@ -17,7 +20,7 @@ public class MemberDao {
 	private static MemberDao memberDao = new MemberDao();
 	public MemberDao() {
 		 try {
-			 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/day16","root","1234");
+			 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myway","root","1234");
 		 }catch (Exception e) { 
 			 System.out.println("Db연결 실패 ::: " + e); 
 		 }
@@ -29,11 +32,11 @@ public class MemberDao {
 	// 회원가입
 	public boolean signup (String memberId, int memberPw) {
 		try {
-			int result = checkUserId(memberId);
+				int result = checkUserId(memberId);
 			
-			if (result == 0) {
+			if (result==0) {
 				// 회원가입 완료
-				String sql="insert into member( memberId,memberPw )values(?,?);";	
+				String sql="insert into member( member_Id, member_Pw )values(?,?);";	
 					try {
 						ps=conn.prepareStatement(sql);
 						ps.setString(1, memberId);
@@ -46,7 +49,7 @@ public class MemberDao {
 						System.out.println("DB오류"+e);
 					}
 
-			} else if (result == 1) {
+			} else if (result==1) {
 				// 회원가입 불가 (중복되는 아이디)
 				System.out.println("중복되는 아이디입니다.");
 				return false;
@@ -61,33 +64,38 @@ public class MemberDao {
 	}
 	 
 	 
-	 
+
 	// 로그인 
 	public boolean login(String memberId,int memberPw ) {
-		try {
-				
-					int result = checklogin(memberId,memberPw);
-					
-					// 경우의수 1.DB의 저장된 ID,PW가 일치해야함.. /2. ID 나 PW 둘 중 하나라도 안맞는 경우 
-					if(result == 0) {//로그인성공
-						
-						
-						return true;
-						
-					}else if(result == 1) { //로그인실패
-						System.out.println("id와 pw가 일치하지 않습니다");
+
+				try {
+							boolean result = checklogin(memberId, memberPw);
+							// 경우의수 1.DB의 저장된 ID,PW가 일치해야함.. /2. ID 나 PW 둘 중 하나라도 안맞는 경우 
+							if(result == true) {//로그인성공
+								String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
+								
+								ps = conn.prepareStatement(sql);
+								ps.setString(1,memberId );
+								ps.setInt(2, memberPw);
+								ps.executeUpdate();
+								
+								return true;
+								
+							}else if(result == false) { //로그인실패
+								System.out.println("id와 pw가 일치하지 않습니다");					
+								return false;
+								
+							}else {
+								return false;
+							}
+							
+				}catch (Exception e) {
 						return false;
-					}else {
-						return false;
-					}
 					
-		}catch (Exception e) {
-				return false;
-		}	
+				}	
 		
 
-	}//login e
-	
+	}//login e	
 	
 	
 	
@@ -99,9 +107,7 @@ public class MemberDao {
 	// return 0 (중복없음 회원가입 가능), 1 (중복있음 회원가입 불가)
 	public int checkUserId (String memberId) {
 		int result = 0;
-		String sql =  "SELECT IFNULL(member_id, 0, 1) AS member_id"
-					+ "  FROM member"
-					+ " WHERE member_id = ?";
+		String sql =  "SELECT *  FROM member WHERE member_id = ?";
 		 
 		 try {
 			 ps=conn.prepareStatement(sql);
@@ -110,10 +116,13 @@ public class MemberDao {
 			 
 			 rs = ps.executeQuery();
 			 
-			 System.out.println("MemberDao checkUserId 결과값 ::: " + rs.getInt(1));
 			 
-			 result = rs.getInt(1);
-			 
+			 if(rs.next() == false) { 
+				 return 0; }
+			 else { 
+				 return 1; }
+		
+			
 		 } catch (Exception e) {
 			System.out.println("checkUserId error"+e);
 		 }
@@ -122,26 +131,47 @@ public class MemberDao {
 	 }
 	
 	
-	//로그인 유효성검사 
-	public int checklogin( String memberId,int memberPw) {
-		int result = 0;
-		String sql = "SELECT MEMBER_ID"
-					+"		 MEMBER_PW"
-					+"		 WHERE(MEMBER_ID = memberId && MEMBER_PW = memberPw)"
-					+"		FROM PRODUCT;";
+////로그인 유효성검사 
+	public boolean checklogin( String memberId, int memberPw) {
+		
+		ArrayList<MemberDto>memberDB = new ArrayList<>();
+		
+		String sql = "select * from member where member_id =? and member_pw =?";
 	
 		try {
 			ps=conn.prepareStatement(sql);
 			
+			ps.setString(1, memberId );
+			
+			ps.setInt(2,memberPw );
+			
 			rs = ps.executeQuery();
 			
+			while(rs.next()) {
+				MemberDto dto = 
+						new MemberDto(
+								rs.getInt(1),
+								rs.getString(2),
+								rs.getInt(3) 
+								
+								);
+				
+					memberDB.add(dto);
+					return true;
+				
+			}
+			return false;
 	
 			
 		}catch (Exception e) {
 			System.out.println("checklogin error"+e);
+			return false;
+			
 		}
-		
 	}
+
+
+	
 	
 	
 	
