@@ -26,11 +26,12 @@ public class BoardFront {
 			System.out.println(" •┈┈┈＊┈┈┈┈＊ 추천게시물 ＊┈┈┈┈＊┈┈┈• ");		
 			System.out.println(" •┈┈┈                      ┈┈┈• ");
 			System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈• ");
-			System.out.print("1.상세보기 2.주문하기 3.뒤로가기 : ");
+			System.out.print("1.상세보기 2.주문하기 3.장바구니목록확인 4.뒤로가기 : ");
 			int select = scanner.nextInt();
-			if( select == 1) {boardList(); break;}
-			else if( select == 2) {break;}
-			else if( select == 3) {break;}
+			if( select == 1) {boardList();}
+			else if( select == 2) {OderFront.getInstance().order();}
+			else if( select == 3) {OderFront.getInstance().viewCartList();;}
+			else if( select == 4) {break;}
 			else {System.out.println(" 다시 선택해주세요.");boardIndex();}
 		}
 	}// boardIndex e

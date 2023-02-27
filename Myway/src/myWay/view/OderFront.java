@@ -22,32 +22,6 @@ public class OderFront {
 	
 	
 	
-	//메인 페이지
-	public void index() {
-	while(true) {
-		try {
-				System.out.print("1.커뮤니티 2. 주문하기 3.장바구니목록확인 4.로그아웃 : ");
-				int choice = scanner.nextInt();
-				
-				if(choice == 1) {
-					
-				}else if(choice == 2) { //2. 주문하기
-					order();
-					
-				}else if(choice == 3) { //3. 장바구니
-					viewCartList();
-					
-				}else if(choice == 4) { //4. 로그아웃
-					return;
-				}
-
-		}catch(InputMismatchException e) {
-			System.out.println("숫자로 입력해주세요.");
-			scanner = new Scanner(System.in);
-		}		
-	}
-}
-	
 	// 종류마다 재료 리스트 출력
 	public void printMaterialList(int categoryNo) {
 		ArrayList<DmaterialDto> materialList = OderController.getInstance().printMaterialList(categoryNo);

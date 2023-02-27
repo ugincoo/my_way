@@ -5,7 +5,6 @@ public class MemberDto {
 	int 	memberNo;	// 회원일련번호
     String 	memberId;	// 회원 ID
     int 	memberPw;	// 회원 PW
-    String 	memberNm;	// 회원 이름
     
   
     
@@ -41,12 +40,7 @@ public class MemberDto {
 	public void setMemberPw(int memberPw) {
 		this.memberPw = memberPw;
 	}
-	public String getMemberNm() {
-		return memberNm;
-	}
-	public void setMemberNm(String memberNm) {
-		this.memberNm = memberNm;
-	}
+	
 	
 	
 }
