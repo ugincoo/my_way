@@ -22,9 +22,9 @@ public class BoardFront {
 	// 커뮤니티 선택
 	public void boardIndex() {//boardIndex s
 		System.out.println(" =================== 커뮤니티 =================== ");
-		while(true) {
+		while(true) { // 추천게시물 3개 해야함
 			System.out.println(" •┈┈┈＊┈┈┈┈＊ 추천게시물 ＊┈┈┈┈＊┈┈┈• ");		
-			System.out.println(" •┈┈┈                           ┈┈┈• ");
+			System.out.println(" •┈┈┈                      ┈┈┈• ");
 			System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈• ");
 			System.out.print("1.상세보기 2.주문하기 3.뒤로가기 : ");
 			int select = scanner.nextInt();
@@ -54,11 +54,12 @@ public class BoardFront {
 			else {System.out.println("없는 메뉴입니다.\n다시 선택해주세요 :)");boardList();}
 		} //for문 e		
 	}//void e
+	
 	//상세게시물
 	public void board(){
 		// ArrayList 저장
-		ArrayList<RecomendDto> result1 = BoardController.getInstance().boardlist();
-		ArrayList<BcommendDto> result2 = BoardController.getInstance().commentList();
+		ArrayList<RecomendDto> result1 = BoardController.getInstance().boardlist();	//게시물 ArrayList
+		ArrayList<BcommendDto> result2 = BoardController.getInstance().commentList(); //댓글 ArrayList
 		//
 		System.out.print("게시판 번호 : ");
 		int boardno = scanner.nextInt();
@@ -79,7 +80,7 @@ public class BoardFront {
 	//댓글 작성
 	public void comment() {
 		System.out.println("댓글 작성 : ");	String bcommContent = scanner.next();
-		int memberNo = scanner.nextInt(); int recomNo = scanner.nextInt();
+		int memberNo = scanner.nextInt(); 	int recomNo = scanner.nextInt();
 		//입력 받은 데이터 컨트롤에 전달
 		boolean result = BoardController.getInstance().comment(bcommContent);
 		if(result) {System.out.println("댓글이 등록 되었습니다."); board();}

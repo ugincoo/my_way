@@ -29,6 +29,7 @@ public class BoardDao {
 				}
 				catch (Exception e) {System.out.println("연동 실패 : " + e);}
 			}// 빈 생성자 e
+			
 		// 추천 게시물	
 		public ArrayList<RecomendDto> boardlist(){
 			//여러개 게시판 저장을 위한 리스트 선언
@@ -50,6 +51,7 @@ public class BoardDao {
 			}catch (Exception e) {System.out.println("연동실패 사유 : " + e); }	
 			return null;
 		}
+		
 		// 댓글 출력
 		public ArrayList<BcommendDto> commentList(){
 			//여러개 게시판 저장을 위한 리스트 선언
@@ -78,13 +80,13 @@ public class BoardDao {
 			//2.연결된 DB에 작성된 SQL 대입
 			try {ps = con.prepareStatement(sql);
 			//3. SQL 조작[매개변수 없으면 생략]
-			ps.setString(1, bcommContent);
+				ps.setString(1, bcommContent);
 			//4. SQL 실행
-			ps.executeUpdate();
-			return true;
+				ps.executeUpdate();
+				return true;
 			//5. SQL 결과
 			}catch (Exception e) {System.out.println("연동 실패 : " + e);}
-			return false;		
+				return false;		
 		}
 		
 	
