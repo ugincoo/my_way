@@ -2,10 +2,11 @@ package myWay.controller;
 
 import java.util.ArrayList;
 
-import myWay.dao.BoardDao;
-import myWay.dao.RecomendDao;
-import myWay.dto.BcommendDto;
-import myWay.dto.RecomendDto;
+import myWay.dto.*;
+import myWay.dao.*;
+import myWay.controller.*;
+import myWay.view.*;
+
 
 public class BoardController {
 	//싱글톤 생성

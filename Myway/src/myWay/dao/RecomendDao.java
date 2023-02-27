@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import myWay.dto.RecomendDto;
+import myWay.dto.*;
+import myWay.dao.*;
+import myWay.controller.*;
+import myWay.view.*;
 
 public class RecomendDao {
 		//싱글톤 생성

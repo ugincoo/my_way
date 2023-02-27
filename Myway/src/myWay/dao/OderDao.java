@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import myWay.controller.MemberController;
-import myWay.dto.DmaterialDto;
-import myWay.dto.PorderDto;
+import myWay.dto.*;
+import myWay.dao.*;
+import myWay.controller.*;
+import myWay.view.*;
 
 public class OderDao {
 private static OderDao oderDao = new OderDao();
@@ -31,7 +32,6 @@ private static OderDao oderDao = new OderDao();
 			conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/myway", "root", "1234");
 //			System.out.println("연결 성공");
-			System.out.println(MemberController.getInstance().getLogSeasion());
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -196,7 +196,7 @@ private static OderDao oderDao = new OderDao();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, MemberController.getInstance().getLogSeasion().getMemberNo());
+			pstmt.setInt(1, MemberController.getInstance().dto().getMemberNo());
 			pstmt.setInt(2, 0);
 			
 			rs = pstmt.executeQuery();

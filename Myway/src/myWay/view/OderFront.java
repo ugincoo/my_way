@@ -19,17 +19,7 @@ public class OderFront {
 	public static OderFront getInstance() {
 		return orderFront;
 	}
-	public void login() {
-		System.out.print("아이디 : ");
-		String id = scanner.next();
-		
-		System.out.print("비밀번호 : ");
-		int pw = scanner.nextInt();
-		
-		if(MemberController.getInstance().logIn(id, pw) != -1) {
-			index();
-		}
-	}
+	
 	
 	
 	//메인 페이지

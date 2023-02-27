@@ -20,7 +20,7 @@ public class StockController {
 	// 재료 등록
 	public boolean materialSignup( int categoryNo , String materName , int materprice , int materStock ) {
 		// 객체화
-		DmaterialDto dto = new DmaterialDto( categoryNo, materName, materStock, materprice);
+		DmaterialDto dto = new DmaterialDto( categoryNo, 0,materName, materStock, materprice);
 		// DB 저장 후 반환
 		return StockDao.getInstance().materialSignup( dto );
 	}

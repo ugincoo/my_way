@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import myWay.dto.DmaterialDto;
+import myWay.dto.*;
+import myWay.dao.*;
+import myWay.controller.*;
+import myWay.view.*;
 
 public class StockDao {
 	
@@ -38,7 +41,7 @@ public class StockDao {
 			rs = ps.executeQuery();
 			while( rs.next() ) {
 				if( rs.getInt(1) == categoryNo ) { // 입력받은 카테고리와 일치하면
-					DmaterialDto dto = new DmaterialDto( rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+					DmaterialDto dto = new DmaterialDto( rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
 					materialsList.add(dto);
 				}
 			}

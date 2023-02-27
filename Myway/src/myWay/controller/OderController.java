@@ -7,9 +7,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-import myWay.dao.OderDao;
-import myWay.dto.DmaterialDto;
-import myWay.dto.PorderDto;
+import myWay.dto.*;
+import myWay.dao.*;
+import myWay.controller.*;
+import myWay.view.*;
 
 public class OderController {
 	private static OderController oc = new OderController();
@@ -121,7 +122,7 @@ public class OderController {
 	//pOrder 반환하는 함수
 	public PorderDto returnPorderDto(ArrayList<DmaterialDto> dto) {
 		PorderDto pOrderDto = new PorderDto(
-				MemberController.getInstance().getLogSeasion().getMemberNo(),
+				MemberController.getInstance().dto().getMemberNo(),
 				dto.get(0).getMaterNo(),
 				dto.get(1).getMaterNo(),
 				dto.get(2).getMaterNo(),

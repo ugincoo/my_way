@@ -6,9 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import myWay.controller.BoardController;
-import myWay.dto.BcommendDto;
-import myWay.dto.RecomendDto;
+import myWay.dto.*;
+import myWay.dao.*;
+import myWay.controller.*;
+import myWay.view.*;
 
 public class BoardDao {
 	//싱글톤 생성

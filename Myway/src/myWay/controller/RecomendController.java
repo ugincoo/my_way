@@ -2,8 +2,10 @@ package myWay.controller;
 
 import java.util.ArrayList;
 
-import myWay.dao.RecomendDao;
-import myWay.dto.RecomendDto;
+import myWay.dto.*;
+import myWay.dao.*;
+import myWay.controller.*;
+import myWay.view.*;
 
 
 public class RecomendController {
