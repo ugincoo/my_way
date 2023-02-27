@@ -82,7 +82,7 @@ public class BoardFront {
 		System.out.println("댓글 작성 : ");	String bcommContent = scanner.next();
 		int memberNo = scanner.nextInt(); 	int recomNo = scanner.nextInt();
 		//입력 받은 데이터 컨트롤에 전달
-		boolean result = BoardController.getInstance().comment(bcommContent);
+		boolean result = BoardController.getInstance().comment(bcommContent, memberNo, recomNo);
 		if(result) {System.out.println("댓글이 등록 되었습니다."); board();}
 		else {System.out.println("댓글 등록 실패하였습니다.");}
 				

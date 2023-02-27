@@ -32,7 +32,8 @@ public class BoardController {
 		return result;
 	}
 	
-	public boolean comment(String bcommContent) {
-		return BoardDao.getInstance().comment(bcommContent);	
+	public boolean comment(String bcommContent, int memberNo, int recomNo ) {
+		return BoardDao.getInstance().comment(bcommContent, 0, 0);
+				
 	}
 }

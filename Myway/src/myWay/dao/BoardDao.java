@@ -74,13 +74,16 @@ public class BoardDao {
 			return null;
 		}
 		//댓글 작성
-		public boolean comment(String bcommContent) {
+		public boolean comment(String bcommContent, int memberNo, int recomNo) {
 			//1. SQL 작성
-			String sql = "insert into bcommend (bcomm_content) values (?)";
+			String sql = "insert into bcommend (bcomm_content,member_no,recom_no) values (?,?,?)";
 			//2.연결된 DB에 작성된 SQL 대입
 			try {ps = con.prepareStatement(sql);
 			//3. SQL 조작[매개변수 없으면 생략]
 				ps.setString(1, bcommContent);
+				ps.setInt(2,memberNo);
+				ps.setInt(3,recomNo);
+				
 			//4. SQL 실행
 				ps.executeUpdate();
 				return true;
