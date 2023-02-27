@@ -23,6 +23,9 @@ public class BoardController {
 		//2. 결과 반환
 			return result;
 	}
+	//조회수 증가 
+	public void view( int recomNo) { BoardDao.getInstance().view(recomNo);	}
+	
 	
 	//댓글 출력
 	public ArrayList<BcommendDto> commentList(){
@@ -31,7 +34,7 @@ public class BoardController {
 		//2. 결과 반환
 		return result;
 	}
-	
+	//댓글작성
 	public boolean comment(String bcommContent, int memberNo, int recomNo ) {
 		return BoardDao.getInstance().comment(bcommContent, 0, 0);
 				

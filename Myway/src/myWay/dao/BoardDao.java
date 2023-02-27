@@ -52,6 +52,23 @@ public class BoardDao {
 			return null;
 		}
 		
+		//조회수 증가 
+		public void view( int recomNo) {
+			
+			//1. SQL 작성
+			String sql ="update recommend set recom_view = recom_view+1 where recom_no =?";
+			//2.연결된 DB에 작성된 SQL 대입
+			try {ps = con.prepareStatement(sql);
+			//3. SQL 조작[매개변수 없으면 생략]
+			ps.setInt(1, recomNo);
+			//4. SQL 실행
+			ps.executeUpdate();
+			//5. SQL 결과
+			}catch (Exception e) {System.out.println("연동실패 사유 : " + e); }		
+			
+		}
+		
+		
 		// 댓글 출력
 		public ArrayList<BcommendDto> commentList(){
 			//여러개 게시판 저장을 위한 리스트 선언

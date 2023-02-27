@@ -41,6 +41,7 @@ public class BoardFront {
 		System.out.printf("%3s \t %10s \t %10s \t %10s \n","번호","제목","조회수","내용");
 		// ArrayList 저장
 		ArrayList<RecomendDto> result = BoardController.getInstance().boardlist();;
+		
 		//반복문 돌리기
 		for(int i = 0 ; i<result.size();i++) {// for s
 			System.out.printf("%3s \t %10s \t %10s \t %10s \n",
@@ -67,6 +68,7 @@ public class BoardFront {
 			System.out.printf(" =================== %d 번게시물 =================== \n",(i+1) );
 			System.out.println("제목 : " + result1.get(i).getRecomTitle());
 			System.out.println("내용 : " + result1.get(i).getRecomContent());
+			System.out.println("조회수 : " + result1.get(i).getRecomView());
 			System.out.println("댓글번호 \t 내용 \t 회원번호");
 			System.out.println(result2.get(i).getBcommNo()+"\t"+result2.get(i).getBcommContent()+"\t"+result2.get(i).getMemberNo());
 			//다음 출력 선택
