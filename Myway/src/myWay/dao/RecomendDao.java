@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import myWay.dto.RecomendDto;
 
 public class RecomendDao {
@@ -101,12 +100,3 @@ public class RecomendDao {
 		
 		
 }
-=======
-import myWay.controller.RecomendController;
-import myWay.dto.BcommendDto;
-import myWay.dto.RecomendDto;
-
-public class RecomendDao {
-	
-}
->>>>>>> branch '오유진' of https://github.com/Kimy041/myway
