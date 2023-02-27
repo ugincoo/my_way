@@ -72,12 +72,12 @@ public class MemberDao {
 						MemberDto result = checklogin(memberId, memberPw);
 							// 경우의수 1.DB의 저장된 ID,PW가 일치해야함.. /2. ID 나 PW 둘 중 하나라도 안맞는 경우 
 							if(result !=null) {//로그인성공
-								String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
+								//String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
 								
-								ps = conn.prepareStatement(sql);
-								ps.setString(1,memberId );
-								ps.setInt(2, memberPw);
-								ps.executeUpdate();
+								//ps = conn.prepareStatement(sql);
+								//ps.setString(1,memberId );
+								//ps.setInt(2, memberPw);
+								//ps.executeUpdate();
 								
 								return result;
 								
@@ -143,15 +143,9 @@ public class MemberDao {
 			ps.setInt(2,memberPw );
 			
 			rs = ps.executeQuery();
-			
+
 			while(rs.next()) {
-				MemberDto dto = 
-						new MemberDto(
-								rs.getInt(1),
-								rs.getString(2),
-								rs.getInt(3) 
-								
-								);
+				MemberDto dto = new MemberDto(rs.getInt(1),rs.getString(2),rs.getInt(3));
 				
 					
 					return dto;

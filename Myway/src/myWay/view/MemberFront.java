@@ -80,4 +80,17 @@ public class MemberFront {
 		
 	}
 	
+	//회원비밀번호 변경;;;; 인수: 회원번호		->  비번 새 입력
+	
+	public void update() {
+		System.out.println("회원번호를 입력하세요");
+		int mno = scanner.nextInt();
+		
+		System.out.println("새로운 비밀번호를 입력하세요");
+		String Member_pw = scanner.next();
+	
+		
+	}
+	
+	
 }//class e

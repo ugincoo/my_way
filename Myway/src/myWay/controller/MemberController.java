@@ -16,7 +16,7 @@ public class MemberController {
 	}
 	
 	//로그인 세션
-	private MemberDto logSession = null;
+	private MemberDto logSession = null;	//초기화
 	
 	MemberDto dto = new MemberDto();
 	
@@ -37,8 +37,7 @@ public class MemberController {
 	//로그인
 	public boolean login(String memberId,int memberPw ) {
 		
-		 MemberDto result
-			= MemberDao.getInstance().login(memberId,memberPw);
+		 MemberDto result = MemberDao.getInstance().login(memberId,memberPw);
 		
 		 if(result!=null) {
 			 logSession = result;
