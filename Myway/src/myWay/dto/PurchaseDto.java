@@ -5,15 +5,22 @@ public class PurchaseDto {
 	int purchaseNo;
     int porderNo;
     int purchasePrice;
+    String purchaseDateTime;
     
     // 생성자
     public PurchaseDto() { }
-	public PurchaseDto(int purchaseNo, int porderNo, int purchasePrice) {
+
+    
+
+	public PurchaseDto(int purchaseNo, int porderNo, int purchasePrice, String purchaseDateTime) {
 		super();
 		this.purchaseNo = purchaseNo;
 		this.porderNo = porderNo;
 		this.purchasePrice = purchasePrice;
+		this.purchaseDateTime = purchaseDateTime;
 	}
+
+
 
 	// 메소드
 	@Override
@@ -21,6 +28,15 @@ public class PurchaseDto {
 		return "PurchaseDto [purchaseNo=" + purchaseNo + ", porderNo=" + porderNo + ", purchasePrice=" + purchasePrice
 				+ "]";
 	}
+	
+	public String getPurchaseDateTime() {
+		return purchaseDateTime;
+	}
+
+	public void setPurchaseDateTime(String purchaseDateTime) {
+		this.purchaseDateTime = purchaseDateTime;
+	}
+
 	public int getPurchaseNo() {
 		return purchaseNo;
 	}
@@ -40,6 +56,4 @@ public class PurchaseDto {
 		this.purchasePrice = purchasePrice;
 	}
     
-	
-
 }
