@@ -27,12 +27,12 @@ public class BoardController {
 	//댓글 출력
 	public ArrayList<BcommendDto> commentList(){
 		//1. 모든 게시물을 호출 하는 dao 메소드 호출하여 결과 얻기
-		ArrayList<BcommendDto> result = RecomendDao .getInstance().commentList();
+		ArrayList<BcommendDto> result = BoardDao .getInstance().commentList();
 		//2. r과 반환
 		return result;
 	}
 	
 	public boolean comment(String bcommContent) {
-		return RecomendDao.getInstance().comment(bcommContent);	
+		return BoardDao.getInstance().comment(bcommContent);	
 	}
 }

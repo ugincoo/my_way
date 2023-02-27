@@ -58,7 +58,7 @@ public class BoardFront {
 	public void board(){
 		// ArrayList 저장
 		ArrayList<RecomendDto> result1 = BoardController.getInstance().boardlist();
-		ArrayList<BcommendDto> result2 = RecomendDao.getInstance().commentList();
+		ArrayList<BcommendDto> result2 = BoardController.getInstance().commentList();
 		//
 		System.out.print("게시판 번호 : ");
 		int boardno = scanner.nextInt();
