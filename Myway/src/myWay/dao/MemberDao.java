@@ -66,12 +66,12 @@ public class MemberDao {
 	 
 
 	// 로그인 
-	public boolean login(String memberId,int memberPw ) {
+	public MemberDto login(String memberId,int memberPw ) {
 
 				try {
-							boolean result = checklogin(memberId, memberPw);
+						MemberDto result = checklogin(memberId, memberPw);
 							// 경우의수 1.DB의 저장된 ID,PW가 일치해야함.. /2. ID 나 PW 둘 중 하나라도 안맞는 경우 
-							if(result == true) {//로그인성공
+							if(result !=null) {//로그인성공
 								String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
 								
 								ps = conn.prepareStatement(sql);
@@ -79,18 +79,16 @@ public class MemberDao {
 								ps.setInt(2, memberPw);
 								ps.executeUpdate();
 								
-								return true;
+								return result;
 								
-							}else if(result == false) { //로그인실패
+							}else { //로그인실패
 								System.out.println("id와 pw가 일치하지 않습니다");					
-								return false;
+								return result;
 								
-							}else {
-								return false;
 							}
 							
 				}catch (Exception e) {
-						return false;
+						return null;
 					
 				}	
 		
@@ -132,9 +130,8 @@ public class MemberDao {
 	
 	
 ////로그인 유효성검사 
-	public boolean checklogin( String memberId, int memberPw) {
+	public MemberDto checklogin( String memberId, int memberPw) {
 		
-		ArrayList<MemberDto>memberDB = new ArrayList<>();
 		
 		String sql = "select * from member where member_id =? and member_pw =?";
 	
@@ -156,16 +153,16 @@ public class MemberDao {
 								
 								);
 				
-					memberDB.add(dto);
-					return true;
+					
+					return dto;
 				
 			}
-			return false;
+			return null;
 	
 			
 		}catch (Exception e) {
 			System.out.println("checklogin error"+e);
-			return false;
+			return null;
 			
 		}
 	}

@@ -1,5 +1,7 @@
 package myWay.controller;
 
+
+
 import myWay.dao.MemberDao;
 import myWay.dto.MemberDto;
 
@@ -11,6 +13,15 @@ public class MemberController {
 	}
 	public static MemberController getInstance() {
 		return memberController;
+	}
+	
+	//로그인 세션
+	private MemberDto logSession = null;
+	
+	MemberDto dto = new MemberDto();
+	
+	public MemberDto dto() {
+		return logSession;
 	}
 	
 	//회원가입
@@ -26,12 +37,22 @@ public class MemberController {
 	//로그인
 	public boolean login(String memberId,int memberPw ) {
 		
-		boolean result
+		 MemberDto result
 			= MemberDao.getInstance().login(memberId,memberPw);
 		
-		return result;
+		 if(result!=null) {
+			 logSession = result;
+			 System.out.println(logSession);
+			 return true;
+		 }
+		 return false;
+		
+	
 				
 	}
+	
+
+	
 	
 	
 }//class e
