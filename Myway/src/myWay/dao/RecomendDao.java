@@ -24,7 +24,7 @@ public class RecomendDao {
 		public RecomendDao() {//빈 생성자 s
 			try {
 				con = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/myway","root","kimy172418");
+				"jdbc:mysql://localhost:3306/myway","root","1234");
 			}catch (Exception e) {
 				System.out.println("연동실패 사유 : " + e); 
 			}		

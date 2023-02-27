@@ -23,7 +23,7 @@ public class StockDao {
 	// 생성자 연동
 	private StockDao() {
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myway" , "root" , "kimy172418" );
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myway" , "root" , "1234" );
 		}catch( Exception e ) { System.out.println( e.getMessage() ); }
 	}
 	
