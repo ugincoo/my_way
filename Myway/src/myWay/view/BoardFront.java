@@ -21,11 +21,9 @@ public class BoardFront {
 	
 	// 커뮤니티 선택
 	public void boardIndex() {//boardIndex s
-		System.out.println(" =================== 커뮤니티 =================== ");
+		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 커뮤니티 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
 		while(true) { // 추천게시물 3개 해야함
-			System.out.println(" •┈┈┈＊┈┈┈┈＊ 추천게시물 ＊┈┈┈┈＊┈┈┈• ");		
-			System.out.println(" •┈┈┈                      ┈┈┈• ");
-			System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈• ");
+			boardPrintRecent();
 			System.out.print("1.상세보기 2.주문하기 3.장바구니목록확인 4.뒤로가기 : ");
 			int select = scanner.nextInt();
 			if( select == 1) {boardList();}
@@ -38,7 +36,7 @@ public class BoardFront {
 	
 	//게시물출력
 	public void boardList(){//void s
-		System.out.println(" =================== 상세 게시물 =================== ");
+		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 상세 게시물 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
 		System.out.printf("%3s \t %10s \t %10s \t %10s \n","번호","제목","조회수","내용");
 		// ArrayList 저장
 		ArrayList<RecomendDto> result = BoardController.getInstance().boardlist();;
@@ -49,7 +47,7 @@ public class BoardFront {
 				result.get(i).getRecomNo(),result.get(i).getRecomTitle(),
 				result.get(i).getRecomView(),result.get(i).getRecomContent() );
 			//다음 출력 선택
-			System.out.print("1.상세보기 2.뒤로가기 : ");
+			System.out.print("1.게시판 번호 2.뒤로가기 : ");
 			int select = scanner.nextInt();
 			if( select == 1) {	board();}
 			else if ( select == 2) {boardIndex();}
@@ -59,33 +57,53 @@ public class BoardFront {
 	
 	//상세게시물
 	public void board(){
+		while(true) {
 		// ArrayList 저장
 		ArrayList<RecomendDto> result1 = BoardController.getInstance().boardlist();	//게시물 ArrayList
-		ArrayList<BcommendDto> result2 = BoardController.getInstance().commentList(); //댓글 ArrayList
+		ArrayList<BcommendDto> result2 = BoardController.getInstance().commentList(0); //댓글 ArrayList
 		//
 		System.out.print("게시판 번호 : ");
 		int boardno = scanner.nextInt();
-		for(int i = 0 ; i<result1.size() || i<result2.size() ;i++) {
-			System.out.printf(" =================== %d 번게시물 =================== \n",(i+1) );
+		for(int i = 0 ; i<result1.size() ;i++) {
+			System.out.printf(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ %d 번게시물 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  \n",(i+1) );
 			System.out.println("제목 : " + result1.get(i).getRecomTitle());
 			System.out.println("내용 : " + result1.get(i).getRecomContent());
 			System.out.println("조회수 : " + result1.get(i).getRecomView());
 			System.out.println("댓글번호 \t 내용 \t 회원번호");
-			System.out.println(result2.get(i).getBcommNo()+"\t"+result2.get(i).getBcommContent()+"\t"+result2.get(i).getMemberNo());
+			for(int j = 0 ; j <result2.size();j++) {
+				System.out.println(result2.get(i).getBcommNo()+"\t"+result2.get(i).getBcommContent()+"\t"+result2.get(i).getMemberNo());	
+			}
+			
+			
 			//다음 출력 선택
 			System.out.print("1.댓글달기 2.뒤로가기 : ");
 			int select = scanner.nextInt();
-			if( select == 1) {	comment();}
+			if( select == 1) {	comment(boardno);}
 			else if ( select == 2) {boardList();}
+			}
 		}//for문 e
 	}//board e
 	
+	
+	//게시물 3개 출력
+	public void boardPrintRecent() {
+		
+		ArrayList<RecomendDto> blist = BoardController.getInstance().boardPrintRecent();
+		System.out.printf("  %5s\t%10s\t%5s\t%10s \n","번호","제목","조회수","내용");
+		for(RecomendDto dto : blist) {
+			System.out.printf(" %5s\t%10s\t%5s\t%10s \n",
+					dto.getRecomNo(),dto.getRecomTitle(),dto.getRecomView(),dto.getRecomContent());
+		}
+		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈• ");
+	}
+	
+	
+	
 	//댓글 작성
-	public void comment() {
+	public void comment(int boardno) {
 		System.out.println("댓글 작성 : ");	String bcommContent = scanner.next();
-		int memberNo = scanner.nextInt(); 	int recomNo = scanner.nextInt();
 		//입력 받은 데이터 컨트롤에 전달
-		boolean result = BoardController.getInstance().comment(bcommContent, memberNo, recomNo);
+		boolean result = BoardController.getInstance().comment(bcommContent, boardno);
 		if(result) {System.out.println("댓글이 등록 되었습니다."); board();}
 		else {System.out.println("댓글 등록 실패하였습니다.");}
 				
