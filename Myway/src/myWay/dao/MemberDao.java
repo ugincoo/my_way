@@ -33,17 +33,19 @@ public class MemberDao {
 	}
 	
 	// 회원가입
-	public boolean signup (String memberId, int memberPw) {
+	public boolean signup (String memberId, int memberPw, String memberphone, String membername) {
 		try {
 				int result = checkUserId(memberId);
 			
 			if (result==0) {
 				// 회원가입 완료
-				String sql="insert into member( member_Id, member_Pw )values(?,?);";	
+				String sql="insert into member( member_Id, member_Pw, member_phone,member_name )values(?,?,?,?);";	
 					try {
 						ps=conn.prepareStatement(sql);
 						ps.setString(1, memberId);
 						ps.setInt( 2 , memberPw );
+						ps.setString(3, memberphone);
+						ps.setString(4, membername);
 						ps.executeUpdate(); 
 						
 						return true;
@@ -75,12 +77,12 @@ public class MemberDao {
 						MemberDto result = checklogin(memberId, memberPw);
 							// 경우의수 1.DB의 저장된 ID,PW가 일치해야함.. /2. ID 나 PW 둘 중 하나라도 안맞는 경우 
 							if(result !=null) {//로그인성공
-								//String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
+								String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
 								
-								//ps = conn.prepareStatement(sql);
-								//ps.setString(1,memberId );
-								//ps.setInt(2, memberPw);
-								//ps.executeUpdate();
+								ps = conn.prepareStatement(sql);
+								ps.setString(1,memberId );
+								ps.setInt(2, memberPw);
+								ps.executeUpdate();
 								
 								return result;
 								
@@ -98,12 +100,7 @@ public class MemberDao {
 
 	}//login e	
 	
-	
-	
-	
-	
-	
-	
+
 	// 회원정보 유효성 검사 (ID 중복체크) 기능 <-- 얘는 회원가입때 쓸 예정 집에 db없어서 일단 노확인
 	// return 0 (중복없음 회원가입 가능), 1 (중복있음 회원가입 불가)
 	public int checkUserId (String memberId) {
@@ -163,8 +160,33 @@ public class MemberDao {
 			
 		}
 	}
-
-
+	
+	//비밀번호 수정(아이디,휴대폰번호)
+//	public boolean update() {
+		
+//	}
+	
+	
+	
+	//회원탈퇴
+	public boolean delete(String memberId) {
+		
+		String sql="delete from member where member_id = ?;";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, memberId);
+			ps.executeUpdate();
+			
+			return true;
+			
+		}catch (Exception e) {
+			System.out.println("DB오류:"+e);
+		}
+		
+		return false;
+		
+	}
 	
 	
 	

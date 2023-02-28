@@ -19,12 +19,16 @@ public class MemberFront {
 	//메인화면: 회원가입, 로그인 메뉴 분기 처리 (1, 2) 
 	public void index() {
 		while(true) {
-			System.out.println("1.회원가입 2.로그인 ");
+			System.out.println("1.회원가입 2.로그인 3.아이디수정 4.회원탈퇴");
 			int ch=scanner.nextInt();
 			if(ch==1) {
 				signup();
 			}else if(ch==2) {
 				login();
+			}else if(ch==3) {
+				
+			}else if(ch==4) {
+				delete();
 			}
 		}
 	}//index e
@@ -41,13 +45,20 @@ public class MemberFront {
 		System.out.println("비밀번호재입력해주세요");
 		int confirmed = scanner.nextInt();
 		
+		System.out.println("핸드폰번호를입력하세요");
+		String memberphone = scanner.next();
+		
+		System.out.println("이름을입력해주세요");
+		String membername = scanner.next();
+				
+		
 		if(memberPw != confirmed) {
 			System.out.println("비밀번호가일치하지 않습니다");
 		}
 		
 		
 		boolean result = 
-				MemberController.getInstance().signup(memberId,memberPw);
+				MemberController.getInstance().signup(memberId,memberPw,memberphone,membername);
 		
 		if(result==true) {
 			System.out.println("회원가입이 완료되었습니다");
@@ -81,17 +92,29 @@ public class MemberFront {
 		
 	}
 	
-	//회원비밀번호 변경;;;; 인수: 회원번호		->  비번 새 입력
-	
+	//비밀번호수정
 	public void update() {
-		System.out.println("회원번호를 입력하세요");
-		int mno = scanner.nextInt();
-		
-		System.out.println("새로운 비밀번호를 입력하세요");
-		String Member_pw = scanner.next();
-	
+		System.out.println("--------비밀번호수정-------");
 		
 	}
+	
+	
+	//회원삭제
+	public void delete() {
+		System.out.println("---------회원삭제-----------");
+		System.out.println("회원아이디를 입력하세요");
+		String memberId = scanner.next();
+		
+		boolean result = MemberController.getInstance().delete(memberId);
+		
+		if(result) {
+			System.out.println("회원탈퇴 성공");
+		}else {
+			System.out.println("회원탈퇴 실패");
+		}
+	}
+	
+	
 	
 	
 }//class e

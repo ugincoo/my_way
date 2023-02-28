@@ -27,10 +27,10 @@ public class MemberController {
 	}
 	
 	//회원가입
-	public boolean signup(String memberId, int memberPw) {
+	public boolean signup(String memberId, int memberPw, String memberphone, String membername) {
 		
 		boolean result 
-			= MemberDao.getInstance().signup(memberId, memberPw);
+			= MemberDao.getInstance().signup(memberId, memberPw,memberphone,membername);
 
 		return result;
 	}
@@ -53,6 +53,10 @@ public class MemberController {
 				
 	}
 	
+	//회원탈퇴
+	public boolean delete(String memberId) {
+		return MemberDao.getInstance().delete(memberId);
+	}
 
 	
 	

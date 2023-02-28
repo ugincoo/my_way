@@ -20,7 +20,9 @@ create table dMaterials( -- 재료 상세 테이블
 create table member( -- 회원가입 테이블
 	member_no int auto_increment primary key,
     member_id varchar(15) not null,
-    member_pw int
+    member_pw int,
+    member_phone varchar(30),
+    member_name varchar(10)
 );
 
 create table recommend( -- 추천게시판 테이블
@@ -69,7 +71,7 @@ create table purchase( -- 결제 테이블
 
 
 -- DB 추가
-insert into member value (0, 'admin' , 1); -- 관리자
+insert into member (member_no, member_id,member_pw) values (0, 'admin' , 1); -- 관리자
 insert into mMaterials value ( 1 );	-- 카테고리
 insert into mMaterials value ( 2 );
 insert into mMaterials value ( 3 );
@@ -123,3 +125,6 @@ select * from purchase;
 select * from porder;
 
 select * from porder where member_no = 1 && o_status = 0;
+
+
+
