@@ -4,7 +4,7 @@ public class RecomendDto {
 	// 필드
 	int recomNo;
     String recomTitle;
-    int recomView = 0;
+    int recomView;
     String recomContent;
     
 	// 생성자

@@ -50,10 +50,12 @@ public class BoardDao extends DB연동{
 				ps = con.prepareStatement(sql);
 				rs=ps.executeQuery();
 				while(rs.next()) {
-					RecomendDto dto = new RecomendDto(rs.getInt(1)
-							, rs.getString(2), rs.getInt(3), rs.getString(4));
+					RecomendDto dto = new RecomendDto(
+							rs.getInt(1),
+							rs.getString(2), 
+							rs.getInt(3), 
+							rs.getString(4));
 					blist.add(dto);
-					System.out.println(blist);
 				}
 			}catch (Exception e) {System.out.println(e);}
 			return blist;

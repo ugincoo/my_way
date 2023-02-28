@@ -26,7 +26,7 @@ public class MemberDao extends DB연동 {
 	// 회원가입
 	public boolean signup (String memberId, int memberPw, String memberphone, String membername) {
 		try {
-				int result = checkUserId(memberId);
+			int result = checkUserId(memberId);
 			
 			if (result==0) {
 				// 회원가입 완료

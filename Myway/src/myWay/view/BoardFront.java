@@ -64,6 +64,9 @@ public class BoardFront {
 		// ArrayList 저장
 		ArrayList<RecomendDto> result1 = BoardController.getInstance().boardlist();	//게시물 ArrayList
 		ArrayList<BcommendDto> result2 = BoardController.getInstance().commentList(boardno); //댓글 ArrayList
+		
+		BoardController.getInstance().view(boardno); //조회수 증가
+		
 		while(true) {
 		for(int i = 0 ; i<result1.size() ;i++) {
 			System.out.printf(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ %d 번게시물 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  \n",(i+1) );

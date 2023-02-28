@@ -25,7 +25,8 @@ public class BoardController {
 			return result;
 	}
 	//조회수 증가 
-	public void view( int recomNo) { BoardDao.getInstance().view(recomNo);	}
+	public void view( int recomNo) { BoardDao.getInstance().view(recomNo);}
+	
 	//게시물 출력
 	public ArrayList<RecomendDto> boardPrintRecent() {
 		return BoardDao.getInstance().boardPrintRecent();

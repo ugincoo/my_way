@@ -38,7 +38,7 @@ public class RecomendFront {
 				else if( ch == 4 ) { return; }
 			}catch(InputMismatchException e) {
 				System.out.println("!잘못된 입력입니다!");
-				Scanner scanner = new Scanner(System.in);
+				scanner = new Scanner(System.in);
 			}catch( Exception e ) {
 				System.out.println("!!프로그램내 오류 발생 : 관리자 문의!!");
 			}
@@ -78,7 +78,7 @@ public class RecomendFront {
 			System.out.println(" 【 수정 완료 】 ");
 		}catch( InputMismatchException e ) {
 			System.out.println("!잘못된 입력입니다!");
-			Scanner scanner = new Scanner(System.in);
+			scanner = new Scanner(System.in);
 		}catch( Exception e ) { 
 			System.out.println("!!프로그램내 오류 발생 : 관리자 문의!!");
 		}
