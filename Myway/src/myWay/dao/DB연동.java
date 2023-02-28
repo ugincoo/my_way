@@ -14,7 +14,7 @@ public class DB연동 {
 		
 		public DB연동() {
 			try {	// DB연동
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/boardDB", "root", "1234");
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/myway", "root", "1234");
 			}catch(Exception e) { System.out.println( e ); } 
 		}
 }

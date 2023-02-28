@@ -11,26 +11,13 @@ import myWay.dao.*;
 import myWay.controller.*;
 import myWay.view.*;
 
-public class BoardDao {
+public class BoardDao extends DB연동{
 	//싱글톤 생성
 		private static BoardDao bdao = new BoardDao();
 		//어디서든 사용 가능한 변환 메소드  [getInstance]
 		public static BoardDao getInstance() {return bdao;}
-		
-		// 1.필드
-		private Connection con;			// 1. 연결된 DB구현객체를 가지고 있는 인터페이스
-		private PreparedStatement ps;	// 2. 연결된 SQL 조작 [+매개변수 가능]
-		private ResultSet rs;			// 3. 실행된 SQL 결과 인터페이스
-		
-		// DB 연동
-			public BoardDao() {//빈 생성자 s
-				try{
-					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/myway","root","1234");
-					System.out.println("연동성공!");
-				}
-				catch (Exception e) {System.out.println("연동 실패 : " + e);}
-			}// 빈 생성자 e
-			
+		private BoardDao () {}
+	
 		// 추천 게시물	
 		public ArrayList<RecomendDto> boardlist(){
 			//여러개 게시판 저장을 위한 리스트 선언
@@ -66,6 +53,7 @@ public class BoardDao {
 					RecomendDto dto = new RecomendDto(rs.getInt(1)
 							, rs.getString(2), rs.getInt(3), rs.getString(4));
 					blist.add(dto);
+					System.out.println(blist);
 				}
 			}catch (Exception e) {System.out.println(e);}
 			return blist;
@@ -96,12 +84,13 @@ public class BoardDao {
 			//여러개 게시판 저장을 위한 리스트 선언
 			ArrayList<BcommendDto> commentList = new ArrayList<>();
 			//1. SQL 작성
-			String sql = "select * from recommend r, member m,bcommend b where b.member_no = m.member_no and b.recom_no = r.recom_no ";
+			String sql = "select * from bcommend where recom_no = ?";
 			//2.연결된 DB에 작성된 SQL 대입
 			try {ps = con.prepareStatement(sql);
-			//3. SQL 조작[매개변수 없으면 생략]		
+			//3. SQL 조작[매개변수 없으면 생략]	
+			ps.setInt(1, bcommNo);
 			//4. SQL 실행
-				rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			//5. SQL 결과
 				while(rs.next()) {
 					//레코드1개 -> 객체화 1개 ->[rs.get~~ (필드순서번호)]

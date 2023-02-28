@@ -34,7 +34,7 @@ public class BoardController {
 	//댓글 출력
 	public ArrayList<BcommendDto> commentList(int bcommNo){
 		//1. 모든 게시물을 호출 하는 dao 메소드 호출하여 결과 얻기
-		ArrayList<BcommendDto> result = BoardDao .getInstance().commentList(bcommNo);
+		ArrayList<BcommendDto> result = BoardDao.getInstance().commentList(bcommNo);
 		//2. 결과 반환
 		return result;
 	}

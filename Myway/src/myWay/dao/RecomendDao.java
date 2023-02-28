@@ -17,7 +17,9 @@ public class RecomendDao extends DB연동 {
 		//어디서든 사용 가능한 변환 메소드  [getInstance]
 		public static RecomendDao getInstance() {return rd;}
 		
-
+		public RecomendDao() {
+			// TODO Auto-generated constructor stub
+		}
 		
 		// 추천게시판 출력
 		public ArrayList<RecomendDto> recomendpage(){

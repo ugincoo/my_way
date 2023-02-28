@@ -57,21 +57,24 @@ public class BoardFront {
 	
 	//상세게시물
 	public void board(){
-		while(true) {
-		// ArrayList 저장
-		ArrayList<RecomendDto> result1 = BoardController.getInstance().boardlist();	//게시물 ArrayList
-		ArrayList<BcommendDto> result2 = BoardController.getInstance().commentList(0); //댓글 ArrayList
 		//
 		System.out.print("게시판 번호 : ");
 		int boardno = scanner.nextInt();
+		
+		// ArrayList 저장
+		ArrayList<RecomendDto> result1 = BoardController.getInstance().boardlist();	//게시물 ArrayList
+		ArrayList<BcommendDto> result2 = BoardController.getInstance().commentList(boardno); //댓글 ArrayList
+		while(true) {
 		for(int i = 0 ; i<result1.size() ;i++) {
 			System.out.printf(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ %d 번게시물 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  \n",(i+1) );
 			System.out.println("제목 : " + result1.get(i).getRecomTitle());
 			System.out.println("내용 : " + result1.get(i).getRecomContent());
 			System.out.println("조회수 : " + result1.get(i).getRecomView());
+			
 			System.out.println("댓글번호 \t 내용 \t 회원번호");
+			
 			for(int j = 0 ; j <result2.size();j++) {
-				System.out.println(result2.get(i).getBcommNo()+"\t"+result2.get(i).getBcommContent()+"\t"+result2.get(i).getMemberNo());	
+				System.out.println(result2.get(j).getBcommNo()+"\t"+result2.get(j).getBcommContent()+"\t"+result2.get(j).getMemberNo());	
 			}
 			
 			

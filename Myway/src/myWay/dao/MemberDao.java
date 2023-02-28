@@ -12,21 +12,12 @@ import myWay.controller.*;
 import myWay.view.*;
 
 
-public class MemberDao {
-	// Database 연결
-	private Connection conn;
-	private PreparedStatement ps;
-	private ResultSet rs;
-	
+public class MemberDao extends DB연동 {
 	
 	//싱글톤
 	private static MemberDao memberDao = new MemberDao();
 	public MemberDao() {
-		 try {
-			 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myway","root","kimy172418");
-		 }catch (Exception e) { 
-			 System.out.println("Db연결 실패 ::: " + e); 
-		 }
+		// TODO Auto-generated constructor stub
 	}
 	public static MemberDao getInstance() {
 		 return memberDao;
@@ -41,7 +32,7 @@ public class MemberDao {
 				// 회원가입 완료
 				String sql="insert into member( member_Id, member_Pw, member_phone,member_name )values(?,?,?,?);";	
 					try {
-						ps=conn.prepareStatement(sql);
+						ps=con.prepareStatement(sql);
 						ps.setString(1, memberId);
 						ps.setInt( 2 , memberPw );
 						ps.setString(3, memberphone);
@@ -79,7 +70,7 @@ public class MemberDao {
 							if(result !=null) {//로그인성공
 								String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
 								
-								ps = conn.prepareStatement(sql);
+								ps = con.prepareStatement(sql);
 								ps.setString(1,memberId );
 								ps.setInt(2, memberPw);
 								ps.executeUpdate();
@@ -108,7 +99,7 @@ public class MemberDao {
 		String sql =  "SELECT *  FROM member WHERE member_id = ?";
 		 
 		 try {
-			 ps=conn.prepareStatement(sql);
+			 ps=con.prepareStatement(sql);
 			 
 			 ps.setString(1, memberId);
 			 
@@ -136,7 +127,7 @@ public class MemberDao {
 		String sql = "select * from member where member_id =? and member_pw =?";
 	
 		try {
-			ps=conn.prepareStatement(sql);
+			ps=con.prepareStatement(sql);
 			
 			ps.setString(1, memberId );
 			
@@ -174,7 +165,7 @@ public class MemberDao {
 		String sql="delete from member where member_id = ?;";
 		
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ps.setString(1, memberId);
 			ps.executeUpdate();
 			

@@ -49,7 +49,6 @@ public class RecomendFront {
 	public void recomendSignup() {
 		scanner.nextLine();
 		System.out.print("〖 제목 〗: ");	String recomTitle = scanner.nextLine();
-		scanner.nextLine();
 		System.out.print("〖 내용 〗: ");	String recomContent = scanner.nextLine();
 		
 		// 데이터 전달

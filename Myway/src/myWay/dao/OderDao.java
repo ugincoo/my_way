@@ -13,30 +13,16 @@ import myWay.dao.*;
 import myWay.controller.*;
 import myWay.view.*;
 
-public class OderDao {
+public class OderDao extends DB연동 {
 private static OderDao oderDao = new OderDao();
 	
 	
 	public static OderDao getInstance() {
 		return oderDao;
 	}
-	
-	private static Connection conn;
-	
-	private PreparedStatement pstmt;
-	private ResultSet rs;
-	
+
 	// 생성자
-	private OderDao() {
-		try {
-			conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/myway", "root", "1234");
-//			System.out.println("연결 성공");
-		}catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
+	private OderDao() {	}
 	// 카테고리 크기 반환
 	public int returnCategoryCount() {
 		String sql = "select * from mMaterials";
@@ -44,8 +30,8 @@ private static OderDao oderDao = new OderDao();
 		int count = 0;
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
 		
 			while(rs.next()) {
 				count++;
@@ -63,11 +49,11 @@ private static OderDao oderDao = new OderDao();
 		String sql = "select row_number() over(order by mater_no asc) as num, mater_no, category_no, mater_name, mater_price from dMaterials where category_no = ?";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, category);
+			ps.setInt(1, category);
 			
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 			
 			while(rs.next()) {
 				if(rs.getRow() == no) {
@@ -88,11 +74,11 @@ private static OderDao oderDao = new OderDao();
 		String sql = "select * from dMaterials where category_no = ?";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, categoryNo);
+			ps.setInt(1, categoryNo);
 			
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 			
 			while(rs.next()) {
 				DmaterialDto dto = new DmaterialDto(
@@ -116,11 +102,11 @@ private static OderDao oderDao = new OderDao();
 		String sql = "select * from dMaterials where mater_no = ?";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, materNo);
+			ps.setInt(1, materNo);
 			
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 			
 			rs.next();
 			
@@ -143,11 +129,11 @@ private static OderDao oderDao = new OderDao();
 		String sql = "select * from dMaterials where mater_no = ?";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, materNo);
+			ps.setInt(1, materNo);
 			
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 			
 			rs.next();
 			
@@ -168,18 +154,18 @@ private static OderDao oderDao = new OderDao();
 		
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 
-			pstmt.setInt(1, pOrderDto.getMemberNo());
-			pstmt.setInt(2, pOrderDto.getBreadNo());
-			pstmt.setInt(3, pOrderDto.getCheNo());
-			pstmt.setInt(4, pOrderDto.getMeatNo());
-			pstmt.setInt(5, pOrderDto.getVegNo());
-			pstmt.setInt(6, pOrderDto.getSourceNo());
-			pstmt.setInt(7, pOrderDto.getDrinkNo());
-			pstmt.setInt(8, totalPrice);
+			ps.setInt(1, pOrderDto.getMemberNo());
+			ps.setInt(2, pOrderDto.getBreadNo());
+			ps.setInt(3, pOrderDto.getCheNo());
+			ps.setInt(4, pOrderDto.getMeatNo());
+			ps.setInt(5, pOrderDto.getVegNo());
+			ps.setInt(6, pOrderDto.getSourceNo());
+			ps.setInt(7, pOrderDto.getDrinkNo());
+			ps.setInt(8, totalPrice);
 			
-			pstmt.executeUpdate();
+			ps.executeUpdate();
 
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -194,12 +180,12 @@ private static OderDao oderDao = new OderDao();
 		ArrayList<Integer> pOrderNoList = new ArrayList<>();
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, MemberController.getInstance().dto().getMemberNo());
-			pstmt.setInt(2, 0);
+			ps.setInt(1, MemberController.getInstance().dto().getMemberNo());
+			ps.setInt(2, 0);
 			
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 			
 			while(rs.next()) {
 				pOrderNoList.add(rs.getInt(1));
@@ -217,11 +203,11 @@ private static OderDao oderDao = new OderDao();
 		String sql = "select * from porder where porder_no = ?";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, pOrderNo);
+			ps.setInt(1, pOrderNo);
 			
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 			rs.next();
 			
 			return rs.getInt(10);
@@ -237,13 +223,13 @@ private static OderDao oderDao = new OderDao();
 		String sql = "insert into purchase (porder_no, purchase_price, purcahse_date)"
 				+ "values (?, ?, ?)";
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, pOrderNo);
-			pstmt.setInt(2, price);
-			pstmt.setTimestamp(3, dateTime);
+			ps.setInt(1, pOrderNo);
+			ps.setInt(2, price);
+			ps.setTimestamp(3, dateTime);
 			
-			pstmt.executeUpdate();
+			ps.executeUpdate();
 
 			changepOrderStatus(pOrderNo);
 			
@@ -258,12 +244,12 @@ private static OderDao oderDao = new OderDao();
 	public Timestamp changepOrderStatus(int pOrderNo) {
 		String sql = "update porder set o_status = ? where porder_no = ?";	
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, 1);
-			pstmt.setInt(2, pOrderNo);
+			ps.setInt(1, 1);
+			ps.setInt(2, pOrderNo);
 			
-			pstmt.executeUpdate();
+			ps.executeUpdate();
 			
 			Timestamp timeStamp = returnDateTime(pOrderNo);
 			
@@ -279,11 +265,11 @@ private static OderDao oderDao = new OderDao();
 		String sql = "update dMaterials set mater_stock = mater_stock-1 where mater_no = ?";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, materNo);
+			ps.setInt(1, materNo);
 			
-			pstmt.executeUpdate();
+			ps.executeUpdate();
 			
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -295,11 +281,11 @@ private static OderDao oderDao = new OderDao();
 		String sql = "select * from porder where porder_no = ?";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, pOrderNo);
+			ps.setInt(1, pOrderNo);
 			
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 			
 			rs.next();
 			
@@ -327,11 +313,11 @@ private static OderDao oderDao = new OderDao();
 		String sql = "select * from purchase where porder_no = ?";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 
-			pstmt.setInt(1, pOrderNo);
+			ps.setInt(1, pOrderNo);
 			
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 			
 			if(rs.next()) {
 
