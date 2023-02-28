@@ -26,6 +26,21 @@ public class PorderDto {
 		this.meatNo = meatNo;
 	}
 	
+	
+	
+	public PorderDto(int porderNo, int memberNo, int breadNo, int drinkNo, int vegNo, int cheNo, int sourceNo,
+			int meatNo) {
+		super();
+		this.porderNo = porderNo;
+		this.memberNo = memberNo;
+		this.breadNo = breadNo;
+		this.drinkNo = drinkNo;
+		this.vegNo = vegNo;
+		this.cheNo = cheNo;
+		this.sourceNo = sourceNo;
+		this.meatNo = meatNo;
+	}
+	
 	// 메소드
 	@Override
 	public String toString() {

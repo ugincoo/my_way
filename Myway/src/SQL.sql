@@ -84,30 +84,33 @@ insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) valu
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 1,  '오곡브레드',5, 2200 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 1,  '올리브브레드',5, 2300 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 1,  '위트브레드',5, 2500 );
+insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 1,  'No', null,  0 );
 
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 2,  '모짜렐라',30, 500 );	-- 치즈
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 2,  '슈레드',25, 700 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 2,  '아메리칸치즈',18, 800 );
+insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 2,  'No', null,  0 );
 
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 3,  '새우', 5, 800 );	-- 고기
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 3,  '미트볼', 10, 700 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 3,  '베이컨', 15, 600 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 3,  '로스트치킨', 7 , 1500 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 3,  '한우', 4,  3000 );
+insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 3,  'No', null,  0 );
 
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 4,  '양파', 10, 400 );	-- 채소
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 4,  '양배추', 10, 500 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 4,  '양상추', 10, 800 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 4,  '토마토', 10 , 500 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 4,  '오이', 15,  400 );
-
+insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 4,  'No', null,  0 );
 
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 5,  '머스타드', 8, 0 );	-- 소스
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 5,  '렌치', 9, 0 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 5,  '스위트칠리', 10, 0 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 5,  '스위트어니언', 10 , 0 );
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 5,  '후추', 15,  0 );
-
+insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 5,  'No', null,  0 );
 
 
 insert into dMaterials (category_no, mater_name, mater_stock, mater_price ) values ( 6,  '오렌지쥬스', 100, 1500 );	-- 음료
@@ -121,6 +124,7 @@ select row_number() over(order by mater_no asc) as num, mater_no, category_no, m
 select * from member;
 select * from mMaterials;
 select * from dMaterials;
+select * from dMaterials where Category_no = 1;
 select * from purchase; 
 select * from porder;
 

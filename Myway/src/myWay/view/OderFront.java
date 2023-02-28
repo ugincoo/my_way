@@ -1,5 +1,6 @@
 package myWay.view;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,7 +24,7 @@ public class OderFront {
 	
 	
 	// 종류마다 재료 리스트 출력
-	public void printMaterialList(int categoryNo) {
+	public int printMaterialList(int categoryNo) {
 		ArrayList<DmaterialDto> materialList = OderController.getInstance().printMaterialList(categoryNo);
 		// 카테고리별 이름 찾기 
 		int cNo = materialList.get(1).getCategoryNo();
@@ -36,50 +37,63 @@ public class OderFront {
 					materialList.get(i).getMaterName(),
 					materialList.get(i).getMaterPrice()); 
 		}
+		return materialList.size();
 		
 	}
 	
 	// 2. 주문하기 [카트에 넣는]
 	public void order() {
-		System.out.println("--------------------주문--------------------");
-		
-		ArrayList<Integer> inCartNoArr = new ArrayList<>();
-		
-		for(int i = 0; i < OderController.getInstance().returnCategoryCount(); i++) {
-//			int []souNo = null;
-			printMaterialList(i+1);
+		try {
+			System.out.println("--------------------주문--------------------");
 			
-			System.out.print("번호 선택 : ");
-			int No = scanner.nextInt();
-			int materNo = OderController.getInstance().findMaterNo(No, i+1);
-			inCartNoArr.add(materNo);
+			ArrayList<Integer> inCartNoArr = new ArrayList<>();
+			
+			for(int i = 0; i < OderController.getInstance().returnCategoryCount(); i++) {
+//				int []souNo = null;
+				
+				int maxSize = printMaterialList(i+1);
+				
+				System.out.print("번호 선택 : ");
+				
+				int No = scanner.nextInt();
+				
+				if(No == 0 || No >= maxSize) {
+					int materNo = OderController.getInstance().findMaterNo(maxSize, i+1);
+					inCartNoArr.add(materNo);
+				}else {
+					int materNo = OderController.getInstance().findMaterNo(No, i+1);
+					inCartNoArr.add(materNo);
+				}
 
-//			if(i+1 == 5) { //소스인 경우
-//				System.out.print("[숫자만]소스를 종류 몇개 넣으실건가요 ? ");
-//				int souFor = scanner.nextInt();
-//				souNo = new int[souFor];
-//				
-//				for(int j = 0; j < souFor; j++) {
-//					System.out.print(j+1 + "번째 소스 번호 선택 : ");
-//					souNo[j] = scanner.nextInt();
+//				if(i+1 == 5) { //소스인 경우
+//					System.out.print("[숫자만]소스를 종류 몇개 넣으실건가요 ? ");
+//					int souFor = scanner.nextInt();
+//					souNo = new int[souFor];
+//					
+//					for(int j = 0; j < souFor; j++) {
+//						System.out.print(j+1 + "번째 소스 번호 선택 : ");
+//						souNo[j] = scanner.nextInt();
+//					}
+//					for(int j = 0; j < souNo.length; j++) {
+//						int materNo = OderController.getInstance().findMaterNo(souNo[j], i+1);
+//						inCartNoArr.add(materNo);
+//					}
+//				}else {
 //				}
-//				for(int j = 0; j < souNo.length; j++) {
-//					int materNo = OderController.getInstance().findMaterNo(souNo[j], i+1);
-//					inCartNoArr.add(materNo);
-//				}
-//			}else {
-//			}
+				
+			}
+			System.out.print("장바구니에 담겠습니까 ? [1. Yes 2. No] : ");
+			int answer = scanner.nextInt();
 			
+			if(answer == 1) {
+				OderController.getInstance().inCartMaterials(inCartNoArr);
+			}else if(answer == 2) {
+				return;
+			}
+			viewCartList();
+		}catch(Exception e) {
+			System.out.println("잘못입력하셨습니다.");
 		}
-		System.out.print("장바구니에 담겠습니까 ? [1. Yes 2. No] : ");
-		int answer = scanner.nextInt();
-		
-		if(answer == 1) {
-			OderController.getInstance().inCartMaterials(inCartNoArr);
-		}else if(answer == 2) {
-			return;
-		}
-		viewCartList();
 	}
 	
 	//3. 장바구니 목록 확인
@@ -111,6 +125,7 @@ public class OderFront {
 	public void purchase() {
 		OderController.getInstance().returnPOrderDto();
 		ArrayList<PorderDto> result = OderController.getInstance().purchase();
+		
 		if(result != null) {
 			System.out.println("결제 완료되었습니다.");
 			printOrderPaper(result);
@@ -121,30 +136,44 @@ public class OderFront {
 	
 	//영수증 출력
 	public void printOrderPaper(ArrayList<PorderDto> orderPaperList) {
-		System.out.println("--------------영수증--------------");
-		System.out.printf("\t\t  %d  \t\t\n", OderController.getInstance().orderNumber);
-		int totalPrice = 0;
-		
-		ArrayList<DmaterialDto> materialsList = new ArrayList<>();
-		for(int i = 0; i < orderPaperList.size(); i++) {
-			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getBreadNo()));
-			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getCheNo()));
-			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getDrinkNo()));
-			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getMeatNo()));
-			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getSourceNo()));
-			materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getVegNo()));
+		if(orderPaperList.size() > 0) {
 			
-			totalPrice += OderController.getInstance().findOneSetPrice(orderPaperList.get(i));
-		}
+			System.out.println("-------------------영수증-------------------");
+			System.out.printf("\t 주문번호[  %d  ] \t\n", OderController.getInstance().orderNumber);
+			int totalPrice = 0;
 		
-		System.out.printf("%s  \t %s \t %s\n" ,"번호", "재료 이름", "재료 가격");
-		for(int i = 0; i < materialsList.size(); i++) {
-			System.out.printf("%d \t %s \t%d\n", i+1, materialsList.get(i).getMaterName(), materialsList.get(i).getMaterPrice());
-		}
-		System.out.println("[총 금액]  " + totalPrice);
+			ArrayList<DmaterialDto> materialsList = new ArrayList<>();
+			for(int i = 0; i < orderPaperList.size(); i++) {
+				materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getBreadNo()));
+				materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getCheNo()));
+				materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getDrinkNo()));
+				materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getMeatNo()));
+				materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getSourceNo()));
+				materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getVegNo()));
+				
+				totalPrice += OderController.getInstance().findOneSetPrice(orderPaperList.get(i));
+			}
 		
-		OderController.getInstance().orderNumber++; //주문 번호 증가
+			System.out.printf("%s  %10s \t %8s\n" ,"번호", "재료 이름", "재료 가격");
+			for(int i = 0; i < materialsList.size(); i++) {
+				if(i != 0 && i%6 == 0) {
+					System.out.println("------------------------");
+				}
+				System.out.printf("%d  %10s \t %15d\n", i+1, materialsList.get(i).getMaterName(), materialsList.get(i).getMaterPrice());
+				
+			}
+			System.out.println();
+			
+			System.out.print("[총 금액]  " + totalPrice+"\t");
+			System.out.println(OderController.getInstance().formatDateTime);
+			
+			System.out.println();
+			System.out.println("║▌│█║▌│ █║▌│█│║▌║║▌│█║▌│ █║▌│█│║▌║\r\n"
+					+ "║▌│█║▌│ █║▌│█│║▌║║▌│█║▌│ █║▌│█│║▌║");
+			
+			OderController.getInstance().orderNumber++; //주문 번호 증가
+		}else {
+			System.out.println("결제할 목록이 없습니다.");
+		}
 	}
-	
-	
 }

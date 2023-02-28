@@ -21,6 +21,8 @@ public class OderController {
 	}
 	
 	public int orderNumber = 1; //주문 번호 [프로그램 재실행할때마다 1부터]
+	public String formatDateTime = null; // DB가 이리저리 얽혀있어서 주문 시간을 빼줌..
+	//차피 결제할때마다 함수를 호출하므로 해당 formatDateTime은 같은 값이 나올 수없음.
 	
 	ArrayList<DmaterialDto> cartList = new ArrayList<>();
 	
@@ -137,18 +139,18 @@ public class OderController {
 	//최종 결제!
 	public ArrayList<PorderDto> purchase() {
 		ArrayList<Integer> pOrderList = OderDao.getInstance().returnPOrderNo();
-		
+	
 		Timestamp dateTime = new Timestamp(System.currentTimeMillis());
 		for(int i = 0; i < pOrderList.size(); i++) {
 			int price = OderDao.getInstance().returnPorderPrice(pOrderList.get(i));
 			OderDao.getInstance().purchase(pOrderList.get(i), price, dateTime);
+			returnNowDate(pOrderList.get(i));
 		}
 		
 		minusStock(cartList); //장바구니 비우기 전에 재고 줄이기 위해 전달
 		cartList.clear(); // 결제가 완료되었으면 해당 장바구니를 비워준다.
 		
 		ArrayList<PorderDto> dto = returnOrderPaper(pOrderList);
-		
 		return dto;
 	}
 	
@@ -160,11 +162,10 @@ public class OderController {
 	}
 	
 	//현재 시간 형식
-	public String returnNowDate() {
-		LocalDateTime dateTime = LocalDateTime.now();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String dateString = format.format(dateTime);
-		return dateString;
+	public String returnNowDate(int pOrderNo) {
+		Timestamp dateTime = OderDao.getInstance().returnDateTime(pOrderNo);
+		formatDateTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateTime);
+		return formatDateTime;
 	}
 	
 	//영수증 출력
@@ -177,5 +178,6 @@ public class OderController {
 		
 		return orderList;
 	}
+	
 	
 }

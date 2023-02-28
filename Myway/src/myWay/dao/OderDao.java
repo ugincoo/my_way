@@ -52,7 +52,7 @@ private static OderDao oderDao = new OderDao();
 			}
 			
 			return count;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return 0;
 		}
@@ -75,7 +75,7 @@ private static OderDao oderDao = new OderDao();
 				}
 			}
 			return -1; // 못찾을 경우
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			return -2; //DB에러
 		}
@@ -105,7 +105,7 @@ private static OderDao oderDao = new OderDao();
 				materialList.add(dto);
 			}
 			return materialList;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return null;
 		}
@@ -132,7 +132,7 @@ private static OderDao oderDao = new OderDao();
 					rs.getInt(5));
 			
 			return dto;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return null;
 		}
@@ -153,7 +153,7 @@ private static OderDao oderDao = new OderDao();
 			
 			return rs.getInt(5); //가격
 			
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return 0;
 		}
@@ -181,7 +181,7 @@ private static OderDao oderDao = new OderDao();
 			
 			pstmt.executeUpdate();
 
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			
 		}
@@ -207,7 +207,7 @@ private static OderDao oderDao = new OderDao();
 			
 			return pOrderNoList;
 			
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return null;
 		}
@@ -225,7 +225,7 @@ private static OderDao oderDao = new OderDao();
 			rs.next();
 			
 			return rs.getInt(10);
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return 0;
 		}
@@ -244,18 +244,18 @@ private static OderDao oderDao = new OderDao();
 			pstmt.setTimestamp(3, dateTime);
 			
 			pstmt.executeUpdate();
-			
+
 			changepOrderStatus(pOrderNo);
 			
 			return true;
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			return false;
 		}
 	}
 	
 	//결제되었으면 해당 pOrder의 status를 1로 바꾸기
-	public void changepOrderStatus(int pOrderNo) {
+	public Timestamp changepOrderStatus(int pOrderNo) {
 		String sql = "update porder set o_status = ? where porder_no = ?";	
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -264,8 +264,13 @@ private static OderDao oderDao = new OderDao();
 			pstmt.setInt(2, pOrderNo);
 			
 			pstmt.executeUpdate();
-		}catch (SQLException e) {
+			
+			Timestamp timeStamp = returnDateTime(pOrderNo);
+			
+			return timeStamp;
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 	
@@ -280,7 +285,7 @@ private static OderDao oderDao = new OderDao();
 			
 			pstmt.executeUpdate();
 			
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -308,10 +313,41 @@ private static OderDao oderDao = new OderDao();
 					rs.getInt(7));
 			
 			return dto;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
 	}
+	
+	//해당 주문 날짜/시간 반환하는 함수 pOrderNo로
+	public Timestamp returnDateTime(int pOrderNo) {
+		//인수로 pOrderNo를 받은 이유는 차피 pOrderNo가 여러개일지라도
+		//결제는 같은 아이디고 status가 0이면 한꺼번에 Timestamp(같은 값)을 넣어주기 때문
+		
+		String sql = "select * from purchase where porder_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, pOrderNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+
+				return rs.getTimestamp(4);
+				
+			}else {
+				return null;
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
 	
 }
