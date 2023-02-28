@@ -17,6 +17,7 @@ public class RecomendDto {
 		this.recomContent = recomContent;
 	}
 
+	
 	// 메소드
 	@Override
 	public String toString() {
