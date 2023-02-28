@@ -23,7 +23,7 @@ public class MemberDao {
 	private static MemberDao memberDao = new MemberDao();
 	public MemberDao() {
 		 try {
-			 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myway","root","1234");
+			 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myway","root","kimy172418");
 		 }catch (Exception e) { 
 			 System.out.println("Db연결 실패 ::: " + e); 
 		 }
