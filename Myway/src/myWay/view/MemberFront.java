@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import myWay.controller.MemberController;
 import myWay.dao.MemberDao;
+import myWay.dto.MemberDto;
 
 public class MemberFront {
 	Scanner scanner = new Scanner(System.in);
@@ -19,16 +20,18 @@ public class MemberFront {
 	//메인화면: 회원가입, 로그인 메뉴 분기 처리 (1, 2) 
 	public void index() {
 		while(true) {
-			System.out.println("1.회원가입 2.로그인 3.아이디수정 4.회원탈퇴");
+			System.out.println("1.회원가입 2.로그인 3.비밀번호수정 4.회원탈퇴 5.아이디찾기");
 			int ch=scanner.nextInt();
 			if(ch==1) {
 				signup();
 			}else if(ch==2) {
 				login();
 			}else if(ch==3) {
-				
+				update();
 			}else if(ch==4) {
 				delete();
+			}else if(ch==5) {
+				findId();
 			}
 		}
 	}//index e
@@ -91,30 +94,100 @@ public class MemberFront {
 		}
 		
 	}
-	
-	//비밀번호수정
+	//비밀번호수정 개어려움 ㅠ 로그인되야 가능하게 설게함 로그인 후 뒤로가기하삼 ㅇㅇ 
 	public void update() {
-		System.out.println("--------비밀번호수정-------");
+		if(MemberController.getInstance().checkLogin()) {
+			System.out.println("--------비밀번호수정-------");
+			/*
+			 * System.out.print("회원아이디를 입력하세요 ::: "); String memberid=scanner.next();
+			 */
+			System.out.print("회원비밀번호를 입력하세요 ::: ");
+			int memberpassword = scanner.nextInt();
+			
+			boolean result = MemberController.getInstance().checkPassword(memberpassword);
+			
+			if (result) {
+				int memberNo = MemberController.getInstance().getMemberNo();
+				
+				// 비밀번호가 세션의 비밀번호와 일치
+				System.out.print("새로운 비밀번호를 입력하세요 ::: ");
+				 
+				int newpassword = scanner.nextInt();
+				
+				int updateResult = MemberController.getInstance().update(memberNo, newpassword);
+				
+				if (updateResult == 0) {
+					System.out.println("회원의 비밀번호가 수정되었습니다.");
+				} else {
+					System.out.println("비밀번호 변경 중 오류가 발생하였습니다. 재시도 부탁드립니다.");
+				}
+			} else {
+				System.out.println("세션의 값이 잘못되었습니다.");
+			}
+		}
+
+		
+	}
+	
+	//아이디찾기
+	public void findId() {
+		System.out.println("---------아이디찾기-----------");
+		System.out.println("회원이름을 입력하세요");
+		String membername = scanner.next();
+		System.out.println("전화번호를 입력하세요");
+		String memberphone = scanner.next();
+		
+		boolean	result = MemberController.getInstance().checknamephone(membername,memberphone);
+		
+				if(result) {
+						int memberNo = MemberController.getInstance().getMemberNo();
+						
+						boolean findID = MemberController.getInstance().findId(memberNo);
+		
+						if(findID) {	//아이디반환성공
+							String userId= MemberDto.getInstance().getMemberId();
+							System.out.println(userId);
+							System.out.println("아이디가 반환되었습니다");
+						}else {
+							System.out.println("아이디반환에 실패하였습니다 다시 확인해주세요");
+						}
+						
+					
+				}else {
+					System.out.println("휴대폰과 전화번호가 일치하지 않습니다 다시 입력하세요");
+				}
 		
 	}
 	
 	
-	//회원삭제
+	//회원탈퇴
 	public void delete() {
-		System.out.println("---------회원삭제-----------");
+		System.out.println("---------회원탈퇴-----------");
 		System.out.println("회원아이디를 입력하세요");
 		String memberId = scanner.next();
+		System.out.println("비밀번호를 입력하세요");
+		int memberpw = scanner.nextInt();
 		
-		boolean result = MemberController.getInstance().delete(memberId);
+		
+		boolean result = MemberController.getInstance().delete(memberId,memberpw);
+
 		
 		if(result) {
 			System.out.println("회원탈퇴 성공");
-		}else {
+			
+		}else  {
 			System.out.println("회원탈퇴 실패");
 		}
 	}
 	
 	
+	
+	//전체출력
+	
+	
+
+	
+	//
 	
 	
 }//class e

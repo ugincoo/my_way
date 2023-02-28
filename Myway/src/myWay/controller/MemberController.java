@@ -22,8 +22,23 @@ public class MemberController {
 	
 	MemberDto dto = new MemberDto();
 	
+	// 로그인 세션 값 불러오기
 	public MemberDto dto() {
 		return LogSeasion;
+	}
+	
+	// 로그인 세션 값의 유무 판단 (로그인 되어 있는 여부 확인)
+	public boolean checkLogin() {
+		MemberDto dto = dto();
+		
+		if (dto != null) { 
+			// 세션에 회원 아이디 값이 있는 경우 (즉, 회원이 로그인되어 있는 경우)
+			return true;
+		} else {
+			System.out.println("로그인이 되어 있지 않습니다.");
+			return false;
+		}
+		
 	}
 	
 	//회원가입
@@ -53,11 +68,53 @@ public class MemberController {
 				
 	}
 	
+	// 회원이 입력한 비밀번호와 세션의 비밀번호 체크
+	public boolean checkPassword (int memberpassword) {
+		MemberDto dto = dto();
+		
+		if (memberpassword == dto.getMemberPw()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public int getMemberNo () {
+		MemberDto dto = dto();
+		return dto.getMemberNo();
+	}
+	
+	//비밀번호변경
+	public int update(int memberNo, int newpassword) {
+		
+		return MemberDao.getInstance().update(memberNo, newpassword); 
+	}
+	
+	
 	//회원탈퇴
-	public boolean delete(String memberId) {
-		return MemberDao.getInstance().delete(memberId);
+	public boolean delete(String memberId , int memberpw) {
+		return MemberDao.getInstance().delete(memberId,memberpw);
 	}
 
+	//아이디찾기 유효성검사 핸드폰번호와 DB의 이름이 일치하는지
+	public boolean checknamephone(String membername, String memberphone ) {
+		MemberDto dto = new MemberDto();
+		
+		if(membername.equals(dto.getMembername())) {
+			if(memberphone.equals(dto.getMemberphone())) {
+				return true;
+			}else{
+				return false;
+			}
+		}
+		return false;
+	}
+	//아이디찾기
+
+	public boolean findId(int memberNo) {
+		
+		return MemberDao.getInstance().findId(memberNo);
+	}
 	
 	
 	

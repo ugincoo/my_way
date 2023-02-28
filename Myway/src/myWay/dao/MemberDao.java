@@ -68,12 +68,12 @@ public class MemberDao extends DB연동 {
 						MemberDto result = checklogin(memberId, memberPw);
 							// 경우의수 1.DB의 저장된 ID,PW가 일치해야함.. /2. ID 나 PW 둘 중 하나라도 안맞는 경우 
 							if(result !=null) {//로그인성공
-								String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
+								// String sql = "INSERT INTO MEMBER(MEMBER_ID,MEMBER_PW) VALUES(? ,?)";	
 								
-								ps = con.prepareStatement(sql);
-								ps.setString(1,memberId );
-								ps.setInt(2, memberPw);
-								ps.executeUpdate();
+								// ps = con.prepareStatement(sql);
+								// ps.setString(1,memberId );
+								// ps.setInt(2, memberPw);
+								// ps.executeUpdate();
 								
 								return result;
 								
@@ -152,34 +152,89 @@ public class MemberDao extends DB연동 {
 		}
 	}
 	
-	//비밀번호 수정(아이디,휴대폰번호)
-//	public boolean update() {
+	//비밀번호수정
+	public int update(int memberNo, int newpassword ) {
 		
-//	}
-	
-	
-	
-	//회원탈퇴
-	public boolean delete(String memberId) {
-		
-		String sql="delete from member where member_id = ?;";
+		String sql = "update member set member_pw=? where member_no=?;";
 		
 		try {
-			ps = con.prepareStatement(sql);
-			ps.setString(1, memberId);
-			ps.executeUpdate();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, newpassword );
+			ps.setInt(2, memberNo);
+			ps.executeUpdate(); 
 			
-			return true;
+			return 0;//비밀번호수정성공
 			
 		}catch (Exception e) {
-			System.out.println("DB오류:"+e);
+			return 1;
 		}
-		
-		return false;
 		
 	}
 	
 	
+	
+	//회원탈퇴 //삭제는 select로 한번 조회 후 가능이였음..후
+	public boolean delete(String memberId, int memberpw) {
+		// 삭제대상 회원 정보 조회 쿼리
+		String sql1 = "SELECT *"
+					+ "  FROM MEMBER"
+					+ " WHERE member_id = ?"
+					+ "   AND member_pw = ?";
+		
+		// 조회된 회원 정보 삭제 쿼리
+		String sql2 = "delete from member where member_id=? and member_pw=?";
+		
+		try {
+				
+			ps = con.prepareStatement(sql1);
+			ps.setString(1, memberId);
+			ps.setInt(2, memberpw);
+				
+			rs = ps.executeQuery();
+				
+			if(rs.next()) {
+				// 회원 정보가 있는 경우
+				System.out.println("삭제할 회원 정보를 찾았습니다. 해당 회원 정보를 삭제하겠습니다.");
+				
+				// 삭제 로직 시작
+				ps = con.prepareStatement(sql2);
+				ps.setString(1, memberId);
+				ps.setInt(2, memberpw);
+				
+				return true;
+			} else {
+				// 회원 정보가 없는 경우
+				System.out.println("삭제할 회원 정보가 없습니다. 다시 입력해주시길 바랍니다.");
+				
+				return false;
+			}
+				
+		}catch (Exception e) {
+			System.out.println("DB오류:"+e);
+			
+		}	
+		return false;
+	}
+	
+	
+	//아이디찾기 * 아직미완성
+	
+	public boolean findId(int memberNo ) {
+		
+		String sql = "select member_id from member where member_no;";
+			
+				try {
+					ps=con.prepareStatement(sql);
+					ps.setInt(1, memberNo);
+					rs=ps.executeQuery(); 
+
+					return true;//아이디찾기 성공
+					
+				}catch (Exception e) {
+					return false;
+				}
+		
+	}
 	
 	
 }//class e

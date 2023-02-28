@@ -1,6 +1,14 @@
 package myWay.dto;
 
 public class MemberDto {
+	// 싱글톤
+	private static MemberDto memberdto = new MemberDto();
+	public static MemberDto getInstance() {
+		return memberdto;
+	}
+	
+	
+	
 	// 필드
 	int 	memberNo;	// 회원일련번호
     String 	memberId;	// 회원 ID
