@@ -3,6 +3,7 @@ package myWay.view;
 import java.util.Scanner;
 
 import myWay.controller.MemberController;
+import myWay.dao.MemberDao;
 
 public class MemberFront {
 	Scanner scanner = new Scanner(System.in);
@@ -40,9 +41,6 @@ public class MemberFront {
 		System.out.println("비밀번호재입력해주세요");
 		int confirmed = scanner.nextInt();
 		
-		System.out.println("이름을입력해주세요");
-		String memberNm = scanner.next();
-		
 		if(memberPw != confirmed) {
 			System.out.println("비밀번호가일치하지 않습니다");
 		}
@@ -74,6 +72,9 @@ public class MemberFront {
 		
 		if(result==true) {
 			System.out.println("로그인에 성공하였습니다 추천메뉴페이지로 이동");
+			if( MemberController.getInstance().dto().getMemberId().equals("admin") ) {
+				StockFront.getInstance().managerpage();
+			}else { BoardFront.getInstance().boardIndex();}
 		}else if(result==false) {
 			System.out.println("아이디와 비밀번호가 일치하지 않습니다");
 		}

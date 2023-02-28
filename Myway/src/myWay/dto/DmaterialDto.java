@@ -1,7 +1,6 @@
 package myWay.dto;
 
 public class DmaterialDto extends MmaterialDto  {
-	// 필드
 	int materNo;
 	String materName;
 	int  materStock;
@@ -9,13 +8,20 @@ public class DmaterialDto extends MmaterialDto  {
 	
 	// 생성자
 	public DmaterialDto() { }
-	public DmaterialDto(int materNo, String materName, int materStock, int materPrice) {
-		super();
+	
+	public DmaterialDto(int materNo) {
+		this.materNo = materNo;
+	}
+	
+	public DmaterialDto(int categoryNo, int materNo, String materName, int materStock, int materPrice) {
+		this.categoryNo = categoryNo;
 		this.materNo = materNo;
 		this.materName = materName;
 		this.materStock = materStock;
 		this.materPrice = materPrice;
 	}
+	
+	
 
 	// 메소드
 	@Override
@@ -23,6 +29,7 @@ public class DmaterialDto extends MmaterialDto  {
 		return "DmaterialDto [materNo=" + materNo + ", materName=" + materName + ", materStock=" + materStock
 				+ ", materPrice=" + materPrice + ", categoryNo=" + categoryNo + "]";
 	}
+	
 	public int getMaterNo() {
 		return materNo;
 	}

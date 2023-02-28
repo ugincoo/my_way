@@ -5,7 +5,7 @@ public class BcommendDto {
 	int bcommNo;
     String bcommContent;
     int memberNo;
-    int recomNo;
+    int recomNo; 
     
 	// 생성자
 	public BcommendDto() { }
