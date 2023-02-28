@@ -24,7 +24,7 @@ public class OderFront {
 	
 	
 	// 종류마다 재료 리스트 출력
-	public void printMaterialList(int categoryNo) {
+	public int printMaterialList(int categoryNo) {
 		ArrayList<DmaterialDto> materialList = OderController.getInstance().printMaterialList(categoryNo);
 		// 카테고리별 이름 찾기 
 		int cNo = materialList.get(1).getCategoryNo();
@@ -37,6 +37,7 @@ public class OderFront {
 					materialList.get(i).getMaterName(),
 					materialList.get(i).getMaterPrice()); 
 		}
+		return materialList.size();
 		
 	}
 	
@@ -48,12 +49,20 @@ public class OderFront {
 		
 		for(int i = 0; i < OderController.getInstance().returnCategoryCount(); i++) {
 //			int []souNo = null;
-			printMaterialList(i+1);
+			
+			int maxSize = printMaterialList(i+1);
 			
 			System.out.print("번호 선택 : ");
+			
 			int No = scanner.nextInt();
-			int materNo = OderController.getInstance().findMaterNo(No, i+1);
-			inCartNoArr.add(materNo);
+			
+			if(No >= maxSize) {
+				int materNo = OderController.getInstance().findMaterNo(maxSize, i+1);
+				inCartNoArr.add(materNo);
+			}else {
+				int materNo = OderController.getInstance().findMaterNo(No, i+1);
+				inCartNoArr.add(materNo);
+			}
 
 //			if(i+1 == 5) { //소스인 경우
 //				System.out.print("[숫자만]소스를 종류 몇개 넣으실건가요 ? ");

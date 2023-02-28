@@ -52,7 +52,7 @@ private static OderDao oderDao = new OderDao();
 			}
 			
 			return count;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return 0;
 		}
@@ -75,7 +75,7 @@ private static OderDao oderDao = new OderDao();
 				}
 			}
 			return -1; // 못찾을 경우
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			return -2; //DB에러
 		}
@@ -105,7 +105,7 @@ private static OderDao oderDao = new OderDao();
 				materialList.add(dto);
 			}
 			return materialList;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return null;
 		}
@@ -132,7 +132,7 @@ private static OderDao oderDao = new OderDao();
 					rs.getInt(5));
 			
 			return dto;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return null;
 		}
@@ -153,7 +153,7 @@ private static OderDao oderDao = new OderDao();
 			
 			return rs.getInt(5); //가격
 			
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return 0;
 		}
@@ -181,7 +181,7 @@ private static OderDao oderDao = new OderDao();
 			
 			pstmt.executeUpdate();
 
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			
 		}
@@ -207,7 +207,7 @@ private static OderDao oderDao = new OderDao();
 			
 			return pOrderNoList;
 			
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return null;
 		}
@@ -225,7 +225,7 @@ private static OderDao oderDao = new OderDao();
 			rs.next();
 			
 			return rs.getInt(10);
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return 0;
 		}
@@ -248,7 +248,7 @@ private static OderDao oderDao = new OderDao();
 			changepOrderStatus(pOrderNo);
 			
 			return true;
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			return false;
 		}
@@ -268,7 +268,7 @@ private static OderDao oderDao = new OderDao();
 			Timestamp timeStamp = returnDateTime(pOrderNo);
 			
 			return timeStamp;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
@@ -285,7 +285,7 @@ private static OderDao oderDao = new OderDao();
 			
 			pstmt.executeUpdate();
 			
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -313,7 +313,7 @@ private static OderDao oderDao = new OderDao();
 					rs.getInt(7));
 			
 			return dto;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
@@ -342,7 +342,7 @@ private static OderDao oderDao = new OderDao();
 			}
 			
 			
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			return null;
