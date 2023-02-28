@@ -26,18 +26,22 @@ public class BoardController {
 	}
 	//조회수 증가 
 	public void view( int recomNo) { BoardDao.getInstance().view(recomNo);	}
-	
+	//게시물 출력
+	public ArrayList<RecomendDto> boardPrintRecent() {
+		return BoardDao.getInstance().boardPrintRecent();
+	}
 	
 	//댓글 출력
-	public ArrayList<BcommendDto> commentList(){
+	public ArrayList<BcommendDto> commentList(int bcommNo){
 		//1. 모든 게시물을 호출 하는 dao 메소드 호출하여 결과 얻기
-		ArrayList<BcommendDto> result = BoardDao .getInstance().commentList();
+		ArrayList<BcommendDto> result = BoardDao .getInstance().commentList(bcommNo);
 		//2. 결과 반환
 		return result;
 	}
 	//댓글작성
-	public boolean comment(String bcommContent, int memberNo, int recomNo ) {
-		return BoardDao.getInstance().comment(bcommContent, 0, 0);
+	public boolean comment(String bcommContent, int recomNo) {
+		return BoardDao.getInstance().comment(bcommContent, 
+										MemberController.getInstance().dto().getMemberNo(),recomNo );
 				
 	}
 }

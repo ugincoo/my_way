@@ -53,6 +53,27 @@ public class BoardDao {
 			return null;
 		}
 		
+		//게시물출력
+		public ArrayList<RecomendDto> boardPrintRecent() {
+			
+			ArrayList<RecomendDto> blist = new ArrayList<>();
+			
+			String sql = " select * from recommend limit 3";
+			try {
+				ps = con.prepareStatement(sql);
+				rs=ps.executeQuery();
+				while(rs.next()) {
+					RecomendDto dto = new RecomendDto(rs.getInt(1)
+							, rs.getString(2), rs.getInt(3), rs.getString(4));
+					blist.add(dto);
+				}
+			}catch (Exception e) {System.out.println(e);}
+			return blist;
+		}
+		
+		
+		
+		
 		//조회수 증가 
 		public void view( int recomNo) {
 			
@@ -71,11 +92,11 @@ public class BoardDao {
 		
 		
 		// 댓글 출력
-		public ArrayList<BcommendDto> commentList(){
+		public ArrayList<BcommendDto> commentList(int bcommNo){
 			//여러개 게시판 저장을 위한 리스트 선언
 			ArrayList<BcommendDto> commentList = new ArrayList<>();
 			//1. SQL 작성
-			String sql = "select * from bcommend";
+			String sql = "select * from recommend r, member m,bcommend b where b.member_no = m.member_no and b.recom_no = r.recom_no ";
 			//2.연결된 DB에 작성된 SQL 대입
 			try {ps = con.prepareStatement(sql);
 			//3. SQL 조작[매개변수 없으면 생략]		
@@ -93,6 +114,8 @@ public class BoardDao {
 		}
 		//댓글 작성
 		public boolean comment(String bcommContent, int memberNo, int recomNo) {
+			// 리스트 선언
+			
 			//1. SQL 작성
 			String sql = "insert into bcommend (bcomm_content,member_no,recom_no) values (?,?,?)";
 			//2.연결된 DB에 작성된 SQL 대입
