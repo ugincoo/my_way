@@ -4,6 +4,9 @@ package myWay.controller;
 
 import myWay.dto.*;
 import myWay.dao.*;
+
+import java.util.ArrayList;
+
 import myWay.controller.*;
 import myWay.view.*;
 
@@ -97,25 +100,28 @@ public class MemberController {
 	}
 
 	//아이디찾기 유효성검사 핸드폰번호와 DB의 이름이 일치하는지
-	public boolean checknamephone(String membername, String memberphone ) {
-		MemberDto dto = new MemberDto();
+	public MemberDto checknamephone(String membername, String memberphone ) {
+		 return MemberDao.getInstance().checknamephone(membername, memberphone);
 		
-		if(membername.equals(dto.getMembername())) {
-			if(memberphone.equals(dto.getMemberphone())) {
-				return true;
-			}else{
-				return false;
-			}
-		}
-		return false;
 	}
+		
+		
+
 	//아이디찾기
 
-	public boolean findId(int memberNo) {
+	public String findId(int memberNo) {
 		
 		return MemberDao.getInstance().findId(memberNo);
 	}
 	
+	
+	//전체출력
+	//전체회원조회
+	public ArrayList<MemberDto> Allprint() {
+		
+		return MemberDao.getInstance().Allprint();
+	}
+
 	
 	
 }//class e

@@ -219,7 +219,7 @@ public class MemberDao extends DB연동 {
 	
 	//아이디찾기 * 아직미완성
 	
-	public boolean findId(int memberNo ) {
+	public String findId(int memberNo ) {
 		
 		String sql = "select member_id from member where member_no;";
 			
@@ -227,14 +227,71 @@ public class MemberDao extends DB연동 {
 					ps=con.prepareStatement(sql);
 					ps.setInt(1, memberNo);
 					rs=ps.executeQuery(); 
-
-					return true;//아이디찾기 성공
+					
+					if(rs.next() ) {
+						ps = con.prepareStatement(sql);
+						ps.setLong(1, memberNo);
+						
+							return MemberDto.getInstance().getMemberId();
+					}
+				
 					
 				}catch (Exception e) {
-					return false;
+					return null;
 				}
+				return null;
 		
 	}
 	
+	//아이디찾기 유효성검사
+	public MemberDto checknamephone(String membername,String memberphone) {
+		MemberDto dto = new MemberDto();
+		
+		String sql = "select * from member where member_name =? and member_phone =?";
+	
+		try {			
+			ps=con.prepareStatement(sql);
+		
+			ps.setString(1, membername );
+		
+			ps.setString(2,memberphone );
+		
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				dto = new MemberDto(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5));
+			}
+			
+			return dto;
+			
+		} catch (Exception e) {
+			return dto;
+		}
+	}
+
+	
+	public ArrayList<MemberDto> Allprint() {
+		ArrayList<MemberDto> memberList = new ArrayList<>();
+
+		
+		String sql = "select* from member;";
+		
+		try {
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				MemberDto dto = new MemberDto(
+						rs.getInt(1),
+						rs.getString(2), 
+						rs.getInt(3), 
+						rs.getString(4),
+						rs.getString(5));
+				memberList.add(dto);
+			}
+		}catch (Exception e) {
+
+		}
+		return memberList;
+	}
 	
 }//class e

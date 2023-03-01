@@ -1,5 +1,6 @@
 package myWay.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import myWay.controller.MemberController;
@@ -20,7 +21,7 @@ public class MemberFront {
 	//메인화면: 회원가입, 로그인 메뉴 분기 처리 (1, 2) 
 	public void index() {
 		while(true) {
-			System.out.println("1.회원가입 2.로그인 3.비밀번호수정 4.회원탈퇴 5.아이디찾기");
+			System.out.println("1.회원가입 2.로그인 3.비밀번호수정 4.회원탈퇴 5.아이디찾기 6.회원조회");
 			int ch=scanner.nextInt();
 			if(ch==1) {
 				signup();
@@ -32,6 +33,8 @@ public class MemberFront {
 				delete();
 			}else if(ch==5) {
 				findId();
+			}else if(ch==6) {
+				Allprint();
 			}
 		}
 	}//index e
@@ -85,7 +88,8 @@ public class MemberFront {
 				MemberController.getInstance().login(memberId,memberPw);
 		
 		if(result==true) {
-			System.out.println("로그인에 성공하였습니다 추천메뉴페이지로 이동");
+			
+			System.out.println( MemberController.getInstance().dto().getMemberId()+"님 환영합니다");
 			if( MemberController.getInstance().dto().getMemberId().equals("admin") ) {
 				StockFront.getInstance().managerpage();
 			}else { BoardFront.getInstance().boardIndex();}
@@ -132,31 +136,18 @@ public class MemberFront {
 	//아이디찾기
 	public void findId() {
 		System.out.println("---------아이디찾기-----------");
-		System.out.println("회원이름을 입력하세요");
+		System.out.print("회원이름을 입력하세요 : ");
 		String membername = scanner.next();
-		System.out.println("전화번호를 입력하세요");
+		System.out.print("전화번호를 입력하세요 : ");
 		String memberphone = scanner.next();
 		
-		boolean	result = MemberController.getInstance().checknamephone(membername,memberphone);
+		MemberDto result = MemberController.getInstance().checknamephone(membername,memberphone);
 		
-				if(result) {
-						int memberNo = MemberController.getInstance().getMemberNo();
-						
-						boolean findID = MemberController.getInstance().findId(memberNo);
-		
-						if(findID) {	//아이디반환성공
-							String userId= MemberDto.getInstance().getMemberId();
-							System.out.println(userId);
-							System.out.println("아이디가 반환되었습니다");
-						}else {
-							System.out.println("아이디반환에 실패하였습니다 다시 확인해주세요");
-						}
-						
-					
-				}else {
-					System.out.println("휴대폰과 전화번호가 일치하지 않습니다 다시 입력하세요");
-				}
-		
+		if (result.getMemberId() != null) {
+			System.out.println("회원의 아이디는 " + result.getMemberId() + " 입니다.");
+		} else {
+			System.out.println("입력하신 내용에 해당되는 회원의 정보가 없습니다.");
+		}
 	}
 	
 	
@@ -182,12 +173,28 @@ public class MemberFront {
 	
 	
 	
-	//전체출력
+	//전체회원조회
+	public void Allprint() {
+		System.out.println("전체회원입니다");
+		System.out.printf("%3s \t %10s \t %10s \t %10s %10s\n","번호","아이디","비밀번호","휴대폰","이름");
+		ArrayList<MemberDto> result = 
+				MemberController.getInstance().Allprint();
+		
+		
+		for(int i=0; i<result.size(); i++) {
+			System.out.printf("%3s \t %10s \t %10s \t %10s \t %10s \n",
+					result.get(i).getMemberNo(),
+					result.get(i).getMemberId(),
+					result.get(i).getMemberPw(),
+					result.get(i).getMemberphone(),
+					result.get(i).getMembername());
+		}
+		
+	}
 	
 	
-
 	
-	//
+	
 	
 	
 }//class e
