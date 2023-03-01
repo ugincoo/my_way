@@ -22,7 +22,7 @@ public class StockFront {
 	public void managerpage() {
 		while(true) {
 			try {
-				System.out.println("━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━");
+				System.out.println("━━━━━━━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━━━━━━━");
 				System.out.print("[1]재고 관리  [2]커뮤니티  [3]매출현황  [4]나가기 :");
 				int ch = scanner.nextInt();
 				if( ch == 1) { stockpage(); }
