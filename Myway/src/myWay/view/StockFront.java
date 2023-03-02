@@ -24,6 +24,14 @@ public class StockFront {
 	public void managerpage() {
 		while(true) {
 			try {
+				//관리자가 로그인하면 먼저 알림창 먼저 
+				ArrayList<String> notices = StockController.getInstance().noticeMessageList;
+				System.out.println("━━━━━━━━━━━━━━━━━━━━ 알림창 ["+notices.size()+"] ━━━━━━━━━━━━━━━━━━━━");
+				for(int i= 0; i < notices.size(); i++) {
+					System.out.println(notices.get(i));
+				}
+				StockController.getInstance().noticeMessageList.clear(); //모두 출력했으면 지워주기
+				
 				System.out.println("━━━━━━━━━━━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━━━━━━━━━━━");
 				System.out.print("[1]재고 관리  [2]커뮤니티  [3]매출현황  [4]회원조회  [5]나가기 :");
 				int ch = scanner.nextInt();
