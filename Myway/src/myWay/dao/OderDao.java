@@ -290,15 +290,16 @@ private static OderDao oderDao = new OderDao();
 			rs.next();
 			
 			PorderDto dto = new PorderDto(
-					rs.getInt(1), 
 					rs.getInt(2), 
 					rs.getInt(3), 
 					rs.getInt(4), 
 					rs.getInt(5), 
 					rs.getInt(6), 
-					rs.getInt(7));
-			
+					rs.getInt(7), 
+					rs.getInt(8));
+			System.out.println(dto);
 			return dto;
+			
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;

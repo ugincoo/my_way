@@ -153,7 +153,7 @@ public class OderFront {
 				
 				totalPrice += OderController.getInstance().findOneSetPrice(orderPaperList.get(i));
 			}
-		
+			
 			System.out.printf("%s  %10s \t %8s\n" ,"번호", "재료 이름", "재료 가격");
 			for(int i = 0; i < materialsList.size(); i++) {
 				if(i != 0 && i%6 == 0) {
