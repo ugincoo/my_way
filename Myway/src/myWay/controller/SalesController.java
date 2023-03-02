@@ -40,20 +40,28 @@ public class SalesController {
 		int eday = cal.getActualMaximum( Calendar.DAY_OF_MONTH ); // 해당 월의 마지막일
 		
 		for( int i = 1; i<sweek ; i++ ) { System.out.print("\t\t"); } // 해당 월 1일 전까지 공백으로 채우기
-		int line = 1;
-		for( int i = 1; i<= eday*2 ; i++ ) {
-			if(line%2 == 1) {
-				System.out.printf("\t%2d\t" , i);
-			}else {
-				System.out.printf("\t%2d\t" , findPrice(year+"-"+month+"-"+i));
-			}
-			if( sweek%7 == 0 ) { System.out.println(); line++; }
-			sweek++;
-			
-		}
 		
-		System.out.println("\n===================================================");
+		for( int i = 1; i<= eday ; i++ ) {
+			System.out.print("\t"+i+"\t");
+			if( i < 10 && month < 10 ) {
+				System.out.print(findPrice(year+"-"+"0"+month+"-"+"0"+i));
+			}else if(i >= 10 && month < 10) {
+				System.out.print(findPrice(year+"-"+"0"+month+"-"+i));
+			}else if(i < 10 && month >= 10) {
+				System.out.print(findPrice(year+"-"+month+"-"+"0"+i));
+			}else { System.out.print(findPrice(year+"-"+month+"-"+i)); }
+			if( sweek%7 == 0 ) { System.out.println(); }
+			sweek++;
 		}
+		System.out.println("\n===================================================");
+		
+		}
+	
+	// 달력 일 매출
+	public int findPrice(String date) {
+		
+		return SalesDao.getInstance().findPrice(date);
+	}
 	
 	
 	// 월 매출 출력 or 일 매출 출력
@@ -61,7 +69,5 @@ public class SalesController {
 		return SalesDao.getInstance().printSales();
 	}
 	
-	public int findPrice(String date) {
-		
-	}
+	
 }
