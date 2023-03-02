@@ -24,8 +24,8 @@ public class StockFront {
 	public void managerpage() {
 		while(true) {
 			try {
-				System.out.println("━━━━━━━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━━━━━━━");
-				System.out.print("[1]재고 관리  [2]커뮤니티  [3]매출현황 [4]회원조회 [5]나가기 :");
+				System.out.println("━━━━━━━━━━━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━━━━━━━━━━━");
+				System.out.print("[1]재고 관리  [2]커뮤니티  [3]매출현황  [4]회원조회  [5]나가기 :");
 				int ch = scanner.nextInt();
 				if( ch == 1) { stockpage(); }
 				else if( ch == 2 ) { RecomendFront.getInstance().recomendpage(); }
@@ -77,7 +77,7 @@ public class StockFront {
 	
 	// 재료 등록
 	public void materialSignup( int categoryNo ) {
-		System.out.print("〖 제품명 〗: ");	String materName = scanner.next();
+		System.out.print("〖 제품명 〗: ");		String materName = scanner.next();
 		System.out.print("〖 제품 가격 〗: ");	int materprice = scanner.nextInt();
 		System.out.print("〖 제품 재고 〗: ");	int materStock = scanner.nextInt();
 		
@@ -128,21 +128,23 @@ public class StockFront {
 	
 	//매출현황
 	public void printCurrentSales() {
+		
 		//달력 출력 하고!
-		
-		System.out.println("-1. 이전달  0. 월 매출보기 1. 다음달 2. 일 매출 보기 3. 나가기");
+		System.out.println();
+		SalesController.getInstance().Calendar( 0 );
+		System.out.println("[-1]이전달 [0]월 매출보기 [1]다음달 [2]일 매출보기 [3]나가기 : ");
 		int choice = scanner.nextInt();
-		
 		if(choice == -1){ // 이전달
 			System.err.println();
+			SalesController.getInstance().Calendar( choice );
 		}else if(choice == 0) { //달력에 보여진 월의 매출
 			SalesFront.getInstance().printCurrentSales("null");
 		}else if(choice == 1) {
 			System.out.println();
+			SalesController.getInstance().Calendar( choice );
 		}else if(choice == 2) {
 			System.out.print("일 입력 : ");
 			int selectDay = scanner.nextInt();
-			
 			SalesFront.getInstance().printCurrentSales("null");
 		}else if(choice == 3) {
 			return;

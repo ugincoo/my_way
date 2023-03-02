@@ -21,14 +21,14 @@ public class BoardFront {
 	
 	// 커뮤니티 선택
 	public void boardIndex() {//boardIndex s
-		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 커뮤니티 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
 		while(true) { // 추천게시물 3개 해야함
+			System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 커뮤니티 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
 			boardPrintRecent();
 			System.out.print("1.추천목록 2.주문하기 3.장바구니목록확인 4.뒤로가기 : ");
 			int select = scanner.nextInt();
 			if( select == 1) {boardList();}
 			else if( select == 2) {OderFront.getInstance().order();}
-			else if( select == 3) {OderFront.getInstance().viewCartList();;}
+			else if( select == 3) {OderFront.getInstance().viewCartList();}
 			else if( select == 4) {return;}
 			else {System.out.println(" 다시 선택해주세요.");boardIndex();}
 		}

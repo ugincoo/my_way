@@ -172,6 +172,7 @@ public class OderFront {
 					+ "║▌│█║▌│ █║▌│█│║▌║║▌│█║▌│ █║▌│█│║▌║");
 			
 			OderController.getInstance().orderNumber++; //주문 번호 증가
+	
 		}else {
 			System.out.println("결제할 목록이 없습니다.");
 		}

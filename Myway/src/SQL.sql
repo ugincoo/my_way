@@ -65,7 +65,7 @@ create table purchase( -- 결제 테이블
 	purchase_no int auto_increment primary key,
     porder_no int,
     purchase_price int,
-    purcahse_date  timestamp,
+    purchase_date  timestamp,
     foreign key (porder_no) references porder(porder_no)
 );
 
