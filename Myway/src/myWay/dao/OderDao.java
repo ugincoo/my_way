@@ -220,7 +220,7 @@ private static OderDao oderDao = new OderDao();
 	
 	//최종 결제
 	public boolean purchase(int pOrderNo, int price, Timestamp dateTime) {
-		String sql = "insert into purchase (porder_no, purchase_price, purcahse_date)"
+		String sql = "insert into purchase (porder_no, purchase_price, purchase_date)"
 				+ "values (?, ?, ?)";
 		try {
 			ps = con.prepareStatement(sql);
