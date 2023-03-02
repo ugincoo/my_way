@@ -130,5 +130,9 @@ select * from porder;
 
 select * from porder where member_no = 1 && o_status = 0;
 
-
+insert into recommend (recom_title, recom_content) values ( '비엘티 BEST' , '비엘티+플랫브레드+슈레드치즈+소스(스위트칠리,랜치,스위트어니언)');
+insert into recommend (recom_title, recom_content) values ( '스테이크&치즈 BEST'  , '스테이크&치즈+치즈추가+허니오트빵+소스(스모크바비큐,스윗어니언)' );
+insert into recommend (recom_title, recom_content) values ( '로스트치킨 BEST' , '로스트치킨+페퍼로니추가+허니오트빵+소스(핫칠리,후추)	' );
+insert into recommend (recom_title, recom_content) values ( '쉬림프 BEST' , '쉬림프+새우더블업+에그마요+빵(취향대로)+소스(스위츠칠리,랜치)' );
+insert into recommend (recom_title, recom_content) values ( '비엠티 BEST' , '비엠티+슈레드치즈+에그마요+위트브레드+소스(칠리소스,어니언소스)' );
 

@@ -29,7 +29,7 @@ public class BoardFront {
 			if( select == 1) {boardList();}
 			else if( select == 2) {OderFront.getInstance().order();}
 			else if( select == 3) {OderFront.getInstance().viewCartList();;}
-			else if( select == 4) {break;}
+			else if( select == 4) {return;}
 			else {System.out.println(" 다시 선택해주세요.");boardIndex();}
 		}
 	}// boardIndex e
@@ -46,13 +46,13 @@ public class BoardFront {
 			System.out.printf("%3s \t %10s \t %10s \t %10s \n",
 				result.get(i).getRecomNo(),result.get(i).getRecomTitle(),
 				result.get(i).getRecomView(),result.get(i).getRecomContent() );
-			//다음 출력 선택
-			System.out.print("1.게시물 보기 2.뒤로가기 : ");
-			int select = scanner.nextInt();
-			if( select == 1) {	board();}
-			else if ( select == 2) {boardIndex();}
-			else {System.out.println("없는 메뉴입니다.\n다시 선택해주세요 :)");boardList();}
+
 		} //for문 e		
+		System.out.print("1.게시물 보기 2.뒤로가기 : ");
+		int select = scanner.nextInt();
+		if( select == 1) {	board();}
+		else if ( select == 2) {boardIndex();}
+		else {System.out.println("없는 메뉴입니다.\n다시 선택해주세요 :)");boardList();}
 	}//void e
 	
 	//상세게시물
@@ -68,11 +68,11 @@ public class BoardFront {
 		BoardController.getInstance().view(boardno); //조회수 증가
 		
 		while(true) {
-		for(int i = 0 ; i<result1.size() ;i++) {
-			System.out.printf(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ %d 번게시물 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  \n",(i+1) );
-			System.out.println("제목 : " + result1.get(i).getRecomTitle());
-			System.out.println("내용 : " + result1.get(i).getRecomContent());
-			System.out.println("조회수 : " + result1.get(i).getRecomView());
+		
+			System.out.printf(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ %d 번게시물 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  \n",(boardno) );
+			System.out.println("제목 : " + result1.get(boardno-1).getRecomTitle());
+			System.out.println("내용 : " + result1.get(boardno-1).getRecomContent());
+			System.out.println("조회수 : " + result1.get(boardno-1).getRecomView());
 			
 			System.out.println("댓글번호 \t 내용 \t 회원번호");
 			
@@ -88,7 +88,7 @@ public class BoardFront {
 			else if ( select == 2) {delete();}
 			else if ( select == 3) {boardList();}
 			}
-		}//for문 e
+		
 	}//board e	
 	
 	//게시물 3개 출력

@@ -21,7 +21,7 @@ public class MemberFront {
 	//메인화면: 회원가입, 로그인 메뉴 분기 처리 (1, 2) 
 	public void index() {
 		while(true) {
-			System.out.println("1.회원가입 2.로그인 3.비밀번호수정 4.회원탈퇴 5.아이디찾기 6.회원조회");
+			System.out.println("1.회원가입 2.로그인 3.비밀번호수정 4.회원탈퇴 5.아이디찾기 ");
 			int ch=scanner.nextInt();
 			if(ch==1) {
 				signup();
@@ -33,8 +33,6 @@ public class MemberFront {
 				delete();
 			}else if(ch==5) {
 				findId();
-			}else if(ch==6) {
-				Allprint();
 			}
 		}
 	}//index e

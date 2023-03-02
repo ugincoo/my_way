@@ -62,7 +62,6 @@ public class MemberController {
 		
 		 if(result!=null) {
 			 LogSeasion = result;
-			 System.out.println(LogSeasion);
 			 return true;
 		 }
 		 return false;

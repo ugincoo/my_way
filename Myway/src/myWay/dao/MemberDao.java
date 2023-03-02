@@ -201,6 +201,8 @@ public class MemberDao extends DB연동 {
 				ps.setString(1, memberId);
 				ps.setInt(2, memberpw);
 				
+				ps.executeUpdate();
+				
 				return true;
 			} else {
 				// 회원 정보가 없는 경우

@@ -25,12 +25,13 @@ public class StockFront {
 		while(true) {
 			try {
 				System.out.println("━━━━━━━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━━━━━━━");
-				System.out.print("[1]재고 관리  [2]커뮤니티  [3]매출현황  [4]나가기 :");
+				System.out.print("[1]재고 관리  [2]커뮤니티  [3]매출현황 [4]회원조회 [5]나가기 :");
 				int ch = scanner.nextInt();
 				if( ch == 1) { stockpage(); }
 				else if( ch == 2 ) { RecomendFront.getInstance().recomendpage(); }
 				else if( ch == 3 ) { printCurrentSales();}
-				else if( ch == 4 ) { return; }
+				else if( ch == 4 ) { MemberFront.getInstance().Allprint(); }
+				else if( ch == 5 ) { return; }
 			}catch( InputMismatchException e ) {
 				System.out.println("!잘못된 입력입니다!");
 				Scanner scanner = new Scanner(System.in);
