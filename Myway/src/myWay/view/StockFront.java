@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import myWay.controller.SalesController;
 import myWay.controller.StockController;
 import myWay.dao.StockDao;
 import myWay.dto.DmaterialDto;
+import myWay.dto.SalesDto;
 
 public class StockFront {
 
@@ -27,7 +29,7 @@ public class StockFront {
 				int ch = scanner.nextInt();
 				if( ch == 1) { stockpage(); }
 				else if( ch == 2 ) { RecomendFront.getInstance().recomendpage(); }
-				else if( ch == 3 ) {  }
+				else if( ch == 3 ) { printCurrentSales();}
 				else if( ch == 4 ) { return; }
 			}catch( InputMismatchException e ) {
 				System.out.println("!잘못된 입력입니다!");
@@ -123,6 +125,30 @@ public class StockFront {
 		else { System.out.println( " 【 삭제 실패 】 " ); }
 	}
 	
+	//매출현황
+	public void printCurrentSales() {
+		//달력 출력 하고!
+		
+		System.out.println("-1. 이전달  0. 월 매출보기 1. 다음달 2. 일 매출 보기 3. 나가기");
+		int choice = scanner.nextInt();
+		
+		if(choice == -1){ // 이전달
+			System.err.println();
+		}else if(choice == 0) { //달력에 보여진 월의 매출
+			SalesFront.getInstance().printCurrentSales("null");
+		}else if(choice == 1) {
+			System.out.println();
+		}else if(choice == 2) {
+			System.out.print("일 입력 : ");
+			int selectDay = scanner.nextInt();
+			
+			SalesFront.getInstance().printCurrentSales("null");
+		}else if(choice == 3) {
+			return;
+		}
+	}
+	
+	// 날짜를 문자열로 변환하는 함수 yyyy-mm-dd
 	
 
 }
