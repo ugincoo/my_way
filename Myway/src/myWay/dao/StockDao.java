@@ -44,7 +44,7 @@ public class StockDao extends DB연동 {
 		try {
 			ps = con.prepareStatement(sql);
 			
-			ps.setInt( 1, dto.getMaterNo() );
+			ps.setInt( 1, dto.getCategoryNo() );
 			ps.setString( 2, dto.getMaterName() );
 			ps.setInt( 3, dto.getMaterStock() );
 			ps.setInt(4, dto.getMaterPrice() );
