@@ -24,7 +24,7 @@ public class BoardFront {
 		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 커뮤니티 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
 		while(true) { // 추천게시물 3개 해야함
 			boardPrintRecent();
-			System.out.print("1.상세보기 2.주문하기 3.장바구니목록확인 4.뒤로가기 : ");
+			System.out.print("1.추천목록 2.주문하기 3.장바구니목록확인 4.뒤로가기 : ");
 			int select = scanner.nextInt();
 			if( select == 1) {boardList();}
 			else if( select == 2) {OderFront.getInstance().order();}
@@ -36,7 +36,7 @@ public class BoardFront {
 	
 	//게시물출력
 	public void boardList(){//void s
-		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 상세 게시물 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
+		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 추천목록 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
 		System.out.printf("%3s \t %10s \t %10s \t %10s \n","번호","제목","조회수","내용");
 		// ArrayList 저장
 		ArrayList<RecomendDto> result = BoardController.getInstance().boardlist();;
@@ -47,7 +47,7 @@ public class BoardFront {
 				result.get(i).getRecomNo(),result.get(i).getRecomTitle(),
 				result.get(i).getRecomView(),result.get(i).getRecomContent() );
 			//다음 출력 선택
-			System.out.print("1.게시판 번호 2.뒤로가기 : ");
+			System.out.print("1.게시물 보기 2.뒤로가기 : ");
 			int select = scanner.nextInt();
 			if( select == 1) {	board();}
 			else if ( select == 2) {boardIndex();}
@@ -58,7 +58,7 @@ public class BoardFront {
 	//상세게시물
 	public void board(){
 		//
-		System.out.print("게시판 번호 : ");
+		System.out.print("확인 할 게시물 번호를 입력해주세요 :)  >> ");
 		int boardno = scanner.nextInt();
 		
 		// ArrayList 저장
@@ -82,14 +82,14 @@ public class BoardFront {
 			
 			
 			//다음 출력 선택
-			System.out.print("1.댓글달기 2.뒤로가기 : ");
+			System.out.print("1.댓글달기 2.댓글삭제 3.뒤로가기 : ");
 			int select = scanner.nextInt();
 			if( select == 1) {	comment(boardno);}
-			else if ( select == 2) {boardList();}
+			else if ( select == 2) {delete();}
+			else if ( select == 3) {boardList();}
 			}
 		}//for문 e
-	}//board e
-	
+	}//board e	
 	
 	//게시물 3개 출력
 	public void boardPrintRecent() {
@@ -101,9 +101,7 @@ public class BoardFront {
 					dto.getRecomNo(),dto.getRecomTitle(),dto.getRecomView(),dto.getRecomContent());
 		}
 		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈• ");
-	}
-	
-	
+	}	
 	
 	//댓글 작성
 	public void comment(int boardno) {
@@ -111,7 +109,16 @@ public class BoardFront {
 		//입력 받은 데이터 컨트롤에 전달
 		boolean result = BoardController.getInstance().comment(bcommContent, boardno);
 		if(result) {System.out.println("댓글이 등록 되었습니다."); board();}
-		else {System.out.println("댓글 등록 실패하였습니다.");}
+		else {System.out.println("댓글 등록을 실패하였습니다.");}
 				
 	}//comment e
+	
+	//댓글삭제
+	public void delete() {
+		System.out.println("삭제 할 댓글 번호 : ");	int bcommNo = scanner.nextInt();
+		//입력 받은 데이터 컨트롤에 전달
+		boolean result = BoardController.getInstance().delete(bcommNo);
+		if(result) {System.out.println("댓글이 삭제 되었습니다."); board();}
+		else {System.out.println("댓글 삭제를 실패하였습니다.");}
+	}
 }

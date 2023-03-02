@@ -123,7 +123,23 @@ public class BoardDao extends DB연동{
 			}catch (Exception e) {System.out.println("연동 실패 : " + e);}
 				return false;		
 		}
-		
+		// 댓글 삭제 [ 인수 특정번호 댓글 삭제/  반환 t/f ]
+				public boolean delete(int bcommNo) {
+					//1. SQL 작성
+					String sql = "delete from bcommend where bcomm_no = ?";
+					//2.연결된 DB에 작성된 SQL 대입
+					try {
+						ps = con.prepareStatement(sql);
+						
+					//3. SQL 조작[매개변수 없으면 생략]
+						ps.setInt(1, bcommNo);
+					//4. SQL 실행
+						ps.executeUpdate();
+						return true;
+					//5. SQL 결과
+					}catch (Exception e) {System.out.println("연동 실패 : " + e);}
+					return false;
+				}
 	
 		
 }
