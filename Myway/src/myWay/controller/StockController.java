@@ -17,6 +17,8 @@ public class StockController {
 		return StockDao.getInstance().Materials( categoryNo );
 	}
 	
+	public ArrayList<String> noticeMessageList = new ArrayList<>();
+	
 	// 재료 등록
 	public boolean materialSignup( int categoryNo , String materName , int materprice , int materStock ) {
 		// 객체화

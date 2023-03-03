@@ -260,19 +260,49 @@ private static OderDao oderDao = new OderDao();
 		}
 	}
 	
-	//결제완료되었으면 해당 재료의 재고를 줄이기
-	public void minusStock(int materNo) {
-		String sql = "update dMaterials set mater_stock = mater_stock-1 where mater_no = ?";
+	//해당 재료의 재고 반환하는 메소드
+	public int checkStock(int materNo) {
+		String sql = "select mater_stock from dMaterials where mater_no = ?";
 		
 		try {
 			ps = con.prepareStatement(sql);
 			
 			ps.setInt(1, materNo);
 			
-			ps.executeUpdate();
+			rs = ps.executeQuery();
 			
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
+			rs.next();
+			
+			return rs.getInt(1);
+		}catch (Exception e) {
+			System.err.println(e.getMessage());
+			return 0;
+		}
+	}
+	
+	//결제완료되었으면 해당 재료의 재고를 줄이기
+	public int minusStock(int materNo) {
+		
+		if(checkStock(materNo) > 0) {
+			String sql = "update dMaterials set mater_stock = mater_stock-1 where mater_no = ? and mater_name != 'No'";
+			
+			try {
+				ps = con.prepareStatement(sql);
+				
+				ps.setInt(1, materNo);
+				
+				ps.executeUpdate();
+				
+				return -1;
+				
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+				return -2;
+			}
+			
+		}else {
+			StockDao.getInstance().materStockUpdate(materNo, 10); //재고 부족하면 강제로 재고 늘리기 
+			return materNo;
 		}
 	}
 	
@@ -297,7 +327,6 @@ private static OderDao oderDao = new OderDao();
 					rs.getInt(6), 
 					rs.getInt(7), 
 					rs.getInt(8));
-			System.out.println(dto);
 			return dto;
 			
 		}catch (Exception e) {

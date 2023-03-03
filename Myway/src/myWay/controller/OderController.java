@@ -156,8 +156,20 @@ public class OderController {
 	
 	//재고 줄이기
 	public void minusStock(ArrayList<DmaterialDto> orderList) {
+		ArrayList<Integer> messageNo = new ArrayList<>();
 		for(int i = 0; i < orderList.size(); i++) {
-			OderDao.getInstance().minusStock(orderList.get(i).getMaterNo());
+			messageNo.add(OderDao.getInstance().minusStock(orderList.get(i).getMaterNo()));
+		}
+		sendMessage(messageNo);
+		
+	}
+	
+	//재고 관련해서 message를 관리자에게 보내기
+	public void sendMessage(ArrayList<Integer> messageNo) {
+		for(int i = 0; i < messageNo.size(); i++) {
+			if(messageNo.get(i) >= 0) {
+				StockController.getInstance().noticeMessageList.add(messageNo.get(i) + "번의 제품 재고 부족으로 10개 채워넣었습니다.");
+			}
 		}
 	}
 	
