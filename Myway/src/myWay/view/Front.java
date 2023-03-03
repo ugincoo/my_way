@@ -46,7 +46,7 @@ public class Front {
 					+ "    \\__/  \\__/     /__/     \\__\\     |__|     \n"
 					+ RESET);
 			System.out.println("________________________________________________________");
-			System.out.println("어서오세요! "+FONT_YELLOW+"MY"+FONT_GREEN+"WAY"+RESET+"입니다 :) ");
+			
 		}
 		
 		

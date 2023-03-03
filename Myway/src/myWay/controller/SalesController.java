@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import myWay.dao.SalesDao;
 import myWay.dto.SalesDto;
+import myWay.view.Front;
 
 public class SalesController {
 	
@@ -45,6 +46,7 @@ public class SalesController {
 			if( i < 10 ) { System.out.print("\t0"+i); }
 			else { System.out.print("\t"+i); }
 			if( i < 10 && month < 10 ) {
+				
 				System.out.print( " [ "+findPrice(year+"-"+"0"+month+"-"+"0"+i)+" ] ");
 			}else if(i >= 10 && month < 10) {
 				System.out.print( " [ "+findPrice(year+"-"+"0"+month+"-"+i)+" ] ");
