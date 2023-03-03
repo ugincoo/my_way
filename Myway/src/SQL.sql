@@ -28,7 +28,7 @@ create table member( -- 회원가입 테이블
 create table recommend( -- 추천게시판 테이블
 	recom_no int auto_increment primary key,
     recom_title varchar(15),
-    recom_view int,
+    recom_view int default 0,
     recom_content text
 );
 
