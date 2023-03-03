@@ -11,6 +11,7 @@ import myWay.controller.OderController;
 import myWay.dto.CouponDto;
 import myWay.dto.DmaterialDto;
 import myWay.dto.PorderDto;
+import myWay.dto.orderListDto;
 
 public class OderFront {
 	private Scanner scanner = new Scanner(System.in);
@@ -238,4 +239,35 @@ public class OderFront {
 
 
 
+	
+	//로그인한 사용자의 주문 내역 보여주기
+	public void viewOrderList() {
+		ArrayList<orderListDto> orderListDB = OderController.getInstance().viewOrderList();
+		if(orderListDB.size() > 0) {
+			System.out.println("--------------------------------------------------- 주문 내역 ---------------------------------------------------");
+			System.out.printf("%2s %10s %10s %10s %10s %10s %10s  %10s \t  %10s\n", "번호", "빵", "치즈", "메인", "채소", "소스", "음료", "총 가격", "구매일");
+			System.out.println("--------------------------------------------------------------------------------------------------------------");
+			for(int i = 0; i < orderListDB.size(); i++) {
+				System.out.printf("%2d %10s %10s %10s %10s %10s %10s %10d원 \t %20s\n",
+						i+1,
+						OderController.getInstance().returnMaterialInfo(orderListDB.get(i).getBreadNo()).getMaterName(),
+						OderController.getInstance().returnMaterialInfo(orderListDB.get(i).getCheName()).getMaterName(),
+						OderController.getInstance().returnMaterialInfo(orderListDB.get(i).getMeatName()).getMaterName(),
+						OderController.getInstance().returnMaterialInfo(orderListDB.get(i).getVegName()).getMaterName(),
+						OderController.getInstance().returnMaterialInfo(orderListDB.get(i).getSourceName()).getMaterName(),
+						OderController.getInstance().returnMaterialInfo(orderListDB.get(i).getDrinkName()).getMaterName(),
+						orderListDB.get(i).getPurchasePrice(),
+						orderListDB.get(i).getOrderDate());
+			}
+			System.out.println("--------------------------------------------------------------------------------------------------------------");
+		}else {
+			System.out.println("┌───────────────┐\n"
+					+ "  주문 목록이 없습니다.\n"
+					+ "└───────────────┘\n"
+					+ "　　ᕱ ᕱ ||\n"
+					+ "　 ( ･ω･ ||\n"
+					+ "　 /　つΦ\n"
+					+ "");
+		}
+	}
 }
