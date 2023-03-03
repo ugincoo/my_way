@@ -13,9 +13,13 @@ public class CouponDto {
 	String cpName;		//쿠폰종류(이름)
 	int cpPrice;		//쿠폰할인가격
 	
+	
+
 	public CouponDto() {
 
 	}
+
+
 
 	public CouponDto(int cpNo, String cpName, int cpPrice) {
 		super();

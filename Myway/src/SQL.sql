@@ -136,3 +136,6 @@ insert into recommend (recom_title, recom_content) values ( '로스트치킨 BES
 insert into recommend (recom_title, recom_content) values ( '쉬림프 BEST' , '쉬림프+새우더블업+에그마요+빵(취향대로)+소스(스위츠칠리,랜치)' );
 insert into recommend (recom_title, recom_content) values ( '비엠티 BEST' , '비엠티+슈레드치즈+에그마요+위트브레드+소스(칠리소스,어니언소스)' );
 
+insert into coupon value(1,'가입축하쿠폰',1000);
+insert into coupon value(2,'생일축하쿠폰',2000);
+insert into coupon value(3,'깜짝쿠폰',3000);

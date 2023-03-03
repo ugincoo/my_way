@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
+import myWay.controller.CouponController;
 import myWay.controller.MemberController;
 import myWay.controller.OderController;
+import myWay.dto.CouponDto;
 import myWay.dto.DmaterialDto;
 import myWay.dto.PorderDto;
 
@@ -99,6 +100,8 @@ public class OderFront {
 	//3. 장바구니 목록 확인
 	public void viewCartList() {
 		ArrayList<DmaterialDto> dto = OderController.getInstance().returnCartList();
+		int price = 0;
+		
 		System.out.println("-------------------현재 장바구니-------------------");
 		for(int i = 0; i < dto.size(); i++) {
 			if(i != 0 && i%OderController.getInstance().returnCategoryCount() == 0) {
@@ -106,36 +109,42 @@ public class OderFront {
 			}
 			String cName = OderController.getInstance().findCategoryName(dto.get(i).getCategoryNo());
 			System.out.printf("%s : %s \t %d원\n", cName, dto.get(i).getMaterName(), dto.get(i).getMaterPrice());
+			price += dto.get(i).getMaterPrice();
 		}
 		System.out.println("--------------------------------------------");
+		System.out.println("장바구니 총 금액 " + price);
 		
-		System.out.println("1. 결제하기 2. 뒤로가기");
+		System.out.println("1. 결제하기 2. 쿠폰 결제하기  3. 뒤로가기");
 		
 		int answer = scanner.nextInt();
 		
 		if(answer == 1) {
-			purchase();
+			purchase(0);
 			
-		}else if(answer == 2) {
-			return;
+		}
+		else if(answer == 2) {
+			int useCouponPrice = couponList(price);
+			purchase(useCouponPrice);
+		}else if(answer == 3) {
+			
 		}
 	}
 	
 	// 2-1 or 3-1 결제하기
-	public void purchase() {
+	public void purchase(int price) {
 		OderController.getInstance().returnPOrderDto();
 		ArrayList<PorderDto> result = OderController.getInstance().purchase();
 		
 		if(result != null) {
 			System.out.println("결제 완료되었습니다.");
-			printOrderPaper(result);
+			printOrderPaper(result, price);
 		}else {
 			System.out.println("결제 실패하였습니다.");
 		}
 	}
 	
 	//영수증 출력
-	public void printOrderPaper(ArrayList<PorderDto> orderPaperList) {
+	public void printOrderPaper(ArrayList<PorderDto> orderPaperList, int price) {
 		if(orderPaperList.size() > 0) {
 			
 			System.out.println("-------------------영수증-------------------");
@@ -152,6 +161,7 @@ public class OderFront {
 				materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getVegNo()));
 				
 				totalPrice += OderController.getInstance().findOneSetPrice(orderPaperList.get(i));
+				//totalPrice=couponList(totalPrice);	// 쿠폰적용을 위한 추가
 			}
 			
 			System.out.printf("%s  %10s \t %8s\n" ,"번호", "재료 이름", "재료 가격");
@@ -163,9 +173,14 @@ public class OderFront {
 				
 			}
 			System.out.println();
-			
-			System.out.print("[총 금액]  " + totalPrice+"\t");
+			if(price == 0) {
+				System.out.print("[총 금액은]  " + totalPrice+"\t");	
+			}else {
+				System.out.println("쿠폰 적용된 금액은 "+ price);
+			}
+
 			System.out.println(OderController.getInstance().formatDateTime);
+			
 			
 			System.out.println();
 			System.out.println("║▌│█║▌│ █║▌│█│║▌║║▌│█║▌│ █║▌│█│║▌║\r\n"
@@ -177,4 +192,50 @@ public class OderFront {
 			System.out.println("결제할 목록이 없습니다.");
 		}
 	}
+	
+	//전체쿠폰조회
+		public int couponList(int totalPrice) {
+	        int totalPrice2=0;
+	        totalPrice2 =totalPrice; 	
+			System.out.println("보유 쿠폰 목록");
+			System.out.printf("%3s \t %10s \t %10s\n","번호","쿠폰종류","할인금액");
+			ArrayList<CouponDto> result =
+						CouponController.getInstance().couponList();
+			
+			for( int i=0; i<result.size(); i++) {
+				System.out.printf("%3s \t %10s \t %10s\n",
+								result.get(i).getCpNo(),
+								result.get(i).getCpName(),
+								result.get(i).getCpPrice());
+			}//for e
+			
+						System.out.println("사용하실 쿠폰 번호를 선택해주세요");
+				
+						int ch = scanner.nextInt();
+						
+						if(ch==1) {
+							totalPrice2 -=1000;
+							return totalPrice2;
+							
+							
+						}else if(ch==2) {
+							
+							totalPrice2 -=2000;
+							return totalPrice2;
+							
+						}else if(ch==3) {
+							totalPrice2 -=3000;
+							return totalPrice2;		
+						}else if(ch==4) {
+							return	totalPrice2; 
+							
+						}
+						return totalPrice;
+					
+		}//couponList e
+
+
+
+
+
 }
