@@ -14,7 +14,7 @@ public class SalesDao extends DB연동{
 	private SalesDao() { }
 	
 	// 월 매출 출력 or 일 매출 출력
-	public ArrayList<SalesDto> printSales() {
+	public ArrayList<SalesDto> printSales(String date) {
 		ArrayList<SalesDto> salesDB = new ArrayList<>();
 		String sql = "select pSearch.mater_no, pSearch.mater_name, count(pSearch.mater_no), mater_price*count(pSearch.mater_no)"
 				+ "		from (select  ph.purchase_date, d.mater_name, d.mater_no, d.mater_price, po.drink_no, po.veg_no, po.bread_no, po.che_no, po.source_no, po.meat_no"
@@ -32,7 +32,7 @@ public class SalesDao extends DB연동{
 		try {
 			ps = con.prepareStatement(sql);
 			
-			ps.setString(1, "%2023-03%");
+			ps.setString(1, "%"+date+"%");
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {

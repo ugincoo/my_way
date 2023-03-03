@@ -191,5 +191,12 @@ public class OderController {
 		return orderList;
 	}
 	
+	//로그인한 사용자의 주문 내역 확인 하기 
+	public ArrayList<orderListDto> viewOrderList(){
+		return OderDao.getInstance().viewOrderList();
+	}
+	
+	//이름 반환 메소드
+	
 	
 }

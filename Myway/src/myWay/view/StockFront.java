@@ -26,11 +26,14 @@ public class StockFront {
 			try {
 				//관리자가 로그인하면 먼저 알림창 먼저 
 				ArrayList<String> notices = StockController.getInstance().noticeMessageList;
-				System.out.println("━━━━━━━━━━━━━━━━━━━━ 알림창 ["+notices.size()+"] ━━━━━━━━━━━━━━━━━━━━");
-				for(int i= 0; i < notices.size(); i++) {
-					System.out.println(notices.get(i));
+				
+				if(notices.size() > 0) {
+					System.out.println("━━━━━━━━━━━━━━━━━━━━ 알림창 ["+notices.size()+"] ━━━━━━━━━━━━━━━━━━━━");
+					for(int i= 0; i < notices.size(); i++) {
+						System.out.println(notices.get(i));
+					}
+					StockController.getInstance().noticeMessageList.clear(); //모두 출력했으면 지워주기
 				}
-				StockController.getInstance().noticeMessageList.clear(); //모두 출력했으면 지워주기
 				
 				System.out.println("━━━━━━━━━━━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━━━━━━━━━━━");
 				System.out.print("[1]재고 관리  [2]커뮤니티  [3]매출현황  [4]회원조회  [5]나가기 :");
@@ -138,21 +141,21 @@ public class StockFront {
 	public void printCurrentSales() {
 			//달력 출력 하고!
 			System.out.println();
-			SalesController.getInstance().Calendar( 0 );
+			SalesFront.getInstance().Calendar( 0 );
 			while(true) {
 				System.out.println("[-1]이전달 [0]월 매출보기 [1]다음달 [2]일 매출보기 [3]나가기 : ");
 				int choice = scanner.nextInt();
 				
 				if(choice == -1){ // 이전달
-					SalesController.getInstance().Calendar( choice );
+					SalesFront.getInstance().Calendar( choice );
 				}else if(choice == 0) { //달력에 보여진 월의 매출
-					SalesFront.getInstance().printCurrentSales("null");
+					SalesFront.getInstance().printMCurrentSales();
 				}else if(choice == 1) {
-					SalesController.getInstance().Calendar( choice );
+					SalesFront.getInstance().Calendar( choice );
 				}else if(choice == 2) {
 					System.out.print("일 입력 : ");
 					int selectDay = scanner.nextInt();
-					SalesFront.getInstance().printCurrentSales("null");
+					SalesFront.getInstance().printDCurrentSales(selectDay);
 				}else if(choice == 3) {
 					return;
 				}

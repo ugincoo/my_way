@@ -365,5 +365,39 @@ private static OderDao oderDao = new OderDao();
 		}
 	}
 	
+	//주문 내역 보기
+	public ArrayList<orderListDto> viewOrderList(){
+		ArrayList<orderListDto> orderDB = new ArrayList<>();
+		
+		String sql = "select po.bread_no, po.che_no, po.meat_no, po.veg_no, po.source_no, po.drink_no, ph.purchase_price, ph.purchase_date"
+				    + "		from porder po, purchase ph"
+			        + "  	where member_no = ? and po.porder_no = ph.porder_no";
+		
+		try {
+			ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, MemberController.getInstance().dto().getMemberNo());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				orderListDto oDto = new orderListDto(
+						rs.getInt(1), 
+						rs.getInt(2),
+						rs.getInt(3), 
+						rs.getInt(4), 
+						rs.getInt(5), 
+						rs.getInt(6), 
+						rs.getInt(7), 
+						rs.getString(8));
+				
+				orderDB.add(oDto);
+		}
+			return orderDB;
+	}catch(Exception e) {
+		System.err.println(e.getMessage());
+		return null;
+	}
+  }
 	
 }
