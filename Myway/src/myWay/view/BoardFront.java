@@ -22,9 +22,10 @@ public class BoardFront {
 	// 커뮤니티 선택
 	public void boardIndex() {//boardIndex s
 		while(true) { // 추천게시물 3개 해야함
-			System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 커뮤니티 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
+			System.out.println(" ┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 🌭 커뮤니티 🌭 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑  ");
 			boardPrintRecent();
 			System.out.print("1.추천목록 2.주문하기 3.장바구니목록확인 4. 주문내역 5.뒤로가기 : ");
+			System.out.println();
 			int select = scanner.nextInt();
 			if( select == 1) {boardList();}
 			else if( select == 2) {OderFront.getInstance().order();}
@@ -37,7 +38,7 @@ public class BoardFront {
 	
 	//게시물출력
 	public void boardList(){//void s
-		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ 추천목록 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  ");
+		System.out.println(" ┍━━━━━━━━━━━━━━━━━━━━━━━ (ノ◕ヮ◕)ノ* ・゚✧ 직원 추천 조합 ✧゚・ *ヽ(◕ヮ◕ヽ) ━━━━━━━━━━━━━━━━━━━━━━━┑ ");
 		System.out.printf("%3s \t %10s \t %10s \t %10s \n","번호","제목","조회수","내용");
 		// ArrayList 저장
 		ArrayList<RecomendDto> result = BoardController.getInstance().boardlist();;
@@ -101,7 +102,8 @@ public class BoardFront {
 			System.out.printf(" %5s\t%10s\t%5s\t%10s \n",
 					dto.getRecomNo(),dto.getRecomTitle(),dto.getRecomView(),dto.getRecomContent());
 		}
-		System.out.println(" •┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈＊┈┈┈┈• ");
+		System.out.println();
+		System.out.println(" ┕━━━━━━━━━━━━━"+Front.FONT_YELLOW+"😊"+Front.RESET+"━━"+Front.FONT_GREEN+"🌭"+Front.RESET+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"+Front.FONT_GREEN+"🌭"+Front.RESET+"━━"+Front.FONT_YELLOW+"😊"+Front.RESET+"━━"+Front.FONT_GREEN+"🌭"+Front.RESET+"━━"+Front.FONT_YELLOW+"😊"+Front.RESET+"━━┙ ");
 	}	
 	
 	//댓글 작성

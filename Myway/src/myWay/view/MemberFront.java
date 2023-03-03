@@ -88,7 +88,7 @@ public class MemberFront {
 		
 		if(result==true) {
 			
-			System.out.println( "["+ MemberController.getInstance().dto().getMemberId()+"]님 환영합니다 🎔");
+			System.out.println( "["+ MemberController.getInstance().dto().getMemberId()+"]님 환영합니다"+Front.FONT_RED+"🎔"+Front.RESET);
 			if( MemberController.getInstance().dto().getMemberId().equals("admin") ) {
 				StockFront.getInstance().managerpage();
 			}else { BoardFront.getInstance().boardIndex();}
