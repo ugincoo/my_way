@@ -33,7 +33,7 @@ public class SalesController {
 			if( month > 12 ) { month = 1; year++; }
 		}
 		
-		System.out.printf("=================== %d 년 %d 월 ===================\n" , year , month );
+		System.out.printf("==================================================== %d 년 %d 월 ====================================================\n" , year , month );
 		System.out.println("\t일\t\t월\t\t화\t\t수\t\t목\t\t금\t\t토\t");
 		cal.set(year, month-1, 1); //  현재 연도/월 의 1일 날짜 형식으로 변경
 		int sweek = cal.get( Calendar.DAY_OF_WEEK ); // 해당 월의 시작일
@@ -42,18 +42,19 @@ public class SalesController {
 		for( int i = 1; i<sweek ; i++ ) { System.out.print("\t\t"); } // 해당 월 1일 전까지 공백으로 채우기
 		
 		for( int i = 1; i<= eday ; i++ ) {
-			System.out.print("\t"+i+"\t");
+			if( i < 10 ) { System.out.print("\t0"+i); }
+			else { System.out.print("\t"+i); }
 			if( i < 10 && month < 10 ) {
-				System.out.print(findPrice(year+"-"+"0"+month+"-"+"0"+i));
+				System.out.print( " [ "+findPrice(year+"-"+"0"+month+"-"+"0"+i)+" ] ");
 			}else if(i >= 10 && month < 10) {
-				System.out.print(findPrice(year+"-"+"0"+month+"-"+i));
+				System.out.print( " [ "+findPrice(year+"-"+"0"+month+"-"+i)+" ] ");
 			}else if(i < 10 && month >= 10) {
-				System.out.print(findPrice(year+"-"+month+"-"+"0"+i));
-			}else { System.out.print(findPrice(year+"-"+month+"-"+i)); }
+				System.out.print( " [ "+findPrice(year+"-"+month+"-"+"0"+i)+" ] ");
+			}else { System.out.print( "[ "+findPrice(year+"-"+month+"-"+i)+" ] "); }
 			if( sweek%7 == 0 ) { System.out.println(); }
 			sweek++;
 		}
-		System.out.println("\n===================================================");
+		System.out.println("\n=====================================================================================================================");
 		
 		}
 	

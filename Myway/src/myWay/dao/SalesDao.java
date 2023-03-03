@@ -71,7 +71,7 @@ public class SalesDao extends DB연동{
 			
 		}catch (Exception e) { System.out.println(" DB 오류 : "+ e );}
 		
-		return -1;
+		return 0;
 	}
 	
 }
