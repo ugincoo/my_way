@@ -16,7 +16,11 @@ create table dMaterials( -- 재료 상세 테이블
 	mater_price int,
 	foreign key (category_no) references mMaterials(category_no)
 );
-
+create table coupon(
+cp_no int,
+cp_name varchar(30),
+cp_price int
+);
 create table member( -- 회원가입 테이블
 	member_no int auto_increment primary key,
     member_id varchar(15) not null,
