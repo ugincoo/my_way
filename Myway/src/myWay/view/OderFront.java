@@ -1,12 +1,9 @@
 package myWay.view;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import myWay.controller.CouponController;
-import myWay.controller.MemberController;
 import myWay.controller.OderController;
 import myWay.dto.CouponDto;
 import myWay.dto.DmaterialDto;
@@ -66,22 +63,6 @@ public class OderFront {
 					int materNo = OderController.getInstance().findMaterNo(No, i+1);
 					inCartNoArr.add(materNo);
 				}
-
-//				if(i+1 == 5) { //소스인 경우
-//					System.out.print("[숫자만]소스를 종류 몇개 넣으실건가요 ? ");
-//					int souFor = scanner.nextInt();
-//					souNo = new int[souFor];
-//					
-//					for(int j = 0; j < souFor; j++) {
-//						System.out.print(j+1 + "번째 소스 번호 선택 : ");
-//						souNo[j] = scanner.nextInt();
-//					}
-//					for(int j = 0; j < souNo.length; j++) {
-//						int materNo = OderController.getInstance().findMaterNo(souNo[j], i+1);
-//						inCartNoArr.add(materNo);
-//					}
-//				}else {
-//				}
 				
 			}
 			System.out.print("장바구니에 담겠습니까 ? [1. Yes 2. No] : ");
@@ -124,7 +105,7 @@ public class OderFront {
 			
 		}
 		else if(answer == 2) {
-			int useCouponPrice = couponList(price);
+			int useCouponPrice = CouponFront.getInstance().couponList(price);
 			purchase(useCouponPrice);
 		}else if(answer == 3) {
 			
@@ -193,52 +174,6 @@ public class OderFront {
 			System.out.println("결제할 목록이 없습니다.");
 		}
 	}
-	
-	//전체쿠폰조회
-		public int couponList(int totalPrice) {
-	        int totalPrice2=0;
-	        totalPrice2 =totalPrice; 	
-			System.out.println("보유 쿠폰 목록");
-			System.out.printf("%3s \t %10s \t %10s\n","번호","쿠폰종류","할인금액");
-			ArrayList<CouponDto> result =
-						CouponController.getInstance().couponList();
-			
-			for( int i=0; i<result.size(); i++) {
-				System.out.printf("%3s \t %10s \t %10s\n",
-								result.get(i).getCpNo(),
-								result.get(i).getCpName(),
-								result.get(i).getCpPrice());
-			}//for e
-			
-						System.out.println("사용하실 쿠폰 번호를 선택해주세요");
-				
-						int ch = scanner.nextInt();
-						
-						if(ch==1) {
-							totalPrice2 -=1000;
-							return totalPrice2;
-							
-							
-						}else if(ch==2) {
-							
-							totalPrice2 -=2000;
-							return totalPrice2;
-							
-						}else if(ch==3) {
-							totalPrice2 -=3000;
-							return totalPrice2;		
-						}else if(ch==4) {
-							return	totalPrice2; 
-							
-						}
-						return totalPrice;
-					
-		}//couponList e
-
-
-
-
-
 	
 	//로그인한 사용자의 주문 내역 보여주기
 	public void viewOrderList() {

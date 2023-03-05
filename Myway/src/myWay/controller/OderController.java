@@ -1,16 +1,11 @@
 package myWay.controller;
 
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 import myWay.dto.*;
 import myWay.dao.*;
-import myWay.controller.*;
-import myWay.view.*;
 
 public class OderController {
 	private static OderController oc = new OderController();
@@ -195,8 +190,4 @@ public class OderController {
 	public ArrayList<orderListDto> viewOrderList(){
 		return OderDao.getInstance().viewOrderList();
 	}
-	
-	//이름 반환 메소드
-	
-	
 }

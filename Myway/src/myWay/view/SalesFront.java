@@ -70,7 +70,7 @@ public class SalesFront {
 					salesDB.get(i).getMaterSalesPrice());
 		}
 	}
-	
+	//매출 현황[일]
 	public void printDCurrentSales(int day) {
 		String searchDate = returnDate();
 		
@@ -89,7 +89,7 @@ public class SalesFront {
 					salesDB.get(i).getMaterSalesPrice());
 		}
 	}
-	
+	//date String으로 반환
 	public String returnDate() {
 		String date = year + "-";
 		

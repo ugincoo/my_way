@@ -48,7 +48,4 @@ public class RecomendDto {
 	public void setRecomContent(String recomContent) {
 		this.recomContent = recomContent;
 	}
-	
-	
-	
 }
