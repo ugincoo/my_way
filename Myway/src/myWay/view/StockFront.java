@@ -26,6 +26,7 @@ public class StockFront {
 			try {
 				//관리자가 로그인하면 먼저 알림창 먼저 
 				ArrayList<String> notices = StockController.getInstance().noticeMessageList;
+
 				
 				if(notices.size() > 0) {
 					System.out.println("━━━━━━━━━━━━━━━━━━━━ 알림창 ["+notices.size()+"] ━━━━━━━━━━━━━━━━━━━━");
@@ -35,7 +36,7 @@ public class StockFront {
 					StockController.getInstance().noticeMessageList.clear(); //모두 출력했으면 지워주기
 				}
 				
-				System.out.println("━━━━━━━━━━━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━━━━━━━━━━━");
+				System.out.println("━━━━━━━━━━━━━━━━━━━━━ 관리자 페이지 ━━━━━━━━━━━━━━━━━━━━━");
 				System.out.print("[1]재고 관리  [2]커뮤니티  [3]매출현황  [4]회원조회  [5]나가기 :");
 				int ch = scanner.nextInt();
 				if( ch == 1) { stockpage(); }
@@ -88,21 +89,28 @@ public class StockFront {
 	
 	// 재료 등록
 	public void materialSignup( int categoryNo ) {
-		System.out.print("〖 제품명 〗: ");		String materName = scanner.next();
-		System.out.print("〖 제품 가격 〗: ");	int materprice = scanner.nextInt();
-		System.out.print("〖 제품 재고 〗: ");	int materStock = scanner.nextInt();
-		
-		// 데이터 전달
-		 boolean result = StockController.getInstance().materialSignup(categoryNo, materName, materprice, materStock);
-		
-		 if( result ) { System.out.println(" 【 제품 등록 】 "); }
-		 else { System.out.println(" 【 제품 등록 실패 】 "); }
+		try {
+			System.out.print("〖 제품명 〗: ");		String materName = scanner.next();
+			System.out.print("〖 제품 가격 〗: ");	int materprice = scanner.nextInt();
+			System.out.print("〖 제품 재고 〗: ");	int materStock = scanner.nextInt();
+			
+			// 데이터 전달
+			 boolean result = StockController.getInstance().materialSignup(categoryNo, materName, materprice, materStock);
+			
+			 if( result ) { System.out.println(" 【 제품 등록 】 "); }
+			 else { System.out.println(" 【 제품 등록 실패 】 "); }
+		}catch( InputMismatchException e ) {
+			System.out.println("!잘못된 입력입니다!");
+			Scanner scanner = new Scanner(System.in);
+		}catch( Exception e ) { 
+			System.out.println("!!프로그램내 오류 발생 : 관리자 문의!!");
+		}
 	}
 	
 	// 재료 수정
 	public void materialUpdate( int categoryNo ) {
 		try {
-			System.out.println("〖 변경하실 재료번호와 구분을 입력해주세요. 〗");
+			System.out.println("〖 ! 변경하실 재료번호와 구분을 입력해주세요. 〗");
 			System.out.println("[1]재료명 [2]재료가격 [3]재고 ");
 			System.out.print("- 재료번호 : "); 	int materNo = scanner.nextInt();
 			System.out.print("- 구분 : "); 		int ch = scanner.nextInt();
@@ -129,17 +137,24 @@ public class StockFront {
 
 	// 재료 삭제
 	public void materialDelete( ) {
-		System.out.println("〖 삭제하실 재료번호를 입력해주세요. 〗");
-		int materNo = scanner.nextInt();
-		
-		boolean result = StockController.getInstance().materialDelete(materNo);
-		if( result ) { System.out.println(" 【 삭제 완료 】 "); }
-		else { System.out.println( " 【 삭제 실패 】 " ); }
+		try {
+			System.out.println("〖 삭제하실 재료번호를 입력해주세요. 〗");
+			int materNo = scanner.nextInt();
+			
+			boolean result = StockController.getInstance().materialDelete(materNo);
+			if( result ) { System.out.println(" 【 삭제 완료 】 "); }
+			else { System.out.println( " 【 삭제 실패 】 " ); }
+		}catch( InputMismatchException e ) {
+			System.out.println("!잘못된 입력입니다!");
+			Scanner scanner = new Scanner(System.in);		
+		}catch( Exception e ) { 
+			System.out.println("!!프로그램내 오류 발생 : 관리자 문의!!");
+		}
 	}
 	
 	//매출현황
 	public void printCurrentSales() {
-			//달력 출력 하고!
+		try {
 			System.out.println();
 			SalesFront.getInstance().Calendar( 0 );
 			while(true) {
@@ -160,6 +175,12 @@ public class StockFront {
 					return;
 				}
 			}
+		}catch( InputMismatchException e ) {
+			System.out.println("!잘못된 입력입니다!");
+			Scanner scanner = new Scanner(System.in);		
+		}catch( Exception e ) { 
+			System.out.println("!!프로그램내 오류 발생 : 관리자 문의!!");
+		}
 		
 	}
 	

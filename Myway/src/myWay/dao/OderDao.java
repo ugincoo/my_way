@@ -1,17 +1,10 @@
 package myWay.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import myWay.dto.*;
-import myWay.dao.*;
 import myWay.controller.*;
-import myWay.view.*;
 
 public class OderDao extends DB연동 {
 private static OderDao oderDao = new OderDao();

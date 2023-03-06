@@ -10,8 +10,6 @@ public class PurchaseDto {
     // 생성자
     public PurchaseDto() { }
 
-    
-
 	public PurchaseDto(int purchaseNo, int porderNo, int purchasePrice, String purchaseDateTime) {
 		super();
 		this.purchaseNo = purchaseNo;
@@ -19,8 +17,6 @@ public class PurchaseDto {
 		this.purchasePrice = purchasePrice;
 		this.purchaseDateTime = purchaseDateTime;
 	}
-
-
 
 	// 메소드
 	@Override

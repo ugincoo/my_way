@@ -65,9 +65,7 @@ public class SalesDao extends DB연동{
 			rs = ps.executeQuery();
 			rs.next();
 			
-			
 			return rs.getInt(1);
-			
 			
 		}catch (Exception e) { System.out.println(" DB 오류 : "+ e );}
 		

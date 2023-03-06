@@ -16,8 +16,13 @@ public class CouponFront {
 	
 	Scanner scanner = new Scanner(System.in);
 	
+
+	
+
 	//전체쿠폰조회
-	public void couponList() {
+	public int couponList(int totalPrice) {
+        int totalPrice2=0;
+        totalPrice2 =totalPrice; 	
 		System.out.println("보유 쿠폰 목록");
 		System.out.printf("%3s \t %10s \t %10s\n","번호","쿠폰종류","할인금액");
 		ArrayList<CouponDto> result =
@@ -28,33 +33,29 @@ public class CouponFront {
 							result.get(i).getCpNo(),
 							result.get(i).getCpName(),
 							result.get(i).getCpPrice());
-			
-			System.out.println("사용하실 쿠폰 번호를 선택해주세요");
-			
-
-			
-			int ch = scanner.nextInt();
-			if(ch==1) {
-				welcome();
-			}else if(ch==2) {
-				
-			}else if(ch==3) {
-				
-			}else {
-				break;
-			}
-
 		}//for e
-		
-		
+				while(true) {	
+					System.out.println("사용하실 쿠폰 번호를 선택해주세요");
+			
+					int ch = scanner.nextInt();
+					if(ch==1) {
+						totalPrice2 -=1000;
+						return totalPrice2;
+						
+					}else if(ch==2) {
+						
+						totalPrice2 -=2000;
+						return totalPrice2;
+						
+					}else if(ch==3) {
+						totalPrice2 -=3000;
+						return totalPrice2;		
+					}	
+					return totalPrice;
+				}
 	}//couponList e
+
 	
-	
-	
-	public void welcome() {
-		
-	}
-	
-	
+
 	
 }

@@ -21,7 +21,8 @@ public class MemberFront {
 	//메인화면: 회원가입, 로그인 메뉴 분기 처리 (1, 2) 
 	public void index() {
 		while(true) {
-			System.out.println("1.회원가입 2.로그인 3.아이디찾기 4.비밀번호수정 5.회원탈퇴 ");
+			System.out.println("어서오세요! "+Front.FONT_YELLOW+"MY"+Front.FONT_GREEN+"WAY"+Front.RESET+"입니다 :) ");
+			System.out.println("[1]회원가입  [2]로그인  [3]아이디 찾기  [4]비밀번호 수정  [5]회원탈퇴 : ");
 			int ch=scanner.nextInt();
 			if(ch==1) {
 				signup();
@@ -40,24 +41,24 @@ public class MemberFront {
 	
 	// 회원가입 선택 했을 때 화면
 	public void signup() {
-		System.out.println("아이디입력하세요");
+		System.out.println("아이디 입력하세요.");
 		String memberId = scanner.next();
 		
-		System.out.println("비밀번호입력하세요");
+		System.out.println("비밀번호 입력하세요.");
 		int memberPw = scanner.nextInt();
 		
-		System.out.println("비밀번호재입력해주세요");
+		System.out.println("비밀번호 재입력해주세요.");
 		int confirmed = scanner.nextInt();
 		
-		System.out.println("핸드폰번호를입력하세요");
+		System.out.println("핸드폰번호를 입력하세요.");
 		String memberphone = scanner.next();
 		
-		System.out.println("이름을입력해주세요");
+		System.out.println("이름을 입력해주세요.");
 		String membername = scanner.next();
 				
 		
 		if(memberPw != confirmed) {
-			System.out.println("비밀번호가일치하지 않습니다");
+			System.out.println("비밀번호가 일치하지 않습니다.");
 		}
 		
 		
@@ -65,9 +66,9 @@ public class MemberFront {
 				MemberController.getInstance().signup(memberId,memberPw,memberphone,membername);
 		
 		if(result==true) {
-			System.out.println("회원가입이 완료되었습니다");
+			System.out.println("[회원가입]이 완료되었습니다!");
 		}else if(result==false) {
-			System.out.println("회원가입이 완료되지 않았습니다.");
+			System.out.println("[회원가입]이 완료되지 않았습니다.");
 		}
 		
 	}//signup e
@@ -76,10 +77,10 @@ public class MemberFront {
 	// 로그인 선택했을 때 화면 --> 추천메뉴(limit) --> 메인페이지 (추후 취합할 예정할 페이지)
 	
 	public void login() {
-		System.out.println("아이디를입력하세요");
+		System.out.println("아이디를 입력하세요.");
 		String memberId = scanner.next();
 		
-		System.out.println("비밀번호를입력하세요");
+		System.out.println("비밀번호를 입력하세요.");
 		int memberPw = scanner.nextInt();
 		
 		boolean result= 
@@ -87,7 +88,7 @@ public class MemberFront {
 		
 		if(result==true) {
 			
-			System.out.println( MemberController.getInstance().dto().getMemberId()+"님 환영합니다");
+			System.out.println( "["+ MemberController.getInstance().dto().getMemberId()+"]님 환영합니다"+Front.FONT_RED+"🎔"+Front.RESET);
 			if( MemberController.getInstance().dto().getMemberId().equals("admin") ) {
 				StockFront.getInstance().managerpage();
 			}else { BoardFront.getInstance().boardIndex();}
@@ -99,7 +100,7 @@ public class MemberFront {
 	//비밀번호수정 개어려움 ㅠ 로그인되야 가능하게 설게함 로그인 후 뒤로가기하삼 ㅇㅇ 
 	public void update() {
 		if(MemberController.getInstance().checkLogin()) {
-			System.out.println("--------비밀번호수정-------");
+			System.out.println("------------ 비밀번호 수정 ------------");
 			/*
 			 * System.out.print("회원아이디를 입력하세요 ::: "); String memberid=scanner.next();
 			 */
@@ -133,10 +134,10 @@ public class MemberFront {
 	
 	//아이디찾기
 	public void findId() {
-		System.out.println("---------아이디찾기-----------");
-		System.out.print("회원이름을 입력하세요 : ");
+		System.out.println("------------ 아이디 찾기 ------------");
+		System.out.print("회원이름을 입력하세요. : ");
 		String membername = scanner.next();
-		System.out.print("전화번호를 입력하세요 : ");
+		System.out.print("전화번호를 입력하세요. : ");
 		String memberphone = scanner.next();
 		
 		MemberDto result = MemberController.getInstance().checknamephone(membername,memberphone);
@@ -151,10 +152,10 @@ public class MemberFront {
 	
 	//회원탈퇴
 	public void delete() {
-		System.out.println("---------회원탈퇴-----------");
-		System.out.println("회원아이디를 입력하세요");
+		System.out.println("------------ 회원탈퇴 ------------");
+		System.out.println("회원아이디를 입력하세요. : ");
 		String memberId = scanner.next();
-		System.out.println("비밀번호를 입력하세요");
+		System.out.println("비밀번호를 입력하세요. : ");
 		int memberpw = scanner.nextInt();
 		
 		
@@ -173,20 +174,23 @@ public class MemberFront {
 	
 	//전체회원조회
 	public void Allprint() {
-		System.out.println("전체회원입니다");
-		System.out.printf("%3s \t %10s \t %10s \t %10s %10s\n","번호","아이디","비밀번호","휴대폰","이름");
+		System.out.println("---------------------------- 전체 회원 페이지 ----------------------------");
+		System.out.printf("%3s \t %10s \t %10s \t %10s \t %10s\n","no","아이디","비밀번호","이름","전화번호");
+		System.out.println("======================================================================");
 		ArrayList<MemberDto> result = 
 				MemberController.getInstance().Allprint();
 		
-		
+
 		for(int i=0; i<result.size(); i++) {
-			System.out.printf("%3s \t %10s \t %10s \t %10s \t %10s \n",
+			System.out.printf("%3s \t %10s \t %10s \t %10s \t %10s\n",
 					result.get(i).getMemberNo(),
 					result.get(i).getMemberId(),
 					result.get(i).getMemberPw(),
-					result.get(i).getMemberphone(),
-					result.get(i).getMembername());
+					result.get(i).getMembername(),
+					result.get(i).getMemberphone()
+					);
 		}
+		System.out.println("----------------------------------------------------------------------");
 		
 	}
 	

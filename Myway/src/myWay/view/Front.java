@@ -19,7 +19,9 @@ public class Front {
 		public static final String FONT_BLUE = "\u001B[34m";   
 		public static final String FONT_PURPLE = "\u001B[35m";     
 		public static final String FONT_CYAN = "\u001B[36m";    
-		public static final String FONT_WHITE = "\u001B[37m";     
+		public static final String FONT_WHITE = "\u001B[37m";  
+		public static final String FONT_PINK = "\u001B[95m";  
+		
 		public static final String BACKGROUND_BLACK = "\u001B[40m";     
 		public static final String BACKGROUND_RED = "\u001B[41m";     
 		public static final String BACKGROUND_GREEN = "\u001B[42m";    
@@ -46,7 +48,7 @@ public class Front {
 					+ "    \\__/  \\__/     /__/     \\__\\     |__|     \n"
 					+ RESET);
 			System.out.println("________________________________________________________");
-			System.out.println("어서오세요! "+FONT_YELLOW+"MY"+FONT_GREEN+"WAY"+RESET+"입니다 :) ");
+			
 		}
 		
 		

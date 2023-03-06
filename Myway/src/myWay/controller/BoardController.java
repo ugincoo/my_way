@@ -47,6 +47,7 @@ public class BoardController {
 	}
 	//댓글 삭제
 	public boolean delete(int bcommNo) {
-		return BoardDao.getInstance().delete(bcommNo);
+		return BoardDao.getInstance().delete(bcommNo,MemberController.getInstance().dto().getMemberNo());
 	}
+
 }

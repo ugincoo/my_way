@@ -1,13 +1,11 @@
 package myWay.view;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
-import myWay.controller.MemberController;
+import myWay.controller.CouponController;
 import myWay.controller.OderController;
+import myWay.dto.CouponDto;
 import myWay.dto.DmaterialDto;
 import myWay.dto.PorderDto;
 import myWay.dto.orderListDto;
@@ -65,22 +63,6 @@ public class OderFront {
 					int materNo = OderController.getInstance().findMaterNo(No, i+1);
 					inCartNoArr.add(materNo);
 				}
-
-//				if(i+1 == 5) { //소스인 경우
-//					System.out.print("[숫자만]소스를 종류 몇개 넣으실건가요 ? ");
-//					int souFor = scanner.nextInt();
-//					souNo = new int[souFor];
-//					
-//					for(int j = 0; j < souFor; j++) {
-//						System.out.print(j+1 + "번째 소스 번호 선택 : ");
-//						souNo[j] = scanner.nextInt();
-//					}
-//					for(int j = 0; j < souNo.length; j++) {
-//						int materNo = OderController.getInstance().findMaterNo(souNo[j], i+1);
-//						inCartNoArr.add(materNo);
-//					}
-//				}else {
-//				}
 				
 			}
 			System.out.print("장바구니에 담겠습니까 ? [1. Yes 2. No] : ");
@@ -100,6 +82,8 @@ public class OderFront {
 	//3. 장바구니 목록 확인
 	public void viewCartList() {
 		ArrayList<DmaterialDto> dto = OderController.getInstance().returnCartList();
+		int price = 0;
+		
 		System.out.println("-------------------현재 장바구니-------------------");
 		for(int i = 0; i < dto.size(); i++) {
 			if(i != 0 && i%OderController.getInstance().returnCategoryCount() == 0) {
@@ -107,36 +91,42 @@ public class OderFront {
 			}
 			String cName = OderController.getInstance().findCategoryName(dto.get(i).getCategoryNo());
 			System.out.printf("%s : %s \t %d원\n", cName, dto.get(i).getMaterName(), dto.get(i).getMaterPrice());
+			price += dto.get(i).getMaterPrice();
 		}
 		System.out.println("--------------------------------------------");
+		System.out.println("장바구니 총 금액 " + price);
 		
-		System.out.println("1. 결제하기 2. 뒤로가기");
+		System.out.println("1. 결제하기 2. 쿠폰 결제하기  3. 뒤로가기");
 		
 		int answer = scanner.nextInt();
 		
 		if(answer == 1) {
-			purchase();
+			purchase(0);
 			
-		}else if(answer == 2) {
-			return;
+		}
+		else if(answer == 2) {
+			int useCouponPrice = CouponFront.getInstance().couponList(price);
+			purchase(useCouponPrice);
+		}else if(answer == 3) {
+			
 		}
 	}
 	
 	// 2-1 or 3-1 결제하기
-	public void purchase() {
+	public void purchase(int price) {
 		OderController.getInstance().returnPOrderDto();
 		ArrayList<PorderDto> result = OderController.getInstance().purchase();
 		
 		if(result != null) {
 			System.out.println("결제 완료되었습니다.");
-			printOrderPaper(result);
+			printOrderPaper(result, price);
 		}else {
 			System.out.println("결제 실패하였습니다.");
 		}
 	}
 	
 	//영수증 출력
-	public void printOrderPaper(ArrayList<PorderDto> orderPaperList) {
+	public void printOrderPaper(ArrayList<PorderDto> orderPaperList, int price) {
 		if(orderPaperList.size() > 0) {
 			
 			System.out.println("-------------------영수증-------------------");
@@ -153,6 +143,7 @@ public class OderFront {
 				materialsList.add( OderController.getInstance().returnMaterialInfo(orderPaperList.get(i).getVegNo()));
 				
 				totalPrice += OderController.getInstance().findOneSetPrice(orderPaperList.get(i));
+				//totalPrice=couponList(totalPrice);	// 쿠폰적용을 위한 추가
 			}
 			
 			System.out.printf("%s  %10s \t %8s\n" ,"번호", "재료 이름", "재료 가격");
@@ -164,9 +155,14 @@ public class OderFront {
 				
 			}
 			System.out.println();
-			
-			System.out.print("[총 금액]  " + totalPrice+"\t");
+			if(price == 0) {
+				System.out.print("[총 금액은]  " + totalPrice+"\t");	
+			}else {
+				System.out.println("쿠폰 적용된 금액은 "+ price);
+			}
+
 			System.out.println(OderController.getInstance().formatDateTime);
+			
 			
 			System.out.println();
 			System.out.println("║▌│█║▌│ █║▌│█│║▌║║▌│█║▌│ █║▌│█│║▌║\r\n"
@@ -203,8 +199,8 @@ public class OderFront {
 			System.out.println("┌───────────────┐\n"
 					+ "  주문 목록이 없습니다.\n"
 					+ "└───────────────┘\n"
-					+ "　　ᕱ ᕱ ||\n"
-					+ "　 ( ･ω･ ||\n"
+					+ "　　 ᕱ ᕱ ||\n"
+					+ "　 ( ･ω･  ||\n"
 					+ "　 /　つΦ\n"
 					+ "");
 		}

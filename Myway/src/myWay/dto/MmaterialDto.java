@@ -22,7 +22,5 @@ public class MmaterialDto {
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
 	}
-	
-	
-	
+
 }
