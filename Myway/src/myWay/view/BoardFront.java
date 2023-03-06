@@ -24,8 +24,7 @@ public class BoardFront {
 	// 커뮤니티 선택
 	public void boardIndex() {//boardIndex s
 		while(true) { // 추천게시물 3개 해야함
-			System.out.println(" ┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 🌭 커뮤니티 🌭 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑  ");
-			System.out.println();
+			System.out.println(" ┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ・゚✧ 커뮤니티 ・゚✧ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑  ");
 			boardPrintRecent();
 			System.out.print("1.추천목록 2.주문하기 3.장바구니목록확인 4. 주문내역 5.뒤로가기 : ");
 			int select = scanner.nextInt();
@@ -40,22 +39,21 @@ public class BoardFront {
 	
 	//게시물출력
 	public void boardList(){//void s
-		System.out.println(" ┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ (ノ◕ヮ◕)ノ"+Front.FONT_YELLOW+"* ・゚✧ "+Front.RESET+"직원 추천 조합 "+Front.FONT_YELLOW+"✧゚・ *"+Front.RESET+"ヽ(◕ヮ◕ヽ) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑ ");
-		System.out.println();
-		System.out.printf("\t%3s\t%10s\t%12s\t%32s \n","번호","제목","조회수","내용");
+		System.out.println(" ┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ (ノ◕ヮ◕)ノ"+Front.FONT_YELLOW+"* ・゚✧ "+Front.RESET+"직원 추천 조합 "+Front.FONT_YELLOW+"✧゚・ *"+Front.RESET+"ヽ(◕ヮ◕ヽ) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑ ");
+		System.out.printf("\t%3s\t%10s\t%13s\t%28s \n","번호","제목","조회수","내용");
 		System.out.println();
 		// ArrayList 저장
 		ArrayList<RecomendDto> result = BoardController.getInstance().boardlist();;
 		
 		//반복문 돌리기
 		for(int i = 0 ; i<result.size();i++) {// for s
-			System.out.printf("\t %2s\t%13s \t %4s\t%42s \n",
+			System.out.printf("\t %2s\t%15s \t %4s\t%42s \n",
 				result.get(i).getRecomNo(),result.get(i).getRecomTitle(),
 				result.get(i).getRecomView(),result.get(i).getRecomContent() );
 			
 		} //for문 e		
 		System.out.println();
-		System.out.println(" ┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙");
+		System.out.println(" ┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙");
 		System.out.print("1.게시물 보기 2.뒤로가기 : ");
 		int select = scanner.nextInt();
 		if( select == 1) {	board();}
@@ -103,10 +101,10 @@ public class BoardFront {
 	public void boardPrintRecent() {
 		
 		ArrayList<RecomendDto> blist = BoardController.getInstance().boardPrintRecent();
-		System.out.printf(" \t%3s\t%10s\t%12s\t%32s \n","번호","제목","조회수","내용");
+		System.out.printf(" \t%3s\t%10s\t%13s\t%28s \n","번호","제목","조회수","내용");
 		System.out.println();
 		for(RecomendDto dto : blist) {
-			System.out.printf("\t %2s\t%13s \t %4s\t%42s \n",
+			System.out.printf("\t %2s\t%15s \t %4s\t%42s \n",
 					dto.getRecomNo(),dto.getRecomTitle(),dto.getRecomView(),dto.getRecomContent());
 		}
 		System.out.println();
@@ -132,7 +130,7 @@ public class BoardFront {
 		if(result) {
 			if(memberNo == MemberController.getInstance().dto().getMemberNo()) {
 			System.out.println("댓글 삭제 되었습니다"); boardList();}
-				else {System.out.println("[ 작성자 다름 ]댓글 삭제를 실패하였습니다.");}
+				else {System.out.println("[ 댓글 작성자가 다릅니다 ]댓글 삭제를 실패하였습니다.");}
 		}else {System.out.println("댓글삭제 실패");}
 	}
 

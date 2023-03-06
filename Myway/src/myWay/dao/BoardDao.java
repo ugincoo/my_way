@@ -18,7 +18,7 @@ public class BoardDao extends DB연동{
 		public static BoardDao getInstance() {return bdao;}
 		private BoardDao () {}
 	
-		// 추천 게시물	
+		// 전체 게시물	
 		public ArrayList<RecomendDto> boardlist(){
 			//여러개 게시판 저장을 위한 리스트 선언
 			ArrayList<RecomendDto> boardList = new ArrayList<>();
@@ -60,10 +60,7 @@ public class BoardDao extends DB연동{
 			}catch (Exception e) {System.out.println(e);}
 			return blist;
 		}
-		
-		
-		
-		
+				
 		//조회수 증가 
 		public void view( int recomNo) {
 			
@@ -139,8 +136,7 @@ public class BoardDao extends DB연동{
 				return true;
 			//5. SQL 결과
 			}catch (Exception e) {System.out.println("연동 실패 : " + e);}
-			return false;
-		
+			return false;		
 		}
 }	
 /*
