@@ -100,7 +100,7 @@ public class MemberFront {
 	//비밀번호수정 개어려움 ㅠ 로그인되야 가능하게 설게함 로그인 후 뒤로가기하삼 ㅇㅇ 
 	public void update() {
 		if(MemberController.getInstance().checkLogin()) {
-			System.out.println("------------ 비밀번호 수정 ------------");
+			System.out.println("‿︵‿︵‿︵୨˚̣̣̣͙୧ - - -비밀번호수정- - - ୨˚̣̣̣͙୧‿︵‿︵‿︵");
 			/*
 			 * System.out.print("회원아이디를 입력하세요 ::: "); String memberid=scanner.next();
 			 */
@@ -134,7 +134,7 @@ public class MemberFront {
 	
 	//아이디찾기
 	public void findId() {
-		System.out.println("------------ 아이디 찾기 ------------");
+		System.out.println("‿︵‿︵‿︵୨˚̣̣̣͙୧ - - -아이디찾기 - - - ୨˚̣̣̣͙୧‿︵‿︵‿︵");
 		System.out.print("회원이름을 입력하세요. : ");
 		String membername = scanner.next();
 		System.out.print("전화번호를 입력하세요. : ");
@@ -152,7 +152,7 @@ public class MemberFront {
 	
 	//회원탈퇴
 	public void delete() {
-		System.out.println("------------ 회원탈퇴 ------------");
+		System.out.println("‿︵‿︵‿︵୨˚̣̣̣͙୧ - - -회원탈퇴- - - ୨˚̣̣̣͙୧‿︵‿︵‿︵");
 		System.out.println("회원아이디를 입력하세요. : ");
 		String memberId = scanner.next();
 		System.out.println("비밀번호를 입력하세요. : ");
@@ -174,9 +174,8 @@ public class MemberFront {
 	
 	//전체회원조회
 	public void Allprint() {
-		System.out.println("---------------------------- 전체 회원 페이지 ----------------------------");
-		System.out.printf("%3s \t %10s \t %10s \t %10s \t %10s\n","no","아이디","비밀번호","이름","전화번호");
-		System.out.println("======================================================================");
+		System.out.println("‿︵‿︵‿︵୨˚̣̣̣͙୧ - - -전체회원 - - - ୨˚̣̣̣͙୧‿︵‿︵‿︵");
+		System.out.printf("%3s \t %10s \t %10s \t %10s %10s\n","번호","아이디","비밀번호","휴대폰","이름");
 		ArrayList<MemberDto> result = 
 				MemberController.getInstance().Allprint();
 		

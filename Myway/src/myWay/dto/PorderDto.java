@@ -14,16 +14,16 @@ public class PorderDto {
 	
 	// 생성자
 	public PorderDto() { }
-	public PorderDto(int memberNo, int breadNo, int drinkNo, int vegNo, int cheNo, int sourceNo,
-			int meatNo) {
+	public PorderDto(int memberNo, int breadNo, int cheNo, int meatNo, int vegNo, int sourceNo,
+			int drinkNo) {
 		super();
 		this.memberNo = memberNo;
 		this.breadNo = breadNo;
-		this.drinkNo = drinkNo;
-		this.vegNo = vegNo;
 		this.cheNo = cheNo;
-		this.sourceNo = sourceNo;
 		this.meatNo = meatNo;
+		this.vegNo = vegNo;
+		this.sourceNo = sourceNo;
+		this.drinkNo = drinkNo;
 	}
 
 	public PorderDto(int porderNo, int memberNo, int breadNo, int drinkNo, int vegNo, int cheNo, int sourceNo,
