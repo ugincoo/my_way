@@ -57,7 +57,7 @@ public class BoardFront {
 		System.out.print("1.게시물 보기 2.뒤로가기 : ");
 		int select = scanner.nextInt();
 		if( select == 1) {	board();}
-		else if ( select == 2) {boardIndex();}
+		else if ( select == 2) { return;}
 		else {System.out.println("없는 메뉴입니다.\n다시 선택해주세요 :)");boardList();}
 	}//void e
 	
@@ -73,7 +73,7 @@ public class BoardFront {
 		
 		BoardController.getInstance().view(boardno); //조회수 증가
 		
-		while(true) {
+		
 		
 			System.out.printf(" •┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊ %d 번게시물 ＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈＊┈┈┈┈＊┈┈┈•  \n",(boardno) );
 			System.out.println("제목 : " + result1.get(boardno-1).getRecomTitle());
@@ -92,8 +92,8 @@ public class BoardFront {
 			int select = scanner.nextInt();
 			if( select == 1) {	comment(boardno);}
 			else if ( select == 2) {delete();}
-			else if ( select == 3) {boardList();}
-			}
+			else if ( select == 3) { return;}
+			
 		
 	}//board e	
 	

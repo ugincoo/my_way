@@ -1,10 +1,10 @@
 package myWay.dto;
 
 public class DmaterialDto extends MmaterialDto  {
-	int materNo;
-	String materName;
-	int  materStock;
-	int materPrice;
+	private int materNo;
+	private String materName;
+	private int  materStock;
+	private int materPrice;
 	
 	// 생성자
 	public DmaterialDto() { }

@@ -2,10 +2,10 @@ package myWay.dto;
 
 public class RecomendDto {
 	// 필드
-	int recomNo;
-    String recomTitle;
-    int recomView;
-    String recomContent;
+	private int recomNo;
+	private String recomTitle;
+	private int recomView;
+	private String recomContent;
     
 	// 생성자
 	public RecomendDto() { }
