@@ -44,7 +44,7 @@ public class OderController {
 		}else if(cNo == 2) {
 			cName = "치즈";
 		}else if(cNo == 3) {
-			cName = "메인재료";
+			cName = "메인";
 		}else if(cNo == 4) {
 			cName = "채소";
 		}else if(cNo == 5) {
@@ -126,7 +126,6 @@ public class OderController {
 				dto.get(3).getMaterNo(), 
 				dto.get(4).getMaterNo(),
 				dto.get(5).getMaterNo());
-		
 		return pOrderDto;
 	}
 	
