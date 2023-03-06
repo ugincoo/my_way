@@ -2,10 +2,10 @@ package myWay.dto;
 
 public class BcommendDto {
 	// 필드
-	int bcommNo;
-    String bcommContent;
-    int memberNo;
-    int recomNo; 
+	private int bcommNo;
+	private String bcommContent;
+	private int memberNo;
+	private int recomNo; 
     
 	// 생성자
 	public BcommendDto() { }
