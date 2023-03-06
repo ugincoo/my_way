@@ -131,8 +131,8 @@ public class BoardFront {
 		//입력 받은 데이터 컨트롤에 전달
 		if(result) {
 			if(memberNo == MemberController.getInstance().dto().getMemberNo()) {
-			System.out.println("댓글 삭제 되었습니다"); board();}
-				else {System.out.println("댓글 삭제를 실패하였습니다.");}
+			System.out.println("댓글 삭제 되었습니다"); boardList();}
+				else {System.out.println("[ 작성자 다름 ]댓글 삭제를 실패하였습니다.");}
 		}else {System.out.println("댓글삭제 실패");}
 	}
 
