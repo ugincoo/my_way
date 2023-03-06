@@ -182,10 +182,10 @@ public class OderFront {
 		ArrayList<orderListDto> orderListDB = OderController.getInstance().viewOrderList();
 		if(orderListDB.size() > 0) {
 			System.out.println("┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 🌭 주문 내역 🌭 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑");
-			System.out.printf(" %2s %10s %10s %10s %10s %10s %10s  %10s \t  %10s\n", "번호", "빵", "치즈", "메인", "채소", "소스", "음료", "총 가격", "구매일");
+			System.out.printf(" %2s %10s  %10s   %10s  %10s  %10s  %10s   %10s \t  %10s\n", "번호", "빵", "치즈", "메인", "채소", "소스", "음료", "총 가격", "구매일");
 			System.out.println("----------------------------------------------------------------------------------------------------------------------");
 			for(int i = 0; i < orderListDB.size(); i++) {
-				System.out.printf("   %2d %10s %10s %10s %10s %10s %10s %10d원 \t %-20s\n",
+				System.out.printf("   %2d %10s %10s  %10s  %10s %10s  %10s  %10d원 \t  %15s\n",
 						i+1,
 						OderController.getInstance().returnMaterialInfo(orderListDB.get(i).getBreadNo()).getMaterName(),
 						OderController.getInstance().returnMaterialInfo(orderListDB.get(i).getCheName()).getMaterName(),
