@@ -2,15 +2,15 @@ package myWay.dto;
 
 public class PorderDto {
 	// 필드
-	int porderNo;
-    int memberNo;
+	private int porderNo;
+	private int memberNo;
     
-    int breadNo;
-    int drinkNo;
-    int vegNo;
-    int cheNo;
-    int sourceNo;
-	int meatNo;
+	private int breadNo;
+	private int drinkNo;
+	private int vegNo;
+	private int cheNo;
+	private int sourceNo;
+	private int meatNo;
 	
 	// 생성자
 	public PorderDto() { }

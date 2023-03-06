@@ -10,11 +10,11 @@ public class MemberDto {
 	
 	
 	// 필드
-	int 	memberNo;	// 회원일련번호
-    String 	memberId;	// 회원 ID
-    int 	memberPw;	// 회원 PW
-    String	memberphone;// 회원 phone , 수정
-    String	membername;	// 회원 name , 수정
+	private int 	memberNo;	// 회원일련번호
+	private String 	memberId;	// 회원 ID
+	private int 	memberPw;	// 회원 PW
+	private String	memberphone;// 회원 phone , 수정
+	private String	membername;	// 회원 name , 수정
     
 
 	// 생성자

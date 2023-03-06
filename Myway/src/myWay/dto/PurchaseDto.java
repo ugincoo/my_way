@@ -2,10 +2,10 @@ package myWay.dto;
 
 public class PurchaseDto {
 	// 필드
-	int purchaseNo;
-    int porderNo;
-    int purchasePrice;
-    String purchaseDateTime;
+	private int purchaseNo;
+	private int porderNo;
+	private int purchasePrice;
+	private String purchaseDateTime;
     
     // 생성자
     public PurchaseDto() { }

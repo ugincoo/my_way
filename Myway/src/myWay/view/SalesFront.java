@@ -61,9 +61,9 @@ public class SalesFront {
 		System.out.println("=================== " + year + "년 " + month + "월 매출 "+ "===================" );
 		//매개변수로 해당 월
 		ArrayList<SalesDto> salesDB = SalesController.getInstance().printSales(returnDate());
-		System.out.println("번호\t 이름 \t 수량 \t 매출액" );
+		System.out.printf("%2s%15s \t %7s \t %3s \n" , "no" , "재료명" , "수량" , "매출액" );
 		for(int i = 0; i <salesDB.size(); i++) {
-			System.out.printf("%d \t %s \t %d \t %d\n", 
+			System.out.printf("%2d%15s \t %7d \t %5d \n", 
 					salesDB.get(i).getMaterNo(),
 					salesDB.get(i).getMaterName(),
 					salesDB.get(i).getMaterSalesCount(),
@@ -76,13 +76,15 @@ public class SalesFront {
 		
 		if(day < 10) {
 			searchDate += "0" + day;
+		}else {
+			searchDate += day;
 		}
 		System.out.println("================ " + year + "년 " + month + "월 "+ day + "일 매출 ================" );
 		//매개변수로 해당 일 
 		ArrayList<SalesDto> salesDB = SalesController.getInstance().printSales(searchDate);
-		System.out.println("번호\t 이름 \t 수량 \t 매출액" );
+		System.out.printf("%2s%15s \t %7s \t %3s \n" , "no" , "재료명" , "수량" , "매출액" );
 		for(int i = 0; i <salesDB.size(); i++) {
-			System.out.printf("%d \t %s \t %d \t %d\n", 
+			System.out.printf("%2d%15s \t %7d \t %5d \n",
 					salesDB.get(i).getMaterNo(),
 					salesDB.get(i).getMaterName(),
 					salesDB.get(i).getMaterSalesCount(),

@@ -9,9 +9,9 @@ public class CouponDto {
 	}	
 	
 	//필드
-	int cpNo;			//쿠폰번호
-	String cpName;		//쿠폰종류(이름)
-	int cpPrice;		//쿠폰할인가격
+	private int cpNo;			//쿠폰번호
+	private String cpName;		//쿠폰종류(이름)
+	private int cpPrice;		//쿠폰할인가격
 	
 	
 
