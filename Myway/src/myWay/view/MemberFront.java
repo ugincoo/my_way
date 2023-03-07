@@ -54,15 +54,15 @@ public class MemberFront {
 		
 		System.out.println("이름을입력해주세요");
 		String membername = scanner.next();
+		
+		boolean result = false;
 				
 		
 		if(memberPw != confirmed) {
 			System.out.println("비밀번호가일치하지 않습니다");
+		} else {
+			result = MemberController.getInstance().signup(memberId,memberPw,memberphone,membername);
 		}
-		
-		
-		boolean result = 
-				MemberController.getInstance().signup(memberId,memberPw,memberphone,membername);
 		
 		if(result==true) {
 			System.out.println("회원가입이 완료되었습니다");
