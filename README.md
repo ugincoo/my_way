@@ -45,3 +45,5 @@ DB와 JAVA의 연동과 EER을 보다 세세하게 이해할 수 있을 것 같�
 # 8. 컨트롤 구조도
 ![컨트롤구조도](https://user-images.githubusercontent.com/121651511/221502650-c32a14f4-0c4a-4da4-b8c8-2b1890723c7c.png)
 
+# 9. 시연영상주소
+https://youtu.be/ULNnWmCluDg
