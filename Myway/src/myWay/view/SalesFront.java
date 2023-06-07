@@ -1,5 +1,7 @@
 package myWay.view;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -56,20 +58,28 @@ public class SalesFront {
 		
 		}
 		
-	//매출 현황[월]
+
+	// 매출 현황[월]
 	public void printMCurrentSales() {
-		System.out.println("=================== " + year + "년 " + month + "월 매출 "+ "===================" );
-		//매개변수로 해당 월
-		ArrayList<SalesDto> salesDB = SalesController.getInstance().printSales(returnDate());
-		System.out.printf("%2s%15s \t %7s \t %3s \n" , "no" , "재료명" , "수량" , "매출액" );
-		for(int i = 0; i <salesDB.size(); i++) {
-			System.out.printf("%2d%15s \t %7d \t %5d \n", 
-					salesDB.get(i).getMaterNo(),
-					salesDB.get(i).getMaterName(),
-					salesDB.get(i).getMaterSalesCount(),
-					salesDB.get(i).getMaterSalesPrice());
-		}
+	    System.out.println("=================== " + year + "년 " + month + "월 매출 " + "===================");
+	    // 매개변수로 해당 월
+	    ArrayList<SalesDto> salesDB = SalesController.getInstance().printSales(returnDate());
+	    System.out.printf("%2s%15s \t %7s \t %3s \n", "no", "재료명", "수량", "매출액");
+	    // 현재 월보다 작은 경우에만 출력
+	    if (month < LocalDate.now().getMonthValue()) {
+	        for (int i = 0; i <= salesDB.size(); i++) {
+	            System.out.printf("%2d%15s \t %7d \t %5d \n",
+	                    salesDB.get(i).getMaterNo(),
+	                    salesDB.get(i).getMaterName(),
+	                    salesDB.get(i).getMaterSalesCount(),
+	                    salesDB.get(i).getMaterSalesPrice());
+	        }
+	    } else {
+	        System.out.println("해당 월의 매출 현황은 아직 확인할 수 없습니다.");
+	    }
 	}
+
+
 	//매출 현황[일]
 	public void printDCurrentSales(int day) {
 		String searchDate = returnDate();
