@@ -111,15 +111,19 @@ public class BoardFront {
 		System.out.println(" ┕━━━━━━━━━━━━━"+Front.FONT_YELLOW+"😊"+Front.RESET+"━━━━━━━━━━━━━━━━━━━━━━━━━"+Front.FONT_GREEN+"🌭"+Front.RESET+ "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"+Front.FONT_GREEN+"🌭"+Front.RESET+"━━"+Front.FONT_YELLOW+"😊"+Front.RESET+"━━"+Front.FONT_GREEN+"🌭"+Front.RESET+"━━"+Front.FONT_YELLOW+"😊"+Front.RESET+"━━┙ ");
 	}	
 	
-	//댓글 작성
 	public void comment(int boardno) {
-		System.out.println("댓글 작성 : ");	String bcommContent = scanner.next();
-		//입력 받은 데이터 컨트롤에 전달
-		boolean result = BoardController.getInstance().comment(bcommContent, boardno);
-		if(result) {System.out.println("댓글이 등록 되었습니다.");boardList();}
-		else {System.out.println("댓글 등록을 실패하였습니다.");}
-				
-	}//comment e
+	    System.out.print("댓글 작성: ");
+	    String bcommContent = scanner.nextLine();
+	    // 입력 받은 데이터 컨트롤에 전달
+	    boolean result = BoardController.getInstance().comment(bcommContent, boardno);
+	    if (result) {
+	        System.out.println("댓글이 등록되었습니다.");
+	        boardList();
+	    } else {
+	        System.out.println("댓글 등록을 실패하였습니다.");
+	    }
+	}
+
 	
 	//댓글삭제
 	public void delete() {
